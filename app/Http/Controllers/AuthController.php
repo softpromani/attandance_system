@@ -23,10 +23,21 @@ class AuthController extends Controller
         if (Auth::attempt(['name' => $request->name, 'password' => $request->password], $request->remember_me)) {
 
 
-            // return redirect()->back('');
-            dd('login Successfully');
+            return redirect()->route('backendAdminPage');
+            // dd('login Successfully');
         } else {
             return redirect()->back()->with('error', 'Invalid Username or Password !');
         }
+    }
+
+    public function backendLoginPage()
+    {
+        return view('backend.adminLayout');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/login');
     }
 }

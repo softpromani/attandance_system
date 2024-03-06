@@ -26,3 +26,5 @@ Route::get('sign-in', function () {
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('backend-admin-page',[AuthController::class,'backendLoginPage'])->name('backendAdminPage');
