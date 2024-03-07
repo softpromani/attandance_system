@@ -18,19 +18,20 @@ class userSeeder extends Seeder
      */
     public function run()
     {
-        $role =Role::create([
+        $roles = [
             [
                 'name' => 'admin',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('Admin@123'),
+                'guard_name' => 'web',
             ],
             [
                 'name' => 'Teacher',
-                'email' => 'teacher@gmail.com',
-                'password' => Hash::make('123456'),
+                'guard_name' => 'web',
             ],
-            
-        ]);
+        ];
+       
+foreach ($roles as $roleData) {
+    $role = Role::create($roleData);
+}
         if($role){
             $user = User::create([
                 'name' => 'admin',
