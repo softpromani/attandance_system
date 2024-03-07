@@ -23,8 +23,11 @@ Route::get('index', function () {
 Route::get('sign-in', function () {
     return view('signin');
 });
-
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('backend-admin-page',[AuthController::class,'backendLoginPage'])->name('backendAdminPage');
+
+Route::group([ 'middleware' => 'auth'],function(){
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('backend-admin-page',[AuthController::class,'backendLoginPage'])->name('backendAdminPage');
+});
