@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 @extends('frontend.includes.head')
+{{--  {{$teach}}  --}}
 <body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
 <div id="page">
@@ -9,13 +10,13 @@
 <a href="#" data-back-button="" class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>
 <a href="#" data-toggle-theme="" class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>
 </div>
-@extends('frontend.includes.footer')
+    @extends('frontend.includes.footer')
 <div class="page-content">
 <div class="content notch-clear">
 <div class="d-flex py-2">
 <div class="align-self-center me-auto">
 <strong class="text-uppercase opacity-60 font-11">Welcome Back</strong>
-<h1 class="mt-n2 font-27">Jack Doeson</h1>
+<h1 class="mt-n2 font-27">{{Auth::user()->name??''}}</h1>
 </div>
 <div class="align-self-center ms-auto">
 <a href="#" class="d-block" data-menu="menu-events"><img src="images/pictures/faces/2s.png" class="img-fluid shadow-xl rounded-circle" width="52"></a>
@@ -27,10 +28,11 @@
 <div class="col-6 pe-2">
 <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">Active Projects</h5>
+<a href="{{ route('teacherRegisterData') }}"><h5 class="color-white d-block font-15 pt-1">Teacher's</h5></a>
 </div>
 <div class="card-bottom p-3">
-<h1 class="color-white mb-n1 font-28">23</h1>
+
+<h1 class="color-white mb-n1 font-28">{{$teach}}</h1>
 <i class="color-white font-10 fa fa-arrow-up"></i>
 <span class="color-white font-10 font-700">3 More</span>
 <span class="color-white font-10 opacity-70"> vs last 7 days</span>
@@ -40,7 +42,7 @@
 <div class="col-6 ps-2">
 <div class="card card-style gradient-red shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">Overdue</h5>
+<h5 class="color-white d-block font-15 pt-1">Student's</h5>
 </div>
 <div class="card-bottom p-3">
 <h1 class="color-white mb-n1 font-28">12</h1>
@@ -53,7 +55,7 @@
 <div class="col-6 pe-2">
 <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">Pending</h5>
+<h5 class="color-white d-block font-15 pt-1">Present</h5>
 </div>
 <div class="card-bottom p-3">
 <h1 class="color-white mb-n1 font-28">35</h1>
@@ -66,7 +68,7 @@
 <div class="col-6 ps-2">
 <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">Meetings</h5>
+<h5 class="color-white d-block font-15 pt-1">On Leave</h5>
 </div>
 <div class="card-bottom p-3">
 <h1 class="color-white mb-n1 font-28">None</h1>

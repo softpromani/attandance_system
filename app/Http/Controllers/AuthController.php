@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +33,9 @@ class AuthController extends Controller
 
     public function backendLoginPage()
     {
-        return view('backend.adminLayout');
+        $teacher=Teacher::all();
+        $teach=$teacher->count();
+        return view('backend.adminLayout',compact('teach'));
     }
 
     public function logout()
