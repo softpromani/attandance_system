@@ -25,7 +25,6 @@ class AuthController extends Controller
 
 
             return redirect()->route('backendAdminPage');
-            // dd('login Successfully');
         } else {
             return redirect()->back()->with('error', 'Invalid Username or Password !');
         }
