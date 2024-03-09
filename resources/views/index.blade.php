@@ -4,12 +4,12 @@
 
 
 <body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
-    
+
 @extends('frontend.includes.loader')
 
 <div id="page">
-
-@extends('frontend.includes.footer')
+{{--  {{Auth::user()->name}}  --}}
+@extends('frontend.includes.userFooter')
 
 <div class="page-content header-clear-small">
 <div class="splide single-slider slider-no-arrows slider-no-dots" id="single-slider-home">
@@ -453,5 +453,6 @@ Install Sticky, and access it like a regular app. Open your Safari menu and tap 
 </div>
 </div>
 @extends('frontend.includes.foot')
+
 </body>
 </html>
