@@ -3,15 +3,19 @@
 
 @extends('frontend.includes.loader')
 @extends('frontend.includes.footer')
-<div class="card card-style">
-    <div class="content mb-2">
+<div class="page-content clear-medium ">
+<div class="card card-style ">
+    <div class="content">
     <h3>Teacher's Data </h3>
 
-
-    <p>
+        <a href="{{route('TeacherRegester')}}"> <div class="text-end mb-2">
+            <button type="button" class="btn btn-primary" title="Add Teacher"><i class="fas fa-chalkboard-teacher"></i></button>
+        </div></a>
+    {{--  <p>
     Dark tables are always gorgeous.
-    </p>
-    <table class="table table-borderless text-center rounded-sm shadow-l">
+    </p>  --}}
+    <div class="table-responsive">
+    <table class="table table-borderless text-center rounded-sm shadow-l" >
     <thead>
     <tr>
     <th scope="col" class="bg-night-light border-dark-dark py-3 color-white">Id</th>
@@ -38,13 +42,13 @@
     <th scope="row">{{$dt->anniversary_date}}</th>
     <th scope="row">{{$dt->joining_date}}</th>
     <th scope="row"><img src="{{asset('storage/'.$dt->teacher_image)}}" alt="jpg" width="50" height="50"></th>
-    <th scope="row"> <a href="{{ route('teacherEditData', $dt->id) }}" class="btn btn-primary mb-1" href="#">Edit</a>
+    <th scope="row"> <a href="{{ route('teacherEditData', $dt->id) }}" class="btn btn-primary mb-1" href="#"><i class="fas fa-edit"></i></a>
 
         <form action="{{ route('teacherDeleteData', $dt->id)  }}" method="POST"
             onsubmit="return confirm('Are you sure you want to delete this student?')">
             @csrf
             @method('POST')
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
         </form></th>
 
     </tr>
@@ -52,10 +56,11 @@
 
     </tbody>
     </table>
+</div>
     {{ $data->links('pagination::bootstrap-5') }}
     </div>
     </div>
-
+</div>
 <script>
 
     <script>

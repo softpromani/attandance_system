@@ -25,37 +25,40 @@
 </div>
 <div class="content mt-0">
 <div class="row mb-n3">
-<div class="col-6 pe-2">
-<div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
-<div class="card-top p-3">
-<a href="{{ route('teacherRegisterData') }}"><h5 class="color-white d-block font-15 pt-1">Teacher's</h5></a>
-</div>
-<div class="card-bottom p-3">
 
-<h1 class="color-white mb-n1 font-28">{{$teach}}</h1>
-<i class="color-white font-10 fa fa-arrow-up"></i>
-<span class="color-white font-10 font-700">3 More</span>
-<span class="color-white font-10 opacity-70"> vs last 7 days</span>
-</div>
-</div>
-</div>
+<div class="col-6 pe-2">
+    <a href="{{ route('teacherRegisterData') }}">
+    <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+    <div class="card-top p-3">
+    <h3 class="color-white d-block  pt-1">Teacher's</h3>
+    </div>
+    <div class="card-bottom p-3">
+
+    <h1 class="color-white mb-n1 font-28">{{$teach}}</h1>
+
+    </div>
+    </div>
+    </a>
+    </div>
+
 <div class="col-6 ps-2">
+    <a href="{{route('student.index')}}">
 <div class="card card-style gradient-red shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">Student's</h5>
+<h3 class="color-white d-block  pt-1">Student's</h3>
 </div>
 <div class="card-bottom p-3">
-<h1 class="color-white mb-n1 font-28">12</h1>
-<i class="color-white font-10 fa fa-arrow-down"></i>
-<span class="color-white font-10 font-700">1 Less</span>
-<span class="color-white font-10 opacity-70"> vs last 7 days</span>
+<h1 class="color-white mb-n1 font-28">{{$stdnt}}</h1>
+
 </div>
 </div>
+</a>
 </div>
 <div class="col-6 pe-2">
+    <a href="#">
 <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">Present</h5>
+<h3 class="color-white d-block pt-1">Present</h3>
 </div>
 <div class="card-bottom p-3">
 <h1 class="color-white mb-n1 font-28">35</h1>
@@ -64,21 +67,24 @@
 <span class="color-white font-10 opacity-60"> vs last 7 days</span>
 </div>
 </div>
+</a>
 </div>
 <div class="col-6 ps-2">
+    <a href="{{ route('leave-set-up.index') }}">
 <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
 <div class="card-top p-3">
-<h5 class="color-white d-block font-15 pt-1">On Leave</h5>
+<h3 class="color-white d-block  pt-1">Leave SetUp</h3>
 </div>
 <div class="card-bottom p-3">
-<h1 class="color-white mb-n1 font-28">None</h1>
+<h1 class="color-white mb-n1 font-28">{{$lv}}</h1>
 <span class="color-white font-10 opacity-60">No new Meetings</span>
 </div>
 </div>
 </div>
 </div>
+</a>
 </div>
-<div class="card card-style">
+{{--  <div class="card card-style">
 <div class="content mb-0">
 <div class="row mb-2 mt-n2">
 <div class="col-6 text-start">
@@ -232,9 +238,9 @@
 </div>
 </div>
 </a>
-</div>
+</div>--}}
 <div class="footer card card-style">
-<a href="#" class="footer-title"><span class="color-highlight">StickyMobile</span></a>
+<p href="#" class="footer-title"><span class="color-highlight">Attandance Managment Application</span></p>
 <p class="footer-text"><span>Made with <i class="fa fa-heart color-highlight font-16 ps-2 pe-2"></i> by Enabled</span><br><br>Powered by the best Mobile Website Developer on Envato Market. Elite Quality. Elite Products.</p>
 <div class="text-center mb-3">
 <a href="#" class="icon icon-xs rounded-sm shadow-l me-1 bg-facebook"><i class="fab fa-facebook-f"></i></a>
@@ -243,7 +249,7 @@
 <a href="#" data-menu="menu-share" class="icon icon-xs rounded-sm me-1 shadow-l bg-red-dark"><i class="fa fa-share-alt"></i></a>
 <a href="#" class="back-to-top icon icon-xs rounded-sm shadow-l bg-dark-light"><i class="fa fa-angle-up"></i></a>
 </div>
-<p class="footer-copyright">Copyright &copy; Enabled <span id="copyright-year">2017</span>. All Rights Reserved.</p>
+<p class="footer-copyright">Copyright &copy; Inovation Trove <span id="copyright-year">2024</span>. All Rights Reserved.</p>
 <p class="footer-links"><a href="#" class="color-highlight">Privacy Policy</a> | <a href="#" class="color-highlight">Terms and Conditions</a> | <a href="#" class="back-to-top color-highlight"> Back to Top</a></p>
 <div class="clear"></div>
 </div>

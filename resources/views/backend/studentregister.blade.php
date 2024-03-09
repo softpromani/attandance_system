@@ -21,7 +21,7 @@
      @error('student_name')
      <div <span class="text-danger">{{ $message }}</span></div>
       @enderror
-   
+
     <label for="f1" class="color-blue-dark font-13">Student Name</label>
     <i class="fa fa-times disabled invalid color-red-dark"></i>
     <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -134,13 +134,13 @@
                     <img src="{{asset('storage/'.$student->student_image) }}" width="100">
                 </td>
                 <td>
-                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-primary" href="#">Edit</a>
+                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
 
                     <form action="{{ route('student.destroy', $student->id)  }}" method="POST"
                         onsubmit="return confirm('Are you sure you want to delete this student?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
                     </form>
                 </td>
 
