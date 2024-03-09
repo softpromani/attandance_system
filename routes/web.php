@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,5 @@ Route::group([ 'middleware' => 'auth'],function(){
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('backend-admin-page',[AuthController::class,'backendLoginPage'])->name('backendAdminPage');
+    Route::get('attendance-mark',[AttendanceController::class,'attendanceMark'])->name('attendanceMark');
 });
