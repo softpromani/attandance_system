@@ -16,7 +16,7 @@ class LeaveSetUpController extends Controller
     {
 
         $leave=LeaveSetup::paginate(5);
-        return view('backend.leaveSetUp',compact('leave'));
+        return view('backend.admin.leaveSetUp',compact('leave'));
     }
 
     /**
@@ -89,7 +89,7 @@ class LeaveSetUpController extends Controller
         $lvdata=LeaveSetup::find($id);
         // dd($lvdata);
         $leave=LeaveSetup::paginate(5);
-        return view('backend.leaveSetUp',compact('lvdata','leave'));
+        return view('backend.admin.leaveSetUp',compact('lvdata','leave'));
         dd($lvdata);
     }
 
@@ -116,7 +116,7 @@ class LeaveSetUpController extends Controller
         $student=LeaveSetup::find($id)->update($data);
         // dd($student);
 
-        return redirect()->route('leave-set-up.index');
+        return redirect()->route('admin.leave-set-up.index');
     }
 
     /**

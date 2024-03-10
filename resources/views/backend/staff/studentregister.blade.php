@@ -6,7 +6,7 @@
      @foreach ($errors->all() as $e)
     {{ $e }}
     @endforeach
- <form action="{{ isset($editstudent) ? route('student.update',$editstudent->id) : route('student.store') }}" method="POST"
+ <form action="{{ isset($editstudent) ? route('student.student.update',$editstudent->id) : route('student.student.store') }}" method="POST"
     enctype="multipart/form-data">
     @csrf
     @isset($editstudent)
@@ -134,9 +134,9 @@
                     <img src="{{asset('storage/'.$student->student_image) }}" width="100">
                 </td>
                 <td>
-                    <a href="{{ route('student.edit', $student->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                    <a href="{{ route('student.student.edit', $student->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
 
-                    <form action="{{ route('student.destroy', $student->id)  }}" method="POST"
+                    <form action="{{ route('student.student.destroy', $student->id)  }}" method="POST"
                         onsubmit="return confirm('Are you sure you want to delete this student?')">
                         @csrf
                         @method('DELETE')

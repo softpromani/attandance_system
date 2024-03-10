@@ -4,9 +4,9 @@
 <div class="card card-style">
     <div class="content mb-0 ">
     <h3>Teacher Registration</h3>
-    {{--  <form action="{{ route('storeTeacherRegister') }}" method="POST" enctype="multipart/form-data">  --}}
+    {{--  <form action="{{ route('staff.storeTeacherRegister') }}" method="POST" enctype="multipart/form-data">  --}}
 
-        <form action="{{ isset($data) ? route('teacherUpdateData',$data->id) : route('storeTeacherRegister') }}" method="POST"
+        <form action="{{ isset($data) ? route('staff.teacherUpdateData',$data->id) : route('staff.storeTeacherRegister') }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @isset($editstudent)

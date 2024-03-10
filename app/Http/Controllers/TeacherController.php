@@ -9,7 +9,7 @@ class TeacherController extends Controller
 {
     public function teacherRegister()
     {
-        return view('backend.teacherRegister');
+        return view('backend.staff.teacherRegister');
     }
     public function storeTeacherRegister(Request $request)
     {
@@ -51,22 +51,22 @@ class TeacherController extends Controller
 
         if($res)
         {
-            return redirect()->route('teacherRegisterData');
+            return redirect()->route('staff.teacherRegisterData');
         }
 
     }
 
     public function teacherRegisterData()
     {
-        $data=Teacher::paginate(5);
-        return view('backend.teachers',compact('data'));
+        $data=Teacher::paginate(10);
+        return view('backend.staff.teachers',compact('data'));
     }
 
     public function teacherEditData($id)
     {
         $data=Teacher::find($id);
         // dd($data);
-        return view('backend.teacherRegister',compact('data'));
+        return view('backend.staff.teacherRegister',compact('data'));
     }
 
     public function teacherUpdateData(Request $request, $id)
@@ -94,7 +94,7 @@ class TeacherController extends Controller
         $student=Teacher::find($id)->update($data);
         // dd($student);
 
-        return redirect()->route('teacherRegisterData');
+        return redirect()->route('staff.teacherRegisterData');
     }
     public function teacherDeleteData($id)
     {

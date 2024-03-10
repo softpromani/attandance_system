@@ -8,12 +8,10 @@
     <div class="content">
     <h3>Teacher's Data </h3>
 
-        <a href="{{route('TeacherRegester')}}"> <div class="text-end mb-2">
+        <a href="{{route('staff.TeacherRegester')}}"> <div class="text-end mb-2">
             <button type="button" class="btn btn-primary" title="Add Teacher"><i class="fas fa-chalkboard-teacher"></i></button>
         </div></a>
-    {{--  <p>
-    Dark tables are always gorgeous.
-    </p>  --}}
+    
     <div class="table-responsive">
     <table class="table table-borderless text-center rounded-sm shadow-l" >
     <thead>
@@ -42,9 +40,9 @@
     <th scope="row">{{$dt->anniversary_date}}</th>
     <th scope="row">{{$dt->joining_date}}</th>
     <th scope="row"><img src="{{asset('storage/'.$dt->teacher_image)}}" alt="jpg" width="50" height="50"></th>
-    <th scope="row"> <a href="{{ route('teacherEditData', $dt->id) }}" class="btn btn-primary mb-1" href="#"><i class="fas fa-edit"></i></a>
+    <th scope="row"> <a href="{{ route('staff.teacherEditData', $dt->id) }}" class="btn btn-primary mb-1" href="#"><i class="fas fa-edit"></i></a>
 
-        <form action="{{ route('teacherDeleteData', $dt->id)  }}" method="POST"
+        <form action="{{ route('staff.teacherDeleteData', $dt->id)  }}" method="POST"
             onsubmit="return confirm('Are you sure you want to delete this student?')">
             @csrf
             @method('POST')
