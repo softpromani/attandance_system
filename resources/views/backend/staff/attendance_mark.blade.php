@@ -31,9 +31,6 @@
 
 <!-- QR SCANNER CODE BELOW  -->
 
-{{-- <div class="page-content clear-medium "> --}}
-  {{-- <div class="card card-style "> --}}
-{{-- <div class="container"> --}}
   <div class="row">
     <div class="col-sm-4">
       <div id="reader"></div>
@@ -45,10 +42,6 @@
       </div>
     </div>
   </div>
-{{-- </div> --}}
-
-  {{-- </div> --}}
-{{-- </div> --}}
 
 
 </div>
@@ -56,8 +49,6 @@
 @endsection
 @section('script')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.0/html5-qrcode.min.js"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
 
 <script>
     // When scan is successful fucntion will produce data
