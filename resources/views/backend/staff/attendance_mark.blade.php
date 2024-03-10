@@ -57,6 +57,8 @@
 @section('script')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.0/html5-qrcode.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
+
 <script>
     // When scan is successful fucntion will produce data
 function onScanSuccess(qrCodeMessage) {

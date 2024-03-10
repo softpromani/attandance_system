@@ -24,7 +24,7 @@ class userSeeder extends Seeder
                 'guard_name' => 'web',
             ],
             [
-                'name' => 'Teacher',
+                'name' => 'staff',
                 'guard_name' => 'web',
             ],
         ];
@@ -34,9 +34,15 @@ foreach ($roles as $roleData) {
 }
         if($role){
             $user = User::create([
-                'name' => 'admin',
+                'name' => 'admin JFS',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('Admin@123'),
+                'teacher_id'=>'001',
+                'first_name'=>'admin',
+                'last_name'=>'JFS',
+                'father_name'=>'Super Admin',
+                'mobile_number'=>'9555710197',
+               
             ]);
             $user->assignRole('admin'); 
         }

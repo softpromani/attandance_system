@@ -1,3 +1,5 @@
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> 
 <script type="text/javascript" src="{{asset('frontend/assets/scripts/bootstrap.min.js')}}" defer=""></script>
 <script type="text/javascript" src="{{asset('frontend/assets/scripts/custom.js')}}" defer=""></script>
 <!-- At the end of your layout file, before the closing </body> tag -->
