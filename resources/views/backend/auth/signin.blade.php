@@ -1,19 +1,13 @@
-<!DOCTYPE HTML>
-<html lang="en">
-@extends('frontend.includes.head')
+@extends('frontend.includes.main')
+@section('title', 'mark')
 
-<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
-@extends('frontend.includes.loader')
-<div id="page">
-<div class="header header-fixed header-logo-center">
-     <p class="header-title">School Management</p>
-     <a href="#" data-back-button="" class="header-icon header-icon-1"><i class="fas fa-arrow-left"></i></a>
-     <a href="#" data-toggle-theme="" class="header-icon header-icon-4"><i class="fas fa-lightbulb"></i></a>
-</div>
-@extends('frontend.includes.footer')
-     <div class="page-content header-clear-medium">
+@section('content')
+{{-- <div id="page"> --}}
+
+{{-- @extends('frontend.includes.footer') --}}
+     <div class="page-content ">
           <div class="card card-style">
-               <div class="content mt-4 mb-1">
+               <div class="content">
                     <h1 class="text-center font-800 font-40 pt-2 mb-1">Sign In</h1>
                     <p class="color-highlight text-center font-12 mb-3">Let's get you logged in</p>
                          <form method="POST" action="{{ route('login') }}">
@@ -36,7 +30,7 @@
 </div>
 <input type="submit" class="btn btn-m rounded-sm mt-4 mb-4 btn-full bg-green-dark text-uppercase font-900">
 {{--  <a href="#" class="btn btn-m rounded-sm mt-4 mb-4 btn-full bg-green-dark text-uppercase font-900">Login</a>  --}}
-<div class="divider"></div>
+{{-- <div class="divider"></div> --}}
 </form>
 
 <div class="divider mt-4 mb-3"></div>
@@ -51,7 +45,7 @@
 
 
 
-</div>
-@extends('frontend.includes.foot')
-</body>
-</html>
+{{-- </div> --}}
+@endsection
+@section('script')
+@endsection
