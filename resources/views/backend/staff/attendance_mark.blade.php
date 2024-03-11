@@ -2,98 +2,53 @@
 @section('title', 'mark')
 
 @section('content')
-@section('style')
-<style>
-  /* style.css file*/
-/* body {
-	display: flex;
-	justify-content: center;
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	box-sizing: border-box;
-	text-align: center;
-	background: rgb(128 0 0 / 66%);
-} */
-.container {
-	width: 70%;
-	max-width: 500px;
-	/* margin: 5px; */
-}
-
-/* .container h1 {
-	color: #ffffff;
-} */
-
-/* .section {
-	background-color: #ffffff;
-	padding: 50px 30px;
-	border: 1.5px solid #b2b2b2;
-	border-radius: 0.25em;
-	box-shadow: 0 20px 25px rgba(0, 0, 0, 0.25);
-} */
-
-#my-qr-reader {
-	padding: 20px !important;
-	border: 1.5px solid #b2b2b2 !important;
-	border-radius: 8px;
-}
-
-#my-qr-reader img[alt="Info icon"] {
-	display: none;
-}
-
-#my-qr-reader img[alt="Camera based scan"] {
-	width: 1px !important;
-	height: 100px !important;
-}
-
-button {
-	padding: 10px 20px;
-	border: 1px solid #b2b2b2;
-	outline: none;
-	border-radius: 0.25em;
-	color: white;
-	font-size: 15px;
-	cursor: pointer;
-	margin-top: 15px;
-	margin-bottom: 10px;
-	background-color: #008000ad;
-	transition: 0.3s background-color;
-}
-
-button:hover {
-	background-color: #008000;
-}
-
-#html5-qrcode-anchor-scan-type-change {
-	text-decoration: none !important;
-	color: #1d9bf0;
-}
-
-video {
-	width: 100% !important;
-	/* border: 1px solid #b2b2b2 !important; */
-	border-radius: 0.25em;
-}
-
-</style>
-@endsection
 <div class="page-content clear-medium ">
   
 <div class="card card-style ">
     <div class="content">
-      <div class="container">
-        <h1>Scan QR Codes</h1>
-        <div class="section">
-            <div id="my-qr-reader">
-            </div>
-        </div>
+    <style>
+
+#reader {
+  width: 500px;
+}
+
+.result {
+  background-color: green;
+  color: #fff;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+}
+
+#reader__scan_region {
+  background: white;
+}
+
+    </style>
+    
+
+<!-- QR SCANNER CODE BELOW  -->
+
+{{-- <div class="page-content clear-medium "> --}}
+  {{-- <div class="card card-style "> --}}
+{{-- <div class="container"> --}}
+  <div class="row">
+    <div class="col-sm-4">
+      <div id="reader"></div>
     </div>
-    <script
-        src="https://unpkg.com/html5-qrcode">
-    </script>
+    <div class=" col-sm-4" style="padding: 30px">
+      <h4>Scan Result </h4>
+      <div id="result">
+        Result goes here
+      </div>
     </div>
+  </div>
+{{-- </div> --}}
+
+  {{-- </div> --}}
+{{-- </div> --}}
 
 
 </div>
@@ -101,32 +56,24 @@ video {
 @endsection
 @section('script')
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.0/html5-qrcode.min.js"></script>
 <script>
-   function domReady(fn) {
-    if (
-        document.readyState === "complete" ||
-        document.readyState === "interactive"
-    ) {
-        setTimeout(fn, 1000);
-    } else {
-        document.addEventListener("DOMContentLoaded", fn);
-    }
+    // When scan is successful fucntion will produce data
+function onScanSuccess(qrCodeMessage) {
+  document.getElementById("result").innerHTML =
+    '<span class="result">' + qrCodeMessage + "</span>";
 }
- 
-domReady(function () {
- 
-    // If found you qr code
-    function onScanSuccess(decodeText, decodeResult) {
-        alert("You Qr is : " + decodeText, decodeResult);
-    }
- 
-    let htmlscanner = new Html5QrcodeScanner(
-        "my-qr-reader",
-        { fps: 10, qrbos: 250 }
-    );
-    htmlscanner.render(onScanSuccess);
+// When scan is unsuccessful fucntion will produce error message
+function onScanError(errorMessage) {
+  // Handle Scan Error
+}
+// Setting up Qr Scanner properties
+var html5QrCodeScanner = new Html5QrcodeScanner("reader", {
+  fps: 10,
+  qrbox: 200
 });
+// in
+html5QrCodeScanner.render(onScanSuccess, onScanError);
 
 </script>
 @endsection
