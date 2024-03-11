@@ -16,23 +16,15 @@
 </head>
 
 <body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
-    <div id="preloader">
-        <div class="spinner-border color-highlight" role="status"></div>
-    </div>
+
     <div id="page">
-
         @include('frontend.includes.header')
-
-        <div class="page-content header-clear-small">
+        <div class="page-content ">
             <div id="qr-reader" style="width:450px" ></div>
             <div id="qr-reader-results"></div>
 
 
         </div>
-
-        @include('frontend.includes.footer')
-
-        @include('frontend.includes.foot')
 
 
     </div>
