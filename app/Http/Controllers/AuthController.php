@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('signin');
+        return view('backend.auth.signin');
     }
 
     public function login(Request $request)
@@ -27,7 +27,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember_me)) {
 
 
-            return redirect()->route('backendAdminPage')->with('Success','Login Successfully');
+            return redirect()->route('admin.backendAdminPage')->with('Success','Login Successfully');
         } else {
             return redirect()->back()->with('error', 'Invalid Username or Password !');
         }
@@ -41,12 +41,12 @@ class AuthController extends Controller
         $stdnt=$student->count();
         $teach=$teacher->count();
         $lv=$leave->count();
-        return view('backend.adminLayout',compact('teach','stdnt','lv'));
+        return view('backend.admin.adminLayout',compact('teach','stdnt','lv'));
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect()->route('Getlogin');
     }
 }

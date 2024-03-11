@@ -9,10 +9,10 @@
 
             These boxes will react to them when you type or select a value.
         </p>
-        {{--  <form action="{{(route('leave-set-up.store'))}}" method="post">
+        {{--  <form action="{{(route('admin.leave-set-up.store'))}}" method="post">
         @csrf  --}}
 
-        <form action="{{ isset($lvdata) ? route('leave-set-up.update', $lvdata->id) : route('leave-set-up.store') }}"
+        <form action="{{ isset($lvdata) ? route('admin.leave-set-up.update', $lvdata->id) : route('admin.leave-set-up.store') }}"
             method="POST" enctype="multipart/form-data">
             @csrf
             @isset($lvdata)
@@ -118,7 +118,7 @@
                                 <th scope="row">{{ $dt->years }}</th>
                                 <th scope="row">{{ $dt->paid_leave }}</th>
                                 <th scope="row">{{ $dt->unpaid_leave }}</th>
-                                <th scope="row"> <a href="{{ route('leave-set-up.edit', $dt->id) }}"
+                                <th scope="row"> <a href="{{ route('admin.leave-set-up.edit', $dt->id) }}"
                                         class="btn btn-primary mb-1" href="#"><i class="fas fa-edit"></i></a></th>
 
                             </tr>
