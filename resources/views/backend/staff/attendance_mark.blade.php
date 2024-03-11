@@ -24,12 +24,21 @@
             <div id="qr-reader-results"></div>
 
 
+
+
+
         </div>
 
 
+
+        @include('frontend.includes.footer')
+
     </div>
     <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+    <script type="text/javascript" src="{{asset('frontend/assets/scripts/bootstrap.min.js')}}" defer=""></script>
+    <script type="text/javascript" src="{{asset('frontend/assets/scripts/custom.js')}}" defer=""></script>
     <script>
         var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
