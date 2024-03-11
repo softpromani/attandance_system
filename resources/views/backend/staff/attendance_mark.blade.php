@@ -45,7 +45,7 @@
                 console.log(`Scan result ${decodedText}`, decodedResult);
                 alert(decodedText);
                 alert(decodedResult);
-                window.location.href = decodedResult;
+                window.location.href = decodedText;
             }
         }
 
