@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LeaveSetUpController;
+use App\Http\Controllers\StudentBillController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,7 @@ Route::group([ 'middleware' => 'auth'],function(){
     Route::get('teacher-count',[TeacherController::class,'teacherCount'])->name('teacherCount');
     Route::resource('student',StudentController::class);
     Route::resource('leave-set-up',LeaveSetUpController::class);
-});
 
+});
+Route::resource('student-bill',StudentBillController::class);
 
