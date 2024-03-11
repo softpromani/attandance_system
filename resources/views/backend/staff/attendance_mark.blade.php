@@ -23,13 +23,7 @@
             <div id="qr-reader" style="width:450px" ></div>
             <div id="qr-reader-results"></div>
 
-
-
-
-
         </div>
-
-
 
         @include('frontend.includes.footer')
 
@@ -49,6 +43,9 @@
                 lastResult = decodedText;
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
+                alert(decodedText);
+                alert(decodedResult);
+                window.location.href = decodedResult;
             }
         }
 
