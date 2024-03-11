@@ -21,10 +21,9 @@
     <!-- BEGIN: Content-->
     <div class="page-content header-clear-small">
             {{-- @include('layout.breadcrumb') --}}
-            
                 @yield('content')
             </div>
-        
+
     <!-- END: Content-->
     <!-- BEGIN: Footer-->
     @include('frontend.includes.footer')

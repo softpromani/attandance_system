@@ -1,79 +1,40 @@
 @extends('frontend.includes.main')
-@section('title', 'mark')
+@section('title', 'Mark Attendance')
+@section('style')
 
+@endsection
 @section('content')
-<div class="page-content clear-medium ">
-  
-<div class="card card-style ">
-    <div class="content">
-    <style>
+    <div class="page-content clear-medium ">
 
-#reader {
-  width: 500px;
-}
+        <div class="card card-style ">
+    <h1 class="text-center">QR Scanner</h1>
 
-.result {
-  background-color: green;
-  color: #fff;
-  padding: 20px;
-}
-
-.row {
-  display: flex;
-}
-
-#reader__scan_region {
-  background: white;
-}
-
-    </style>
-    
-
-<!-- QR SCANNER CODE BELOW  -->
-
-{{-- <div class="page-content clear-medium "> --}}
-  {{-- <div class="card card-style "> --}}
-{{-- <div class="container"> --}}
-  <div class="row">
-    <div class="col-sm-4">
-      <div id="reader"></div>
+            <div id="qr-reader" ></div>
+            <div id="qr-reader-results"></div>
+        </div>
     </div>
-    <div class=" col-sm-4" style="padding: 30px">
-      <h4>Scan Result </h4>
-      <div id="result">
-        Result goes here
-      </div>
-    </div>
-  </div>
-{{-- </div> --}}
-
-  {{-- </div> --}}
-{{-- </div> --}}
-
-
-</div>
-</div>
 @endsection
 @section('script')
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.0/html5-qrcode.min.js"></script>
-<script>
-    // When scan is successful fucntion will produce data
-function onScanSuccess(qrCodeMessage) {
-  document.getElementById("result").innerHTML =
-    '<span class="result">' + qrCodeMessage + "</span>";
-}
-// When scan is unsuccessful fucntion will produce error message
-function onScanError(errorMessage) {
-  // Handle Scan Error
-}
-// Setting up Qr Scanner properties
-var html5QrCodeScanner = new Html5QrcodeScanner("reader", {
-  fps: 10,
-  qrbox: 200
-});
-// in
-html5QrCodeScanner.render(onScanSuccess, onScanError);
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // Handle on success condition with the decoded message.
+                console.log(`Scan result ${decodedText}`, decodedResult);
+            }
+        }
 
-</script>
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", {
+                fps: 10,
+                qrbox: 250
+            });
+        html5QrcodeScanner.render(onScanSuccess);
+    </script>
+
 @endsection
