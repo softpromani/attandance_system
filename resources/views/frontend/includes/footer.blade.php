@@ -11,8 +11,9 @@
           <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle"><span>{{ auth()->user()->name??'' }}</span>
         </a>
     @endif
+    @include('sweetalert::alert')
     </div>
-    
+
     <div id="menu-settings" class="menu menu-box-bottom menu-box-detached">
         <div class="menu-title mt-0 pt-0"><h1>Settings</h1><p class="color-highlight">Flexible and Easy to Use</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
         <div class="divider divider-margins mb-n2"></div>

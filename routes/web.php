@@ -3,6 +3,7 @@
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LeaveSetUpController;
+use App\Http\Controllers\QRController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,8 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('backend-admin-page',[AuthController::class,'backendLoginPage'])->name('backendAdminPage');
     Route::resource('leave-set-up',LeaveSetUpController::class);
+    Route::resource('qr',QRController::class);
+    Route::get('changeStatus/{id}',[QRController::class,'is_active']);
 });
 
 Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],function(){
