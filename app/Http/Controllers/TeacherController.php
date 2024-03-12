@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -39,11 +41,13 @@ class TeacherController extends Controller
 
         $name = $request->f_name . $request->l_name;
         $currentYear = now()->year;
+        $count=User::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
+        $teacher_id= Carbon::now()->format('Ym') .'000'.$count;
         $res = User::create([
             'name'=>$name,
-            'email'=>'prakash@gmail.com',
-            'password'=>Hash::make('123456'),
-            'teacher_id'=>'emp'.$currentYear.'-'.$request->f_name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'teacher_id'=>'Emp'.$teacher_id,
          'first_name'=>$request->f_name,
          'last_name'=>$request->l_name,
          'father_name'=>$request->father_name,
@@ -51,9 +55,9 @@ class TeacherController extends Controller
          'mobile_number'=>$request->number,
          'anniversary_date'=>$request->anniversary_date,
          'joining_date'=>$request->joining_date,
-        'teacher_image' => $pathToStore,
+        'teacher_image' => $pathToStore??'',
     ]);
-    $res->assignRole('staff'); 
+    $res->assignRole('staff');
         if($res)
         {
             return redirect()->route('staff.teacherRegisterData');
@@ -63,13 +67,13 @@ class TeacherController extends Controller
 
     public function teacherRegisterData()
     {
-        $data=Teacher::paginate(10);
+        $data=User::paginate(10);
         return view('backend.staff.teachers',compact('data'));
     }
 
     public function teacherEditData($id)
     {
-        $data=Teacher::find($id);
+        $data=User::find($id);
         // dd($data);
         return view('backend.staff.teacherRegister',compact('data'));
     }
@@ -81,10 +85,11 @@ class TeacherController extends Controller
         if($request->hasFile('file')){
             $file = $request->file('file');
             $path = $file->store('file');
-            Teacher::find($id)->update(['file' => $path]);
+            User::find($id)->update(['file' => $path]);
         }
 
         $data = [
+            'email'=>$request->email,
             'first_name'=>$request->f_name,
             'last_name'=>$request->l_name,
             'fathers_name'=>$request->father_name,
@@ -96,7 +101,7 @@ class TeacherController extends Controller
 
 
         ];
-        $student=Teacher::find($id)->update($data);
+        $student=User::find($id)->update($data);
         // dd($student);
 
         return redirect()->route('staff.teacherRegisterData');

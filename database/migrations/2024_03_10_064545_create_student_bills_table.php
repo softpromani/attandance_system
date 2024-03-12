@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('student_bills', function (Blueprint $table) {
             $table->id();
+            $table->integer('student_id');
+            $table->integer('quantity');
+            $table->string('desc');
+            $table->integer('fee');
+            $table->integer('sum_fee');
+            $table->integer('total_fee');
             $table->timestamps();
         });
     }

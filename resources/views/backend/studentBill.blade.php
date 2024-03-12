@@ -1,105 +1,242 @@
-@extends('frontend.includes.head')
-@extends('frontend.includes.loader')
-<div class="card card-style">
-    {{--  {{$data}}  --}}
-    <div class="content mb-0">
+@extends('frontend.includes.main')
+@section('title', 'mark')
+@section('style')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+@section('content')
 
-        <div class="d-flex justify-content-end">
-            <div class="btn-group">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Select Students
-                </button>
-                <ul class="dropdown-menu text-center" id="studentDropdown">
-                    <!-- Student data will be dynamically added here using JavaScript -->
-                </ul>
+    <div class="card card-style">
+        <div class="card-header row">
+            <div class="form-group col-6">
+                <label for="studentSelect">Select Students</label>
+                <select class="form-select js-example-basic-single" id="studentSelect">
+                    <!-- Option for default selection -->
+                    <option value="">Select Student</option>
+                </select>
             </div>
         </div>
+        @if (isset($students))
+            <div class="card-body">
+                <div class="content">
+                    <div class="container mt-5">
+                        <div class="row mb-3">
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Reg. No :</strong></p>&nbsp;&nbsp; <p>{{ $students->registration_number ?? '' }}
+                                </p>
+                            </div>
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Student Name :</strong></p>&nbsp;&nbsp; <p>{{ $students->student_name ?? '' }}
+                                </p>
+                            </div>
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Father Name :</strong></p>&nbsp;&nbsp; <p>{{ $students->father_name ?? '' }}</p>
+                            </div>
+                        </div>
 
-        <p>
-            Student Billing Page.
-        </p>
-        @if (isset($data))
-            <div class="input-style no-borders no-icon validate-field mb-4">
-                <input type="text" class="form-control validate-text" id="form4a"
-                    value="{{ $data->registration_number }}" placeholder="Phone" disabled>
-                <label for="form4aa" class="color-highlight">Phone</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
-            </div>
-            <div class="input-style no-borders has-icon validate-field mb-4">
-                <i class="fa fa-user"></i>
-                <input type="name" class="form-control validate-name" value="{{ $data->student_name }}"
-                    id="form1a" placeholder="Name" disabled>
-                <label for="form1a" class="color-highlight">Name</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
-            </div>
-            <div class="input-style no-borders no-icon validate-field mb-4">
-                <input type="text" class="form-control validate-text" value="{{ $data->date_of_birth }}"
-                    id="form3a" placeholder="Password" disabled>
-                <label for="form3a" class="color-highlight">Date Of Birth</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
-            </div>
-            <div class="input-style no-borders no-icon validate-field mb-4">
-                <input type="text" class="form-control validate-text" id="form4a" value="{{ $data->father_name }}"
-                    placeholder="Website" disabled>
-                <label for="form4a" class="color-highlight">Website</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
-            </div>
-            <div class="input-style no-borders no-icon validate-field mb-4">
-                <input type="text" class="form-control validate-text" id="form4a"
-                    value="{{ $data->mobile_number }}" placeholder="Phone" disabled>
-                <label for="form4aa" class="color-highlight">Phone</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
-            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Date Of birth :</strong></p>&nbsp;&nbsp; <p>{{ $students->date_of_birth ?? '' }}
+                                </p>
+                            </div>
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Mobile Number :</strong></p>&nbsp;&nbsp; <p>{{ $students->mobile_number ?? '' }}
+                                </p>
+                            </div>
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Class :</strong></p>&nbsp;&nbsp; <p>{{ $students->class ?? '' }}</p>
+                            </div>
+                        </div>
 
-            <div class="input-style no-borders no-icon validate-field mb-4">
-                <input type="text" class="form-control validate-text" id="form4a" value="{{ $data->class }}"
-                    placeholder="Phone" disabled>
-                <label for="form4aa" class="color-highlight">Phone</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
-            </div>
-
-            <div class="input-style no-borders no-icon validate-field mb-4">
-                <input type="text" class="form-control validate-text" id="form4a" value="{{ $data->section }}"
-                    placeholder="Phone" disabled>
-                <label for="form4aa" class="color-highlight">Phone</label>
-                <i class="fa fa-times disabled invalid color-red-dark"></i>
-                <i class="fa fa-check disabled valid color-green-dark"></i>
-                <em>(required)</em>
+                        <div class="row mb-3">
+                            <div class="col-md-4 d-flex">
+                                <p><strong>Section :</strong></p>&nbsp;&nbsp; <p>{{ $students->section ?? '' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
     </div>
-</div>
-@extends('frontend.includes.footer')
+    @if (isset($students))
+        <div class="card card-style">
+            <div class="card-header">
+                Billing
+            </div>
+            <div class="container mb-5">
+                <form id="stepForm" method="POST" action="{{ route('student-bill.store') }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="step" id="step2">
+                        <input type="hidden" value="{{$students->id}}" name="studentid">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No</th>
+                                    <th>Fee</th>
+                                    <th>Description</th>
+                                    <th>Late Fee</th>
+                                    <th>Sum Fee</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feeDetails">
+                                <!-- Dynamic rows will be added here -->
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-success add-row"><i class="fa fa-plus"
+                                aria-hidden="true"></i></button>
+                    </div>
+                    <div class="text-end mt-3">
+                        Total Sum: <span id="totalSum"></span>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 
-@extends('frontend.includes.foot')
+
+@endsection
+@section('script')
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-        var studentData = {!! json_encode($studentData) !!};
+        $(document).ready(function() {
+            // Initialize Select2 with AJAX support
+            $('.js-example-basic-single').select2({
+                ajax: {
+                    url: '{{ route('student-bill.index') }}',
+                    type: 'GET',
+                    dataType: 'json',
+                    delay: 250, // Add a delay to avoid too many requests while typing
+                    processResults: function(data) {
+                        // Process the fetched data and return it in the format expected by Select2
+                        return {
+                            results: $.map(data.studentData, function(student) {
+                                return {
+                                    id: student.id,
+                                    text: student.student_name
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
 
-        // Clear existing options
-        document.getElementById('studentDropdown').innerHTML = '';
+            // Handle the change event when an option is selected
+            $('#studentSelect').on('change', function() {
+                var selectedStudentId = $(this).val();
+                // Make an AJAX call to fetch the details of the selected student
+                location.href = '{{ route('student-bill.edit', ':id') }}'.replace(':id', selectedStudentId);
+            });
+        });
 
-        // Append options dynamically
-        studentData.forEach(function(student) {
-            var anchor = document.createElement('a');
-            anchor.href = "{{ route('student-bill.edit', '') }}/" + student.id;
-            anchor.className = 'dropdown-item';
-            anchor.innerText = student.student_name;
+        $(document).ready(function() {
+            var currentStep = 1;
 
-            document.getElementById('studentDropdown').appendChild(anchor);
+            $(".next-step").click(function() {
+                $("#step" + currentStep).hide();
+                currentStep++;
+                $("#step" + currentStep).show();
+            });
+
+            $(".prev-step").click(function() {
+                $("#step" + currentStep).hide();
+                currentStep--;
+                $("#step" + currentStep).show();
+            });
+
+            // Dynamic row addition
+            var rowNumber = 1;
+            $(".add-row").click(function() {
+                var newRow = `
+                    <tr>
+                        <td>${rowNumber}</td>
+                        <td><input type="number" name="quantity[]" class="form-control fee"></td>
+                        <td><input type="text" name="desc" class="form-control month"></td>
+                        <td><input type="number" name="fee[]" class="form-control late-fee"></td>
+                        <td><input type="number" name="sum[]" class="form-control sum" readonly></td>
+                        <td><input type="hidden" name="student_id" class="form-control sum"></td>
+                        <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
+                    </tr>
+                `;
+                $("#feeDetails").append(newRow);
+                rowNumber++;
+            });
+
+            // Dynamic row removal
+            $("#feeDetails").on("click", ".remove-row", function() {
+                // Check if there is at least one row remaining before removal
+                if ($("#feeDetails tr").length > 1) {
+                    $(this).closest("tr").remove();
+                    // You may need to renumber the rows after removal
+                    updateSum();
+                } else {
+                    alert("At least one row must remain.");
+                }
+            });
+
+            // Update sum on input change
+            // Update sum on input change
+            $("#feeDetails").on("input", "input[name='fee[]'], input[name='late_fee[]'], input[name='sum[]']",
+                function() {
+                    updateSum();
+                    updateTotalSum();
+                });
+
+            // Function to update the sum
+            function updateSum() {
+                $("#feeDetails tr").each(function() {
+                    const fee = parseFloat($(this).find(".fee").val()) || 0;
+                    const lateFee = parseFloat($(this).find(".late-fee").val()) || 0;
+
+                    const sum = fee * lateFee;
+
+                    $(this).find(".sum").val(sum.toFixed(2));
+                });
+            }
+
+            // Function to update the total sum
+            function updateTotalSum() {
+                let totalSum = 0;
+
+                $("input[name='sum[]']").each(function() {
+                    const sum = parseFloat($(this).val()) || 0;
+                    totalSum += sum;
+                });
+
+                $("#totalSum").text(totalSum.toFixed(2));
+            }
         });
     </script>
 
+    <script>
+        // Update the hidden input value when the total sum changes
+        function updateTotalSum() {
+            var totalSumElement = document.getElementById('totalSum');
+            var totalSumInput = document.querySelector('input[name="total_sum"]');
 
+            if (totalSumElement && totalSumInput) {
+                totalSumInput.value = totalSumElement.textContent;
+            }
+        }
+
+        // Call the function when the sum changes (you need to call this in your existing code)
+        updateSum();
+
+        // Additional code to handle sum calculation and update
+        function updateSum() {
+            // Your existing code for sum calculation
+
+            // After updating the sum, call the function to update the hidden input
+            updateTotalSum();
+        }
+    </script>
+@endsection

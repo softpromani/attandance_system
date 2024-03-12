@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\StudentBill;
 use Illuminate\Http\Request;
 
 class StudentBillController extends Controller
@@ -12,9 +13,18 @@ class StudentBillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
 
+        if ($req->ajax() && $req->has('term')) {
+            $term = $req->input('term');
+
+            // Perform a search based on the student name
+            $students = Student::where('student_name', 'like', '%' . $term . '%')->get();
+
+            // Return the result as JSON
+            return response()->json(['studentData' => $students]);
+        }
         $studentData=Student::get();
         return view('backend.studentBill',compact('studentData'));
     }
@@ -26,7 +36,7 @@ class StudentBillController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -37,7 +47,25 @@ class StudentBillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'fee.*' => 'required|numeric',
+            'month.*' => 'required|string',
+            'late_fee.*' => 'required|numeric',
+            'sum_fee.*' => 'required|numeric',
+        ]);
+
+        foreach ($data['fee'] as $key => $fee) {
+            StudentBill::create([
+                'student_id'=>$request->studentid,
+                'fee' => $fee,
+                'desc' => $request->desc,
+                'late_fee' => $data['late_fee'][$key],
+                'sum_fee' => $data['sum_fee'][$key],
+                'total_fee' => $request->total_sum,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Data stored successfully');
     }
 
     /**
@@ -46,9 +74,9 @@ class StudentBillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+
     }
 
     /**
@@ -59,9 +87,7 @@ class StudentBillController extends Controller
      */
     public function edit($id)
     {
-         $data = Student::find($id);
-         $studentData=Student::get();
-        return  view('backend.studentBill',compact('data','studentData'));
+
 
     }
 
@@ -87,4 +113,17 @@ class StudentBillController extends Controller
     {
         //
     }
+    public function editBill($id)
+    {
+
+
+        $students = Student::find($id);
+        if (!$students) {
+            return response()->json(['error' => 'Student not found'], 404);
+        }
+                return  view('backend.studentBill',compact('students'));
+    }
+
+
+
 }

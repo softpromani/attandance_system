@@ -1,6 +1,6 @@
-@extends('frontend.includes.head')
-@extends('frontend.includes.loader')
-@extends('frontend.includes.footer')
+@extends('frontend.includes.main')
+@section('title', 'mark')
+@section('content')
 <div class="card card-style">
     <div class="content mb-0 ">
     <h3>Teacher Registration</h3>
@@ -20,7 +20,6 @@
     @error('f_name')
     <div class="alert alert-danger">{{ $message }}</div>
     @enderror
-    <label for="form1" class="color-highlight">Teacher First Name</label>
     <i class="fa fa-times disabled invalid color-red-dark"></i>
     <i class="fa fa-check disabled valid color-green-dark"></i>
     <em>(required)</em>
@@ -35,7 +34,39 @@
     <i class="fa fa-check disabled valid color-green-dark"></i>
     <em>(required)</em>
     </div>
-
+    <div class="input-style has-borders no-icon validate-field mb-4 col-sm-12">
+    <input type="email" name="email" value="{{$data->email ??""}}" class="form-control validate-text" id="form2" placeholder="Email">
+    @error('email')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <label for="form2" class="color-highlight">Teacher Last Name</label>
+    <i class="fa fa-times disabled invalid color-red-dark"></i>
+    <i class="fa fa-check disabled valid color-green-dark"></i>
+    <em>(required)</em>
+    </div>
+    @if(isset($data))
+    <div class="input-style has-borders no-icon validate-field mb-4 col-sm-12">
+    <input type="password" name="password" class="form-control validate-text" id="form2" placeholder="Password" disabled>
+    @error('password')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <label for="form2" class="color-highlight">Teacher Last Name</label>
+    <i class="fa fa-times disabled invalid color-red-dark"></i>
+    <i class="fa fa-check disabled valid color-green-dark"></i>
+    <em>(required)</em>
+    </div>
+@else
+<div class="input-style has-borders no-icon validate-field mb-4 col-sm-12">
+    <input type="password" name="password" class="form-control validate-text" id="form2" placeholder="Password">
+    @error('password')
+    <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
+    <label for="form2" class="color-highlight">Teacher Last Name</label>
+    <i class="fa fa-times disabled invalid color-red-dark"></i>
+    <i class="fa fa-check disabled valid color-green-dark"></i>
+    <em>(required)</em>
+    </div>
+    @endif
     <div class="input-style has-borders no-icon validate-field mb-4 col-sm-12">
     <input type="text" name="father_name" value="{{$data->fathers_name ??""}}" class="form-control validate-text" id="form3" placeholder="Teacher Father's Name">
     @error('father_name')
@@ -117,4 +148,4 @@
     </div>
 
     </div>
-@extends('frontend.includes.foot')
+@endsection
