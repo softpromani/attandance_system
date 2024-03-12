@@ -22,20 +22,19 @@
     <!-- BEGIN: Content-->
     <div class="page-content header-clear-small" style="height: 100vh;">
             {{-- @include('layout.breadcrumb') --}}
-            
-                @yield('content')
-            </div>
-        
-    <!-- END: Content-->
-    <!-- BEGIN: Footer-->
-    @include('frontend.includes.footer')
-    <!-- END: Footer-->
+            @yield('content')
+        </div>
 
-    <!-- BEGIN: script-->
-    @include('frontend.includes.foot')
+        <!-- END: Content-->
+        <!-- BEGIN: Footer-->
+        @include('frontend.includes.footer')
+        <!-- END: Footer-->
 
-    <!-- END: script-->
-    @yield('script')
+        <!-- BEGIN: script-->
+        @include('frontend.includes.foot')
+
+        <!-- END: script-->
+        @yield('script')
     </div>
 </body>
 <!-- END: Body-->

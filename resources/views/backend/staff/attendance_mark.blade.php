@@ -1,79 +1,60 @@
-@extends('frontend.includes.main')
-@section('title', 'mark')
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
 
-@section('content')
-<div class="page-content clear-medium ">
-  
-<div class="card card-style ">
-    <div class="content">
-    <style>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    <title>J.S.F. Academy | @yield('title')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('frontend/assets/images/collage/JFS.png') }}" style="border-radius: 25%;">
+    <link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/styles/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/fonts/css/fontawesome-all.min.css')}}">
+    {{-- <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js"> --}}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('frontend/assets/app/icons/icon-192x192.png')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+</head>
 
-#reader {
-  width: 500px;
-}
+<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
 
-.result {
-  background-color: green;
-  color: #fff;
-  padding: 20px;
-}
+    <div id="page">
+        @include('frontend.includes.header')
+        <div class="page-content ">
+            <div id="qr-reader" style="width:450px" ></div>
+            <div id="qr-reader-results"></div>
 
-.row {
-  display: flex;
-}
+        </div>
 
-#reader__scan_region {
-  background: white;
-}
+        @include('frontend.includes.footer')
 
-    </style>
-    
-
-<!-- QR SCANNER CODE BELOW  -->
-
-{{-- <div class="page-content clear-medium "> --}}
-  {{-- <div class="card card-style "> --}}
-{{-- <div class="container"> --}}
-  <div class="row">
-    <div class="col-sm-4">
-      <div id="reader"></div>
     </div>
-    <div class=" col-sm-4" style="padding: 30px">
-      <h4>Scan Result </h4>
-      <div id="result">
-        Result goes here
-      </div>
-    </div>
-  </div>
-{{-- </div> --}}
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-  {{-- </div> --}}
-{{-- </div> --}}
+    <script type="text/javascript" src="{{asset('frontend/assets/scripts/bootstrap.min.js')}}" defer=""></script>
+    <script type="text/javascript" src="{{asset('frontend/assets/scripts/custom.js')}}" defer=""></script>
+    <script>
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
 
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // Handle on success condition with the decoded message.
+                console.log(`Scan result ${decodedText}`, decodedResult);
+                window.location.href = decodedText;
+            }
+        }
 
-</div>
-</div>
-@endsection
-@section('script')
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", {
+                fps: 10,
+                qrbox: 250
+            });
+        html5QrcodeScanner.render(onScanSuccess);
+    </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.2.0/html5-qrcode.min.js"></script>
-<script>
-    // When scan is successful fucntion will produce data
-function onScanSuccess(qrCodeMessage) {
-  document.getElementById("result").innerHTML =
-    '<span class="result">' + qrCodeMessage + "</span>";
-}
-// When scan is unsuccessful fucntion will produce error message
-function onScanError(errorMessage) {
-  // Handle Scan Error
-}
-// Setting up Qr Scanner properties
-var html5QrCodeScanner = new Html5QrcodeScanner("reader", {
-  fps: 10,
-  qrbox: 200
-});
-// in
-html5QrCodeScanner.render(onScanSuccess, onScanError);
+</body>
 
-</script>
-@endsection
+</html>
