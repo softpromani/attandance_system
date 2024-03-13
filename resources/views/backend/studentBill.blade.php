@@ -72,10 +72,10 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No</th>
-                                    <th>Fee</th>
+                                    <th>Amount</th>
+                                    <th>Quantity</th>
                                     <th>Description</th>
-                                    <th>Late Fee</th>
-                                    <th>Sum Fee</th>
+                                    <th>Sum Amount</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -160,8 +160,8 @@
                     <tr>
                         <td>${rowNumber}</td>
                         <td><input type="number" name="quantity[]" class="form-control fee"></td>
-                        <td><input type="text" name="desc" class="form-control month"></td>
                         <td><input type="number" name="fee[]" class="form-control late-fee"></td>
+                        <td><input type="text" name="desc" class="form-control month"></td>
                         <td><input type="number" name="sum[]" class="form-control sum" readonly></td>
                         <td><input type="hidden" name="student_id" class="form-control sum"></td>
                         <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>

@@ -64,7 +64,7 @@
                             <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
-                                    <h3 class="color-white d-block pt-1">Present</h3>
+                                    <h3 class="color-white d-block pt-1">Student's Bill</h3>
                                 </div>
                                 <div class="card-bottom p-3">
                                     <h1 class="color-white mb-n1 font-28">35</h1>
@@ -88,6 +88,7 @@
                                 </div>
                             </div>
                     </div>
+
                 </div>
                 </a>
             </div>

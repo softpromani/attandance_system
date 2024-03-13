@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\StudentBill;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\View;
 
 class StudentBillController extends Controller
 {
@@ -36,7 +38,8 @@ class StudentBillController extends Controller
      */
     public function create()
     {
-
+        $bills=StudentBill::all();
+        return view('backend.studentsBill',['bills' => $bills]);
     }
 
     /**
@@ -59,8 +62,8 @@ class StudentBillController extends Controller
                 'student_id'=>$request->studentid,
                 'fee' => $fee,
                 'desc' => $request->desc,
-                'late_fee' => $data['late_fee'][$key],
-                'sum_fee' => $data['sum_fee'][$key],
+                'quantity' => $data['quantity'][$key],
+                'sum' => $data['sum'][$key],
                 'total_fee' => $request->total_sum,
             ]);
         }
@@ -74,8 +77,21 @@ class StudentBillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
+    //     $bill = StudentBill::findOrFail($id);
+
+    // // Generate HTML content for the bill
+    // DD($bill);
+    // $htmlContent = view('backend.studentBillPDF', compact('bill'))->render();
+
+    $bill = StudentBill::findOrFail($id);
+
+    // Generate HTML content for the bill
+    $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
+
+    return view('backend.studentBillPDF', ['bill' => $bill]);
+
 
     }
 

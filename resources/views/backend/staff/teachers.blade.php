@@ -33,7 +33,7 @@
         <th scope="row">{{$loop->index+1}}</th>
 
     <th scope="row">{{$dt->full_name}}</th>
-    <th scope="row">{{$dt->fathers_name}}</th>
+    <th scope="row">{{$dt->father_name}}</th>
     <th scope="row">{{$dt->dob}}</th>
     <th scope="row">{{$dt->mobile_number}}</th>
     <th scope="row">{{$dt->anniversary_date}}</th>

@@ -74,6 +74,19 @@
                         </a>
                     </div>
                     <div class="col-6 ps-2">
+                        <a href="{{route('student-bill.create')}}">
+                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Studdnt's Bill</h3>
+                                </div>
+                                <div class="card-bottom p-3">
+                                    <h1 class="color-white mb-n1 font-28">{{ $lv }}</h1>
+                                    <span class="color-white font-10 opacity-60">No new Meetings</span>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-6 ps-2">
                         <a href="{{ route('admin.leave-set-up.index') }}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
@@ -86,7 +99,7 @@
                                 </div>
                             </div>
                     </div>
-                   
+
                 </div>
                 </a>
             </div>

@@ -13,9 +13,6 @@ class Teacher extends Model
     protected $guarded=[];
     use SoftDeletes;
 
-    public function getFullNameAttribute()
-    {
-        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
-    }
+  
 
 }
