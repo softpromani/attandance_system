@@ -19,20 +19,16 @@
 
     <div id="page">
         @include('frontend.includes.header')
-        <div class="page-content ">
-            <div id="qr-reader" style="width:450px" ></div>
-            <div id="qr-reader-results"></div>
-
-        </div>
+        <h1>QR Scanner</h1>
+        <div id="qr-reader" style="width:500px"></div>
+        <div id="qr-reader-results"></div>
 
         @include('frontend.includes.footer')
 
     </div>
+    
     <script src="https://unpkg.com/html5-qrcode"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script type="text/javascript" src="{{asset('frontend/assets/scripts/bootstrap.min.js')}}" defer=""></script>
-    <script type="text/javascript" src="{{asset('frontend/assets/scripts/custom.js')}}" defer=""></script>
     <script>
         var resultContainer = document.getElementById('qr-reader-results');
         var lastResult, countResults = 0;
@@ -43,15 +39,11 @@
                 lastResult = decodedText;
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
-                window.location.href = decodedText;
             }
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
-            "qr-reader", {
-                fps: 10,
-                qrbox: 250
-            });
+            "qr-reader", { fps: 10, qrbox: 250 });
         html5QrcodeScanner.render(onScanSuccess);
     </script>
 
