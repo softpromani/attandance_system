@@ -15,7 +15,7 @@ class QRController extends Controller
      */
     public function index()
     {  
-         $qrDatas = QR::all();
+         $qrDatas = QR::paginate(10);
         return view('backend.admin.qr_generate',compact('qrDatas'));
     }
 
@@ -133,8 +133,32 @@ class QRController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'Status Updated Successfully');
-
-
-
     }
+
+
+    public function generateQR($id){
+        $qr = QR::findOrFail(decrypt($id));
+        if ($qr->is_active !== '1') {
+            return redirect()->route('admin.qr.index')->with('status', 'This QR status is not active');
+        }
+        $data = $qr->qr_code;
+            return view('backend.admin.print_qr',compact('data','qr'));
+    }
+
+    public function capture(Request $request)
+    {
+      $reqData = QR::active()->where('qr_code',$request->qrData)->first();
+      
+      if(auth()->check()){
+        return redirect()->route('Getlogin')->with('error','You are not Logged in');
+    } elseif(empty($reqData)){
+        return redirect()->back()->with('error','Invalid QR Code');
+    }
+    else{
+        return 'Attendance Mark Successfully';
+    }
+        
+    }
+    
+
 }

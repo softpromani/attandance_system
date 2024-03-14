@@ -11,4 +11,14 @@ class QR extends Model
     use HasFactory,SoftDeletes;
     protected $guarded = [];
     protected $table = 'qr';
+    protected $casts = [
+        'valid_from' => 'datetime',
+        'valid_to' => 'datetime',
+    ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', '1');
+    }
+
 }

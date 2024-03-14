@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('qr', function (Blueprint $table) {
             $table->id();
             $table->string('qr_code')->unique();
-            $table->dateTime('valid_from')->nullable();
-            $table->dateTime('valid_to')->nullable();
+            $table->dateTime('valid_from');
+            $table->dateTime('valid_to');
             $table->string('is_active')->default('1');
             $table->softDeletes();
             $table->timestamps();
