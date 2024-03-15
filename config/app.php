@@ -157,6 +157,7 @@ return [
     'providers' => [
 
         Spatie\Permission\PermissionServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
@@ -187,7 +188,6 @@ return [
         /*
          * Package Service Providers...
          */
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +212,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
     ])->toArray(),
 
 ];

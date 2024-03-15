@@ -11,7 +11,6 @@
                 class="rounded-circle"><span>{{ auth()->user()->name ?? '' }}</span>
         </a>
     @endif
-    @include('sweetalert::alert')
     </div>
 
     <div id="menu-settings" class="menu menu-box-bottom menu-box-detached">

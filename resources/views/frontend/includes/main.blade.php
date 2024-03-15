@@ -29,10 +29,10 @@
         <!-- BEGIN: Footer-->
         @include('frontend.includes.footer')
         <!-- END: Footer-->
-
+      
         <!-- BEGIN: script-->
         @include('frontend.includes.foot')
-
+        @include('sweetalert::alert')
         <!-- END: script-->
         @yield('script')
     </div>
