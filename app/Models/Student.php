@@ -12,9 +12,9 @@ class Student extends Model
     use HasFactory, SoftDeletes , HasRoles;
     protected $guarded = [];
 
-    public function studentBills()
+    public function fees()
     {
-        return $this->hasMany(StudentBill::class);
+        return $this->hasMany(Fee::class);
     }
 
 }

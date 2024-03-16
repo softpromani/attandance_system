@@ -7,7 +7,7 @@
     </div>
      <div class="text-end col">
         <a href="{{route('staff.student-bill.index')}}">
-        <button type="button" class="btn btn-success" title="Create QR"><i class="fas fa-qrcode"></i></button>
+        <button type="button" class="btn btn-success" title="Add Bill"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </a>
      </div>
     </div>
@@ -19,9 +19,7 @@
                 <thead>
                     <tr  style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
-                        <th scope="col" class="color-white">Student Name</th>
-                        <th scope="col" class="color-white">Quantiny</th>
-                        <th scope="col" class="color-white">Fee</th>
+                        <th scope="col" class="color-white">Ammount</th>
                         <th scope="col" class="color-white">Description</th>
                         <th scope="col" class="color-white">Action</th>
                     </tr>
@@ -30,28 +28,11 @@
                     @forelse ($bills as $bill)
                     <tr style="color:#2F539B;">
                         <th>{{ $loop->index + 1 }}</th>
-                        <th>{{$bill->student->student_name ??'' }}</th>
-                        <th>{{$bill->quantity??''}}</th>
-                        <th>{{ $bill->fee??'' }}</th>
+                        <th>{{$bill->amount ??'' }}</th>
                         <th>{{ $bill->desc??'' }}</th>
                         <th>
                             <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
                         </th>
-
-                    {{--  <th>
-                        <div class="d-flex">
-                            <a href="{{ route('admin.qr.edit',encrypt($bill->id)) }}" title="Edit"><i class="fa fa-edit me-2" style="color:blue; font-size:15px;"></i></a>
-                            <form action="{{route('admin.qr.destroy',$bill->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" style="border: none; background: none; " title="Delete">
-                                    <i class="fa fa-trash" style="color: red; font-size: 15px;"></i>
-                                </button>
-                            </form>
-
-                        </div>
-
-                    </th>  --}}
                     </tr>
                     @empty
                         <th style="color:red;text-align:center;">No Data Found</th>

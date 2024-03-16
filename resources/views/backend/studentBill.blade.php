@@ -183,8 +183,8 @@
                                 </select>
                             </td>
                             <td><input type="text" name="desc[]" class="form-control year"></td>
-                            <td><input type="number" name="late_fee[]" class="form-control year"></td>
-                            <td><input type="number" name="amount[]" class="form-control sum"></td>
+                            <td><input type="number" name="late_fee[]" class="form-control"></td>
+                            <td><input type="number" name="amount[]" class="form-control"></td>
                             <td><input type="hidden" name="student_id" class="form-control sum"></td>
                             <td><input type="hidden" name="totalsum" class="form-control sum"></td>
                             <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
@@ -208,7 +208,7 @@
 
                 // Update sum on input change
                 // Update sum on input change
-                $("#feeDetails").on("input", "input[name='fee[]'], input[name='late_fee[]'], input[name='sum[]']",
+                $("#feeDetails").on("input", "input[name='late_fee[]'],input[name='amount[]']",
                     function() {
                         updateSum();
                         updateTotalSum();
@@ -217,10 +217,10 @@
                 // Function to update the sum
                 function updateSum() {
                     $("#feeDetails tr").each(function() {
-                        const fee = parseFloat($(this).find(".fee").val()) || 0;
-                        const lateFee = parseFloat($(this).find(".late-fee").val()) || 0;
+                        const fee = parseFloat($(this).find(".late_fee").val()) || 0;
+                        const lateFee = parseFloat($(this).find(".amount").val()) || 0;
 
-                        const sum = fee * lateFee;
+                        const sum =  late_fee + amount;
 
                         $(this).find(".sum").val(sum.toFixed(2));
                     });

@@ -10,6 +10,7 @@ use App\Models\StudentBill;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
 class StudentBillController extends Controller
@@ -63,7 +64,7 @@ class StudentBillController extends Controller
             'year.*' => 'required',
             'totalsum.*' => 'required',
         ]);
-        // dd($request);
+        dd($request);
         $fee = Fee::create(['total_fee'=>$request->totalsum,
         'student_id'=>$request->studentid,
         ]);
@@ -100,18 +101,27 @@ class StudentBillController extends Controller
      */
     public function show($id)
     {
-    //     $bill = StudentBill::findOrFail($id);
 
-    // // Generate HTML content for the bill
-    // DD($bill);
-    // $htmlContent = view('backend.studentBillPDF', compact('bill'))->render();
+        // dd($id);
+            // Retrieve the student along with their fee details and sum of fees paid
+            $student = Student::with(['fees' => function ($query) {
+                $query->select('student_id', DB::raw('SUM(total_fee) as total_paid'))
+                      ->groupBy('student_id');
+            }])->findOrFail($id);
+            $bill = FeeDetail::findOrFail($id);
 
-    // $bill = StudentBill::findOrFail($id);
+return  view('backend.studentBillPDF', compact('student','bill'));
 
     // Generate HTML content for the bill
-    // $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
+    // DD($bill);
+    $htmlContent = view('backend.studentBillPDF', compact('student'))->render();
 
-    // return view('backend.studentBillPDF', ['bill' => $bill]);
+
+
+    // Generate HTML content for the bill
+    $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
+
+    return view('backend.studentBillPDF', ['bill' => $bill]);
 
 
     }

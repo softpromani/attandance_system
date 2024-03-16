@@ -47,7 +47,6 @@ class TeacherLeaveController extends Controller
                 'description'=>'required',
                 'start_date'=>'required',
                 'end_date'=>'required',
-                'file'=>'required',
 
             ]
         );
@@ -67,9 +66,9 @@ class TeacherLeaveController extends Controller
 
         ];
         $teacherleave = TeacherLeave::create($data);
-        toast('Teacher leave created sucessfully','success');
 
-        return redirect()->route('staff.teacher-leaves.create', compact('teacherleave'));
+
+        return redirect()->route('staff.teacher-leaves.create', compact('teacherleave'))->with('Teacher leave created sucessfully','success');
     }
 
     /**
