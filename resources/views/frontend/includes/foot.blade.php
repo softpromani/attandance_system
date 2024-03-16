@@ -6,7 +6,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript" src="{{asset('frontend/assets/scripts/sweetalert2.all.min.js')}}" defer=""></script>
-
+<script>
+   $(document).ready(function() {
+  $(".notification-drop .item").on('click',function() {
+    $(this).find('ul').toggle();
+  });
+});
+</script>
 
 <script>
     // $(document).ready(function() {

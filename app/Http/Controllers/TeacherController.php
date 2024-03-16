@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Action;
+use App\Events\DashboardNotificationEvent;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,9 +53,13 @@ class TeacherController extends Controller
          'mobile_number'=>$request->number,
          'anniversary_date'=>$request->anniversary_date,
          'joining_date'=>$request->joining_date,
-        'teacher_image' => $pathToStore,
+        'teacher_image' => $pathToStore??'',
     ]);
-    $res->assignRole('staff'); 
+    $res->assignRole('staff');
+    if($res){
+        event(new DashboardNotificationEvent($res));
+        event(new Action($res)); 
+      }
         if($res)
         {
             return redirect()->route('staff.teacherRegisterData');
