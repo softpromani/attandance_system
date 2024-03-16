@@ -20,7 +20,7 @@
     <!-- END: Header-->
 
     <!-- BEGIN: Content-->
-    <div class="page-content header-clear-small" style="height: 100vh;">
+    <div class="page-content " style="height: 100vh;">
             {{-- @include('layout.breadcrumb') --}}
             @yield('content')
         </div>

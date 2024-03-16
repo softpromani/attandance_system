@@ -7,12 +7,7 @@
 
     <ul class="notification-drop">
         <li class="item">
-          <i class="fa fa-bell-o notification-bell" aria-hidden="true"></i> <span class="btn__badge badge badge-light pulse-button ">6</span>     
-          <ul>
-            <li>First Item</li>
-            <li>Second Item</li>
-            <li>Third Item</li>
-          </ul>
+          <i class="fa fa-bell-o notification-bell" aria-hidden="true"></i> <span class="btn__badge badge badge-light pulse-button ">6</span> 
         </li>
       </ul>
         {{-- <a href="#"><i class="fa fa-bell"></i><span>Notification</span></a>  --}}

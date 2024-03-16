@@ -67,16 +67,26 @@ class StudentBillController extends Controller
         $fee = Fee::create(['total_fee'=>$request->totalsum,
         'student_id'=>$request->studentid,
         ]);
-
-        foreach ($data['amount'] as $key => $fee) {
-            FeeDetail::create([
-                'amount' => $fee,
+        // dd($fee->id);
+        // foreach ($data['amount'] as $key => $fee) {
+        //     FeeDetail::create([
+        //         'amount' => $fee,
+        //         'desc' => $data['desc'][$key],
+        //         'year' => $data['year'][$key],
+        //         'late_fee' => $data['late_fee'][$key],
+        //         'month' => $data['month'][$key],
+        //         'fee_id'=> $fee->id
+        //     ]);
+        foreach ($data['amount'] as $key => $amount) {
+            $feeDetail = FeeDetail::create([
+                'amount' => $amount,
                 'desc' => $data['desc'][$key],
                 'year' => $data['year'][$key],
                 'late_fee' => $data['late_fee'][$key],
                 'month' => $data['month'][$key],
-                'fee_id'=> $fee->id
+                'fee_id' => $fee->id // Use the ID of the newly created fee
             ]);
+
         }
 
         return redirect()->back()->with('success', 'Data stored successfully');

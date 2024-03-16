@@ -1,12 +1,9 @@
 @extends('frontend.includes.main')
 @section('content')
-
-    {{-- <div id="preloader">
-        <div class="spinner-border color-highlight" role="status"></div>
-    </div> --}}
     <div id="page">
         <div class="page-content">
-            <div class="content mt-0">
+            <div class="content">
+                <p id="demo" style="color:red;display: inline;">Loading....</p>
                 <div class="row mb-n3">
                     <div class="col-6 pe-2">
                         <a href="{{ route('staff.teacherRegisterData') }}">
@@ -108,4 +105,29 @@
     </div>
     @endsection
     @section('script')
-    @endsection
+    <script>
+        // Call getLocation when the page is loaded
+        window.onload = function() {
+            getLocation();
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+            // Log latitude and longitude to the console
+            // console.log("Latitude:", latitude);
+            // console.log("Longitude:", longitude);
+        }
+    </script>
+        @endsection

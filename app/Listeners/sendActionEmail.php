@@ -7,6 +7,7 @@ use App\Mail\ActionMail;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class sendActionEmail
@@ -31,6 +32,8 @@ class sendActionEmail
     {
         $user = $event->user;
         $data = User::where('id',$user->user_id)->first();
+        
+        Log::info('listener data: ' . json_encode($data));
             Mail::to($data->email)->send(new ActionMail($user));
     }
 }

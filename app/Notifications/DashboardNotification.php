@@ -59,11 +59,9 @@ class DashboardNotification extends Notification
     public function toArray($notifiable)
     {
         $user = $this->user;
-        dd($user);
-        Log::info('notiUser data: ' . json_encode($user));
 
             return [
-                'name' => $user->name,
+                'name' => $user->student_name,
                 'id'=>$user->registration_number,
                 'type'=>'success'
             ];

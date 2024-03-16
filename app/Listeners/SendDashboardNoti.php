@@ -3,12 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\DashboardNotificationEvent;
+use App\Notifications\DashboardNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
-
 
 class SendDashboardNoti
 {
@@ -17,10 +17,9 @@ class SendDashboardNoti
      *
      * @return void
      */
-    public $teacher;
-    public function __construct($teacher)
+    public function __construct()
     {
-        $this->teacher = $teacher;
+        //
     }
 
     /**
@@ -31,12 +30,12 @@ class SendDashboardNoti
      */
     public function handle(DashboardNotificationEvent $event)
     {
+        Log::info('event data: ' . json_encode($event));
         $adminRole = Role::where('name','admin')->first();
        
         if ($adminRole) {
-        //    $adminUsers = $adminRole->teacher;
-           Log::info('role data: ' . json_encode($adminRole));
-           Notification::send($adminRole, new ($event->teacher));
+           $adminUsers = $adminRole->Users;
+           Notification::send($adminUsers, new DashboardNotification($event->teacher));
        }
     }
 }

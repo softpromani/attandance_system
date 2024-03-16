@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class Action
 {
@@ -24,6 +25,7 @@ class Action
     public function __construct($user)
     {
         $this->user = $user;
+        Log::info('event data: ' . json_encode($user));
     }
 
     /**

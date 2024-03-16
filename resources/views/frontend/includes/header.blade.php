@@ -1,4 +1,4 @@
-<header class="py-3 bg-light mb-2 border-bottom" >
+<header class="py-2 bg-light mb-0 border-bottom">
     <div class="container-fluid d-grid " style="grid-template-columns: 1fr 5fr;">
 
         <a href="{{route('admin.backendAdminPage')}}" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none " >

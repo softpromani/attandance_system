@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ActionMail extends Mailable
 {
@@ -23,6 +24,8 @@ class ActionMail extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+        
+        Log::info('Mail data: ' . json_encode($user));
     }
 
     /**
@@ -45,7 +48,7 @@ class ActionMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emailView.action_mail',
+            view: 'backend.emailView.action_mail',
             with: ['email_temp'=>$this->user,
             ]
         );
