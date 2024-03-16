@@ -58,7 +58,7 @@
                                         <div class="col-sm-2">
                                             <a href="{{ route('staff.generate_qr', encrypt($qr->id)) }}" id="printButton" target="_blank" class="btn btn-link p-0">
                                                 <i class="fa fa-print" aria-hidden="true"></i>
-                                            </a>                                            
+                                            </a>
                                         </div>
                                     </div>
 
@@ -76,7 +76,7 @@
                     @endif
 
                 </div>
-                
+
             </div>
         </div>
     </div>
