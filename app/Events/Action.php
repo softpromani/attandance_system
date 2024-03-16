@@ -25,7 +25,6 @@ class Action
     public function __construct($user)
     {
         $this->user = $user;
-        Log::info('event data: ' . json_encode($user));
     }
 
     /**

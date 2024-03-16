@@ -31,9 +31,6 @@ class sendActionEmail
     public function handle(Action $event)
     {
         $user = $event->user;
-        $data = User::where('id',$user->user_id)->first();
-        
-        Log::info('listener data: ' . json_encode($data));
-            Mail::to($data->email)->send(new ActionMail($user));
+            Mail::to($user->email)->send(new ActionMail($user));
     }
 }

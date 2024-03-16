@@ -25,7 +25,6 @@ class ActionMail extends Mailable
     {
         $this->user = $user;
         
-        Log::info('Mail data: ' . json_encode($user));
     }
 
     /**
