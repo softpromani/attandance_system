@@ -9,14 +9,14 @@
 
 
 <script>
-    // $(document).ready(function() {
-    //     if (feather) {
-    //         feather.replace({
-    //             width: 14,
-    //             height: 14
-    //         });
-    //     }
-    // });
+    {{--  $(document).ready(function() {
+        if (feather) {
+            feather.replace({
+                width: 14,
+                height: 14
+            });
+        }
+    });  --}}
     // success message popup notification
 
     @if (session()->has('success'))

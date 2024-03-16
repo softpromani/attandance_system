@@ -11,4 +11,10 @@ class Student extends Model
 {
     use HasFactory, SoftDeletes , HasRoles;
     protected $guarded = [];
+
+    public function studentBills()
+    {
+        return $this->hasMany(StudentBill::class);
+    }
+
 }
