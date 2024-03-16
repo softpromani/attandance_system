@@ -15,7 +15,7 @@ class StudentController extends Controller
     public function index()
     {
        $students = Student::get();
-       return view('backend.staff.studentregister', compact('students'));
+       return view('backend.staff.studentsshow', compact('students'));
     }
 
     /**
@@ -25,8 +25,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-
-    }
+        return view('backend.staff.studentregister');
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -137,7 +137,7 @@ class StudentController extends Controller
         ];
         $student=Student::find($id)->update($data);
         // dd($student);
-        
+
         return redirect()->route('student.student.index');
     }
 
@@ -152,7 +152,7 @@ class StudentController extends Controller
         // dd($id);
         $student=Student::find($id)->delete();
         // dd($student);
-        
+
         toast('Student Deleted Sucessfully','success');
         return redirect()->back();
     }
