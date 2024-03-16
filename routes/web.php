@@ -27,7 +27,6 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::get('edit-staff/{id}', [AuthController::class, 'editStaff'])->name('editStaff');
     Route::get('edit-password/{id}', [AuthController::class, 'editPassword'])->name('editPassword');
     Route::post('/change-password', [AuthController::class,'changePassword'])->name('change.password');
-
     Route::post('update-staff-data/{id}', [AuthController::class, 'staffUpdateData'])->name('updateStaff');
     Route::get('Dashboard',[AuthController::class,'backendLoginPage'])->name('backendAdminPage');
     Route::resource('leave-set-up',LeaveSetUpController::class);
@@ -48,7 +47,6 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth:web'],fun
     Route::get('/update-location', [AttendanceController::class, 'updateLocation']);
     Route::get('qr-generate/{id}',[QRController::class,'generateQR'])->name('generate_qr');
     Route::get('cpr',[QRController::class,'capture']);
-    Route::resource('student-bill',StudentBillController::class);
     Route::resource('student-bill',StudentBillController::class);
     Route::get('student-bill/edit/{id}', [StudentBillController::class,'editBill'])->name('student-bill.edit');
 });
