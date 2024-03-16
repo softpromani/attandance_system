@@ -30,7 +30,7 @@ class TeacherController extends Controller
             'password' => 'required|string|min:8', // Adjust the minimum length as needed
             'email' => 'required|email|unique:users,email|max:255',
         ]);
-       
+
         if($request->hasFile('file'))
         {
            $pathToStore=$request->file->store('teacher','public');
@@ -52,7 +52,7 @@ class TeacherController extends Controller
          'mobile_number'=>$request->number,
          'anniversary_date'=>$request->anniversary_date,
          'joining_date'=>$request->joining_date,
-        'teacher_image' => $pathToStore??'',
+        'teacher_image' =>$pathToStore??'',
     ]);
     $res->assignRole('staff');
         if($res)

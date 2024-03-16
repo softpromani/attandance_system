@@ -74,7 +74,7 @@
                         </a>
                     </div>
                     <div class="col-6 ps-2">
-                        <a href="{{route('student-bill.create')}}">
+                        <a href="{{route('staff.student-bill.create')}}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">

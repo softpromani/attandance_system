@@ -6,7 +6,7 @@
     <h2 class="">Student Bill</h2>
     </div>
      <div class="text-end col">
-        <a href="{{route('student-bill.index')}}">
+        <a href="{{route('staff.student-bill.index')}}">
         <button type="button" class="btn btn-success" title="Create QR"><i class="fas fa-qrcode"></i></button>
         </a>
      </div>
@@ -35,7 +35,7 @@
                         <th>{{ $bill->fee??'' }}</th>
                         <th>{{ $bill->desc??'' }}</th>
                         <th>
-                            <a href="{{ route('student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
+                            <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
                         </th>
 
                     {{--  <th>

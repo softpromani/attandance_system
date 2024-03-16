@@ -63,7 +63,7 @@
                 Billing
             </div>
             <div class="container mb-5">
-                <form id="stepForm" method="POST" action="{{ route('student-bill.store') }}"
+                <form id="stepForm" method="POST" action="{{ route('staff.student-bill.store') }}"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="step" id="step2">
@@ -72,10 +72,11 @@
                             <thead>
                                 <tr>
                                     <th>Sr. No</th>
-                                    <th>Amount</th>
-                                    <th>Quantity</th>
+                                    <th>Year</th>
+                                    <th>Month</th>
                                     <th>Description</th>
-                                    <th>Sum Amount</th>
+                                    <th>Late Fee</th>
+                                    <th>Amount</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -111,7 +112,7 @@
             // Initialize Select2 with AJAX support
             $('.js-example-basic-single').select2({
                 ajax: {
-                    url: '{{ route('student-bill.index') }}',
+                    url: '{{ route('staff.student-bill.index') }}',
                     type: 'GET',
                     dataType: 'json',
                     delay: 250, // Add a delay to avoid too many requests while typing
@@ -134,94 +135,116 @@
             $('#studentSelect').on('change', function() {
                 var selectedStudentId = $(this).val();
                 // Make an AJAX call to fetch the details of the selected student
-                location.href = '{{ route('student-bill.edit', ':id') }}'.replace(':id', selectedStudentId);
+                location.href = '{{ route('staff.student-bill.edit', ':id') }}'.replace(':id', selectedStudentId);
             });
         });
 
-        $(document).ready(function() {
-            var currentStep = 1;
+            $(document).ready(function() {
+                var currentStep = 1;
 
-            $(".next-step").click(function() {
-                $("#step" + currentStep).hide();
-                currentStep++;
-                $("#step" + currentStep).show();
-            });
+                $(".next-step").click(function() {
+                    $("#step" + currentStep).hide();
+                    currentStep++;
+                    $("#step" + currentStep).show();
+                });
 
-            $(".prev-step").click(function() {
-                $("#step" + currentStep).hide();
-                currentStep--;
-                $("#step" + currentStep).show();
-            });
+                $(".prev-step").click(function() {
+                    $("#step" + currentStep).hide();
+                    currentStep--;
+                    $("#step" + currentStep).show();
+                });
 
-            // Dynamic row addition
-            var rowNumber = 1;
-            $(".add-row").click(function() {
-                var newRow = `
-                    <tr>
-                        <td>${rowNumber}</td>
-                        <td><input type="number" name="quantity[]" class="form-control fee"></td>
-                        <td><input type="number" name="fee[]" class="form-control late-fee"></td>
-                        <td><input type="text" name="desc" class="form-control month"></td>
-                        <td><input type="number" name="sum[]" class="form-control sum" readonly></td>
-                        <td><input type="hidden" name="student_id" class="form-control sum"></td>
-                        <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
-                    </tr>
-                `;
-                $("#feeDetails").append(newRow);
-                rowNumber++;
-            });
+                // Dynamic row addition
+                var rowNumber = 1;
+                $(".add-row").click(function() {
+                    var newRow = `
+                        <tr>
+                            <td>${rowNumber}</td>
+                            <td>
+                                <select name="year[]" class="form-control year">
+                                    <option value="">Select Year</option>
+                                    @isset($year)
+                                    @foreach($year as $yr)
+                                    <option value="{{ $yr->id }}">{{ $yr->year}}</option>
+                                    @endforeach
+                                    @endisset
 
-            // Dynamic row removal
-            $("#feeDetails").on("click", ".remove-row", function() {
-                // Check if there is at least one row remaining before removal
-                if ($("#feeDetails tr").length > 1) {
-                    $(this).closest("tr").remove();
-                    // You may need to renumber the rows after removal
-                    updateSum();
-                } else {
-                    alert("At least one row must remain.");
+                                </select>
+                            </td>
+                            <td>
+                                <select name="month[]" class="form-control month">
+                                    <option value="" >Select Month</option>
+                                    @isset($months)
+                                    @foreach($months as $month)
+                                    <option value="{{ $month->id }}">{{ $month->month }}</option>
+                                    @endforeach
+                                    @endisset
+
+                                </select>
+                            </td>
+                            <td><input type="text" name="desc[]" class="form-control year"></td>
+                            <td><input type="number" name="late_fee[]" class="form-control year"></td>
+                            <td><input type="number" name="amount[]" class="form-control sum"></td>
+                            <td><input type="hidden" name="student_id" class="form-control sum"></td>
+                            <td><input type="hidden" name="totalsum" class="form-control sum"></td>
+                            <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
+                        </tr>
+                    `;
+                    $("#feeDetails").append(newRow);
+                    rowNumber++;
+                });
+
+                // Dynamic row removal
+                $("#feeDetails").on("click", ".remove-row", function() {
+                    // Check if there is at least one row remaining before removal
+                    if ($("#feeDetails tr").length > 1) {
+                        $(this).closest("tr").remove();
+                        // You may need to renumber the rows after removal
+                        updateSum();
+                    } else {
+                        alert("At least one row must remain.");
+                    }
+                });
+
+                // Update sum on input change
+                // Update sum on input change
+                $("#feeDetails").on("input", "input[name='fee[]'], input[name='late_fee[]'], input[name='sum[]']",
+                    function() {
+                        updateSum();
+                        updateTotalSum();
+                    });
+
+                // Function to update the sum
+                function updateSum() {
+                    $("#feeDetails tr").each(function() {
+                        const fee = parseFloat($(this).find(".fee").val()) || 0;
+                        const lateFee = parseFloat($(this).find(".late-fee").val()) || 0;
+
+                        const sum = fee * lateFee;
+
+                        $(this).find(".sum").val(sum.toFixed(2));
+                    });
+                }
+
+                // Function to update the total sum
+                function updateTotalSum() {
+                    let totalSum = 0;
+
+                    $("input[name='amount[]']").each(function() {
+                        const sum = parseFloat($(this).val()) || 0;
+                        totalSum += sum;
+                    });
+
+                    $("#totalSum").text(totalSum.toFixed(2));
                 }
             });
-
-            // Update sum on input change
-            // Update sum on input change
-            $("#feeDetails").on("input", "input[name='fee[]'], input[name='late_fee[]'], input[name='sum[]']",
-                function() {
-                    updateSum();
-                    updateTotalSum();
-                });
-
-            // Function to update the sum
-            function updateSum() {
-                $("#feeDetails tr").each(function() {
-                    const fee = parseFloat($(this).find(".fee").val()) || 0;
-                    const lateFee = parseFloat($(this).find(".late-fee").val()) || 0;
-
-                    const sum = fee * lateFee;
-
-                    $(this).find(".sum").val(sum.toFixed(2));
-                });
-            }
-
-            // Function to update the total sum
-            function updateTotalSum() {
-                let totalSum = 0;
-
-                $("input[name='sum[]']").each(function() {
-                    const sum = parseFloat($(this).val()) || 0;
-                    totalSum += sum;
-                });
-
-                $("#totalSum").text(totalSum.toFixed(2));
-            }
-        });
     </script>
 
     <script>
         // Update the hidden input value when the total sum changes
         function updateTotalSum() {
             var totalSumElement = document.getElementById('totalSum');
-            var totalSumInput = document.querySelector('input[name="total_sum"]');
+            var totalSumInput = document.querySelector('input[name="amount"]');
 
             if (totalSumElement && totalSumInput) {
                 totalSumInput.value = totalSumElement.textContent;

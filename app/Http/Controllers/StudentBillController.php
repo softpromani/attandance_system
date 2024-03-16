@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fee;
+use App\Models\FeeDetail;
+use App\Models\Month;
 use App\Models\Student;
 use App\Models\StudentBill;
+use App\Models\Year;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\View;
@@ -17,7 +21,6 @@ class StudentBillController extends Controller
      */
     public function index(Request $req)
     {
-
         if ($req->ajax() && $req->has('term')) {
             $term = $req->input('term');
 
@@ -27,8 +30,9 @@ class StudentBillController extends Controller
             // Return the result as JSON
             return response()->json(['studentData' => $students]);
         }
+
         $studentData=Student::get();
-        return view('backend.studentBill',compact('studentData'));
+        return view('backend.studentBill', compact('studentData'));
     }
 
     /**
@@ -38,7 +42,7 @@ class StudentBillController extends Controller
      */
     public function create()
     {
-        $bills=StudentBill::all();
+        $bills=FeeDetail::all();
         return view('backend.studentsBill',['bills' => $bills]);
     }
 
@@ -50,21 +54,28 @@ class StudentBillController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->validate([
-            'fee.*' => 'required|numeric',
-            'month.*' => 'required|string',
+            'amount.*' => 'required|numeric',
+            'month.*' => 'required',
             'late_fee.*' => 'required|numeric',
-            'sum_fee.*' => 'required|numeric',
+            'desc.*' => 'required',
+            'year.*' => 'required',
+            'totalsum.*' => 'required',
+        ]);
+        // dd($request);
+        $fee = Fee::create(['total_fee'=>$request->totalsum,
+        'student_id'=>$request->studentid,
         ]);
 
-        foreach ($data['fee'] as $key => $fee) {
-            StudentBill::create([
-                'student_id'=>$request->studentid,
-                'fee' => $fee,
-                'desc' => $request->desc,
-                'quantity' => $data['quantity'][$key],
-                'sum' => $data['sum'][$key],
-                'total_fee' => $request->total_sum,
+        foreach ($data['amount'] as $key => $fee) {
+            FeeDetail::create([
+                'amount' => $fee,
+                'desc' => $data['desc'][$key],
+                'year' => $data['year'][$key],
+                'late_fee' => $data['late_fee'][$key],
+                'month' => $data['month'][$key],
+                'fee_id'=> $fee->id
             ]);
         }
 
@@ -85,12 +96,12 @@ class StudentBillController extends Controller
     // DD($bill);
     // $htmlContent = view('backend.studentBillPDF', compact('bill'))->render();
 
-    $bill = StudentBill::findOrFail($id);
+    // $bill = StudentBill::findOrFail($id);
 
     // Generate HTML content for the bill
-    $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
+    // $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
 
-    return view('backend.studentBillPDF', ['bill' => $bill]);
+    // return view('backend.studentBillPDF', ['bill' => $bill]);
 
 
     }
@@ -132,14 +143,19 @@ class StudentBillController extends Controller
     public function editBill($id)
     {
 
-
+        $months=Month::get();
+        $year=Year::get();
         $students = Student::find($id);
         if (!$students) {
             return response()->json(['error' => 'Student not found'], 404);
         }
-                return  view('backend.studentBill',compact('students'));
+                return  view('backend.studentBill',compact('students','months','year'));
     }
 
-
+    public function months()
+    {
+        $month=Month::get();
+        dd($month);
+    }
 
 }
