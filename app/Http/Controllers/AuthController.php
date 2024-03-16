@@ -36,7 +36,7 @@ class AuthController extends Controller
 
     public function backendLoginPage()
     {
-        $teacher=Teacher::all();
+        $teacher=User::all();
         $student=Student::get();
         $leave=LeaveSetup::get();
         $stdnt=$student->count();
@@ -110,8 +110,8 @@ class AuthController extends Controller
         $user->update([
             'password' => Hash::make($request->new_password),
         ]);
-        Auth::logout();
-        return redirect()->route('Getlogin')->with('success', 'Password changed successfully');
+        Auth::logout()->with('success', 'Password changed successfully');
+        // return redirect()->route('Getlogin');
     } else {
         return redirect()->back()->withErrors(['current_password' => 'Current password is incorrect']);
     }

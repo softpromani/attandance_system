@@ -50,7 +50,6 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth:web'],fun
     Route::get('qr-generate/{id}',[QRController::class,'generateQR'])->name('generate_qr');
     Route::get('cpr/{id}',[QRController::class,'capture']);
     Route::resource('student-bill',StudentBillController::class);
-    Route::resource('student-bill',StudentBillController::class);
     Route::get('student-bill/edit/{id}', [StudentBillController::class,'editBill'])->name('student-bill.edit');
     Route::resource('teacher-leaves',TeacherLeaveController::class);
 });

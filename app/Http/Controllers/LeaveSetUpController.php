@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LeaveSetup;
+use App\Models\LeaveType;
 use Illuminate\Http\Request;
 
 class LeaveSetUpController extends Controller
@@ -26,7 +27,7 @@ class LeaveSetUpController extends Controller
      */
     public function create()
     {
-        //
+            return view('backend.admin.createLeave');
     }
 
     /**
@@ -40,16 +41,16 @@ class LeaveSetUpController extends Controller
         // dd($request);
         $request->validate(
             [
-                'type'=>'required',
+                'type'=>'required|unique:table,column,except,id',
                 'year'=>'required',
                 'paid_leave'=>'required',
                 'unpaid_leave'=>'required',
                ]
         );
-
+    $leave=LeaveType::get();
         $data =LeaveSetup::create( [
-            //Database column_name => Form field name
-            'type'=>$request->type,
+
+            'type'=>$leave,
             'years' => $request->year,
             'unpaid_leave' => $request->unpaid_leave,
             'paid_leave' => $request->paid_leave,
@@ -89,7 +90,7 @@ class LeaveSetUpController extends Controller
         $lvdata=LeaveSetup::find($id);
         // dd($lvdata);
         $leave=LeaveSetup::paginate(5);
-        return view('backend.admin.leaveSetUp',compact('lvdata','leave'));
+        return view('backend.admin.createLeave',compact('lvdata','leave'));
         dd($lvdata);
     }
 
