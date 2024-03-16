@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\LeaveSetUpController;
 use App\Http\Controllers\QRController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherLeaveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,9 +51,12 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     Route::post('teacher-delete-data/{id}',[TeacherController::class,'teacherDeleteData'])->name('teacherDeleteData');
     Route::get('teacher-count',[TeacherController::class,'teacherCount'])->name('teacherCount');
     Route::get('/update-location', [AttendanceController::class, 'updateLocation']);
+    Route::resource('teacher-leaves',TeacherLeaveController::class);
 });
 Route::group([ 'prefix'=>'student','as'=>'student.', 'middleware' => 'auth'],function(){
     Route::resource('student',StudentController::class);
+    Route::get('bill',[BillController::class,'index'])->name('bills');
+    Route::resource('leave-set-up',LeaveSetUpController::class);
 });
 
 

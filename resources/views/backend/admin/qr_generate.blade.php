@@ -41,7 +41,7 @@
                     </th>
                     <th>
                         <div class="d-flex">
-                            <a href="{{ route('admin.qr.edit',encrypt($qr->id)) }}" title="Edit"><i class="fa fa-edit me-2" style="color:blue; font-size:15px;"></i></a> 
+                            <a href="{{ route('admin.qr.edit',encrypt($qr->id)) }}" title="Edit"><i class="fa fa-edit me-2" style="color:blue; font-size:15px;"></i></a>
                             <form action="{{route('admin.qr.destroy',$qr->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -51,13 +51,13 @@
                             </form>
 
                         </div>
-                       
+
                     </th>
                     </tr>
                     @empty
                         <th style="color:red;text-align:center;">No Data Found</th>
                     @endforelse
-                   
+
                 </tbody>
             </table>
             </div>
@@ -78,5 +78,5 @@
             });
         });
     });
-</script> 
+</script>
 @endsection
