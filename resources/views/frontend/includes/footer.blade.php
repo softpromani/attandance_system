@@ -17,7 +17,7 @@
       </ul>
         {{-- <a href="#"><i class="fa fa-bell"></i><span>Notification</span></a>  --}}
         <a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
-        <a href="#" class="d-block link-dark text-decoration-none " aria-expanded="false">
+        <a href="{{Route('admin.showStaff',auth()->user()->id)}}" class="d-block link-dark text-decoration-none " aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
                 class="rounded-circle"><span>{{ auth()->user()->name ?? '' }}</span>
         </a>

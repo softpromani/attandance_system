@@ -1,8 +1,7 @@
-@extends('frontend.includes.head')
-{{--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">  --}}
-
-@extends('frontend.includes.loader')
-@extends('frontend.includes.footer')
+@extends('frontend.includes.main')
+@section('title', 'mark')
+@section('content')
+<style></style>
 <div class="page-content clear-medium ">
 <div class="card card-style ">
     <div class="content">
@@ -11,7 +10,7 @@
         <a href="{{route('staff.TeacherRegester')}}"> <div class="text-end mb-2">
             <button type="button" class="btn btn-primary" title="Add Teacher"><i class="fas fa-chalkboard-teacher"></i></button>
         </div></a>
-    
+
     <div class="table-responsive">
     <table class="table table-borderless text-center rounded-sm shadow-l" >
     <thead>
@@ -34,7 +33,7 @@
         <th scope="row">{{$loop->index+1}}</th>
 
     <th scope="row">{{$dt->full_name}}</th>
-    <th scope="row">{{$dt->fathers_name}}</th>
+    <th scope="row">{{$dt->father_name}}</th>
     <th scope="row">{{$dt->dob}}</th>
     <th scope="row">{{$dt->mobile_number}}</th>
     <th scope="row">{{$dt->anniversary_date}}</th>
@@ -59,6 +58,8 @@
     </div>
     </div>
 </div>
+@endsection
+@section('script')
 <script>
 
     <script>
@@ -77,4 +78,4 @@
     </script>
 </script>
 
-@extends('frontend.includes.foot')
+@endsection
