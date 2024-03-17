@@ -4,6 +4,7 @@
     {{-- <a href="index-pages.html"><i class="fa fa-heart"></i><span>Pages</span></a> --}}
     <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Settings</span></a>
     @if (auth()->check())
+    @role('admin')
     <div class="notification-drop">
         <a href="{{ route('admin.index') }}" class="{{ request()->is('admin/Notifications') ? 'active-nav' : '' }}"> 
         <div class="py-2 py-sm-0"> 
@@ -12,9 +13,9 @@
                  <span class="btn__badge badge badge-light pulse-button ">{{ count(auth()->user()->unreadnotifications )}}</span> 
                 @endif
         </div><span>Notification</span> 
-</a>
-</div>
-        {{-- <a href="#"><i class="fa fa-bell"></i><span>Notification</span></a>  --}}
+        </a>
+        </div>
+        @endrole
         <a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
         <a href="{{Route('admin.showStaff',auth()->user()->id)}}" class="d-block link-dark text-decoration-none {{ request()->is('admin/show-staff/*') ? 'active-nav' : '' }}" aria-expanded="false">
             <img src="https://w7.pngwing.com/pngs/506/568/png-transparent-man-people-person-boy-glasses-icon.png" alt="mdo" width="32" height="32"
