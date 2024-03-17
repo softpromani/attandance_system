@@ -161,12 +161,7 @@ class QRController extends Controller
       $currentDateTime = now();
       $valid_from = $reqData->valid_from; 
       $valid_to = $reqData->valid_to; 
-
-
-      if(auth()->check()){
-        return redirect()->route('Getlogin')->with('error','You are not Logged in');
-    } 
-    elseif(!empty($currentDateTime->between($valid_from, $valid_to))){
+    if($currentDateTime->between($valid_from, $valid_to) == false){
         return redirect()->back()->with('error','Ops... This QR Code is Expired');
     }
     elseif(empty($reqData)){
@@ -175,7 +170,7 @@ class QRController extends Controller
     else{
        $attendance = Attendance::create([
         'qr_id'=>$reqData->id,
-        'teacher_id'=>$user->teacher_id,
+        'teacher_id'=>$user->id,
         'punching_time'=>$currentDateTime,
         'punching_location'=>'location',
         'status'=>'1',

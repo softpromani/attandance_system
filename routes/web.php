@@ -23,7 +23,8 @@ Route::get('sign-in', function () {
 });
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('Getlogin');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-
+//role:admin
+//role:staff
 Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('show-staff/{id}', [AuthController::class, 'showStaff'])->name('showStaff');
@@ -41,7 +42,7 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
 
 });
 
-Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth:web'],function(){
+Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],function(){
     Route::get('attendance-mark',[AttendanceController::class,'attendanceMark'])->name('attendanceMark');
     Route::get('teacher-register',[TeacherController::class,'teacherRegister'])->name('TeacherRegester');
     Route::post('store-teacher-register',[TeacherController::class,'storeTeacherRegister'])->name('storeTeacherRegister');

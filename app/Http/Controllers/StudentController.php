@@ -73,16 +73,13 @@ class StudentController extends Controller
             'student_image' => $path ?? null,
 
         ];
-       // dd($data);
-
-
         $student = Student::create($data);
         if($student){
             event(new DashboardNotificationEvent($student));
         }
-        toast('User created sucessfully','success');
+        // toast('User created sucessfully','success');
 
-        return redirect()->route('student.student.index', compact('student'));
+        return redirect()->route('student.student.index', compact('student'))->with('success','Student Created Successfully');
     }
 
     /**
