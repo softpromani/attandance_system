@@ -56,7 +56,7 @@
                 console.log(`Scan result ${decodedText}`, decodedResult);
                 // Extract the URL from the decodedResult object
                 let redirectUrl = decodedResult.result.text;
-                window.location.href = redirectUrl;
+                window.location.href = redirectUrl; 
             }   
         }
 

@@ -27,7 +27,6 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember_me)) {
 
-
             return redirect()->route('admin.backendAdminPage')->with('Success','Login Successfully');
         } else {
             return redirect()->back()->with('error', 'Invalid Username or Password !');
@@ -48,7 +47,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('Getlogin');
+        return redirect()->route('Getlogin')->with('success','You are Logout Successfully');
     }
 
     public function showStaff($id)
