@@ -4,6 +4,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\LeaveSetUpController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\QRController;
 use App\Http\Controllers\StudentBillController;
 use App\Http\Controllers\TeacherController;
@@ -34,6 +35,9 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::resource('leave-set-up',LeaveSetUpController::class);
     Route::resource('qr',QRController::class);
     Route::get('changeStatus/{id}',[QRController::class,'is_active']);
+    Route::post('mark-as-read',[NotificationController::class,'markRead'])->name('markread');
+    Route::get('Notifications',[NotificationController::class,'index'])->name('index');
+
 
 });
 

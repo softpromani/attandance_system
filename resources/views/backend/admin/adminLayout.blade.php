@@ -125,9 +125,16 @@
 
             document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
 
-            // Log latitude and longitude to the console
-            // console.log("Latitude:", latitude);
-            // console.log("Longitude:", longitude);
+            // var xhr = new XMLHttpRequest();
+            // xhr.open("get", "/cpr/"+[latitude,longitude], true);
+            // xhr.setRequestHeader("Content-Type", "application/json");
+
+            // var data = JSON.stringify({
+            //     latitude: latitude,
+            //     longitude: longitude
+            // });
+
+            //  xhr.send(data);
         }
     </script>
         @endsection

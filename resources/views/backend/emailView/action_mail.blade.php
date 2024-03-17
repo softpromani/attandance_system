@@ -45,19 +45,15 @@
         <!-- Header with Logo -->
         <div class="header">
             <!-- Logo -->
-           <img src=https://vajiram-prod.s3.ap-south-1.amazonaws.com/National_Assessment_and_Accreditation_Council_NAAC_656d79c7e8.jpeg alt="Company Logo" class="logo"> 
-            <h1>{{ env('APP_NAME') }}</h1>
+           <img src="{{ asset('frontend/assets/images/collage/coll_logo.png') }}" style="height: 100px; width:100px; border-radius:50%;" alt="School Logo" class="logo"> 
+            <h2>JSF Academy</h2>
         </div>
 
         <!-- Content -->
         <div class="content">
-            <p>{{ $email_temp->name }}</p>
-            <p>Grievance Raise Title</p>
-            <h5>Your Tracking Code </h5>
-                <p>Hello Mr/Mis </p>
-                <h4>Action Taken </h4>
-
-           
+           <h5>Hello Mr/Mis </h5> <p>{{ $email_temp->name }}</p>
+            <h5>Your Staff Id:  </h5><p>{{ $email_temp->teacher_id }}</p>
+            <h5>Create Your Own Password</h5><p><a href="https://www.google.com"></a></p>
         </div> 
 
         <!-- Footer -->

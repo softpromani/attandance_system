@@ -42,10 +42,10 @@
                                     </div>
                                 </th>
                                 <th>
-                                    <div class="d-flex row-2 m-2">
+                                    <div class=" row-2 m-2">
                                         <div class="col-sm-2">
                                             <a href="{{ route('admin.qr.edit', encrypt($qr->id)) }}" title="Edit"><i
-                                                    class="fa fa-edit " style="color:blue; font-size:15px;"></i></a>
+                                                    class="fa fa-edit " style="color:blue; font-size:20px;"></i></a>
                                         </div>
                                         <div class="col-sm-2">
                                             <form action="{{ route('admin.qr.destroy', $qr->id) }}" method="post">
@@ -53,14 +53,14 @@
                                                 @method('DELETE')
                                                 <button type="submit" style="border: none; background: none; "
                                                     title="Delete">
-                                                    <i class="fa fa-trash" style="color: red; font-size: 15px;"></i>
+                                                    <i class="fa fa-trash" style="color: red; font-size: 20px;"></i>
                                                 </button>
                                             </form>
                                         </div>
                                         <div class="col-sm-2">
                                             <a href="{{ route('staff.generate_qr', encrypt($qr->id)) }}" id="printButton"
                                                 target="_blank" class="btn btn-link p-0">
-                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                                <i class="fa fa-print" aria-hidden="true" style="color: rgb(255, 174, 0); font-size: 20px;"></i>
                                             </a>
                                         </div>
                                     </div>

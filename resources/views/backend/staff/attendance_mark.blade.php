@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 
 <head>
@@ -14,19 +14,34 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('frontend/assets/app/icons/icon-192x192.png')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
 </head>
+<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default"> -->
+    @extends('frontend.includes.main')
+@section('content')
 
-<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default">
-
-    <div id="page">
-        @include('frontend.includes.header')
-        <h1>QR Scanner</h1>
-        <div id="qr-reader" style="width:500px"></div>
-        <div id="qr-reader-results"></div>
-
-        @include('frontend.includes.footer')
-
+<div class="content ">
+    <div class="row">
+        <div class="col">
+            <h1>QR Scanner</h1>
+        </div>
     </div>
-    
+</div>
+
+    <div id="content" style="width:400px">
+<div class="card card-style">
+    {{-- <div class="content" style="align-item:center;"> --}}
+
+        {{-- @include('frontend.includes.header') --}}
+       
+        <div id="qr-reader" style="width:400px"></div>
+        <div id="qr-reader-results"></div>
+    {{-- </div> --}}
+    </div>
+        {{-- @include('frontend.includes.footer') --}}
+    </div>
+         
+    @endsection
+    @section('script')
+   
     <script src="https://unpkg.com/html5-qrcode"></script>
 
     <script>
@@ -48,6 +63,7 @@
         html5QrcodeScanner.render(onScanSuccess);
     </script>
 
-</body>
+<!-- </body>
 
-</html>
+</html> -->
+@endsection

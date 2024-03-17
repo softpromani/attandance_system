@@ -1,5 +1,5 @@
 @extends('frontend.includes.main')
-@section('title', 'mark')
+@section('title', 'register')
 @section('content')
     <div class="card card-style">
         <div class="content mb-0 ">

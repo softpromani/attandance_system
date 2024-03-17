@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\QR;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
+
 class QRController extends Controller
 {
     /**
@@ -145,17 +148,42 @@ class QRController extends Controller
             return view('backend.admin.print_qr',compact('qrId'));
     }
 
-    public function capture($id)
+    public function capture(Request $request ,$id)
     {
+
+        // $latitude = $request->input('latitude');
+        // $longitude = $request->input('longitude');
+        // dd($latitude,$longitude,$id);
+
        $QRID = QR::find(decrypt($id));
       $reqData = $QRID->active()->where('qr_code',$QRID->qr_code)->first();
+      $user = auth()->user();
+      $currentDateTime = now();
+      $valid_from = $reqData->valid_from; 
+      $valid_to = $reqData->valid_to; 
+
+
       if(auth()->check()){
         return redirect()->route('Getlogin')->with('error','You are not Logged in');
-    } elseif(empty($reqData)){
+    } 
+    elseif(!empty($currentDateTime->between($valid_from, $valid_to))){
+        return redirect()->back()->with('error','Ops... This QR Code is Expired');
+    }
+    elseif(empty($reqData)){
         return redirect()->back()->with('error','Invalid QR Code');
     }
     else{
-        return 'Attendance Mark Successfully';
+       $attendance = Attendance::create([
+        'qr_id'=>$reqData->id,
+        'teacher_id'=>$user->teacher_id,
+        'punching_time'=>$currentDateTime,
+        'punching_location'=>'location',
+        'status'=>'1',
+        'device_info'=>$request->ip(),
+       ]);
+       if($attendance){
+        return redirect()->route('admin.backendAdminPage')->with('success','Attendance Mark Successfully');
+       }
     }
         
     }
