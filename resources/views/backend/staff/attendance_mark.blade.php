@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+    <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 
 <head>
@@ -14,9 +14,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('frontend/assets/app/icons/icon-192x192.png')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" >
 </head>
-<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default"> -->
-    @extends('frontend.includes.main')
-@section('content')
+<body class="theme-light" data-highlight="highlight-red" data-gradient="body-default"> 
+    {{-- @extends('frontend.includes.main') --}}
+{{-- @section('content') --}}
 
 <div class="content ">
     <div class="row">
@@ -30,16 +30,16 @@
 <div class="card card-style">
     {{-- <div class="content" style="align-item:center;"> --}}
 
-        {{-- @include('frontend.includes.header') --}}
+        @include('frontend.includes.header') 
        
         <div id="qr-reader" style="width:400px"></div>
         <div id="qr-reader-results"></div>
     {{-- </div> --}}
     </div>
-        {{-- @include('frontend.includes.footer') --}}
+        @include('frontend.includes.footer')
     </div>
          
-    @endsection
+    {{-- @endsection --}}
     @section('script')
    
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -54,8 +54,10 @@
                 lastResult = decodedText;
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result ${decodedText}`, decodedResult);
-                windows.location.href = decodedResult;
-            }
+                // Extract the URL from the decodedResult object
+                let redirectUrl = decodedResult.result.text;
+                window.location.href = redirectUrl;
+            }   
         }
 
         var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -63,7 +65,7 @@
         html5QrcodeScanner.render(onScanSuccess);
     </script>
 
-<!-- </body>
+</body>
 
-</html> -->
-@endsection
+</html>
+{{-- @endsection --}}
