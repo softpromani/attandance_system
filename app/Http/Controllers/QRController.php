@@ -141,46 +141,50 @@ class QRController extends Controller
 
     public function generateQR($id){
         $qr = QR::findOrFail(decrypt($id));
-        $qrId = encrypt($qr->id);
+        $qrId = $qr->qr_code;
         if ($qr->is_active !== '1') {
             return redirect()->route('admin.qr.index')->with('status', 'This QR status is not active');
         }
             return view('backend.admin.print_qr',compact('qrId'));
     }
 
-    public function capture(Request $request ,$id)
+    public function capture(Request $request , $qr_code)
     {
-
-        // $latitude = $request->input('latitude');
-        // $longitude = $request->input('longitude');
-        // dd($latitude,$longitude,$id);
-
-       $QRID = QR::find(decrypt($id));
-      $reqData = $QRID->active()->where('qr_code',$QRID->qr_code)->first();
+      $reqData = QR::active()->where('qr_code',$qr_code)->first();
       $user = auth()->user();
-      $currentDateTime = now();
-      $valid_from = $reqData->valid_from; 
-      $valid_to = $reqData->valid_to; 
-    if($currentDateTime->between($valid_from, $valid_to) == false){
+       if(auth()->user()->attendances == true){
+       
+          $punchout =  Attendance::where('teacher_id',$user->id)->update([
+                'punchout_time'=>now(),
+                'punchout_location'=>'location',
+            ]);
+            if($punchout){
+                return redirect()->route('admin.backendAdminPage')->with('success','Punchout Successfully');
+            }
+      }
+    if($reqData){
+       $valid = now()->between($reqData->valid_from, $reqData->valid_to);
+        if($valid == false)
+       {
         return redirect()->back()->with('error','Ops... This QR Code is Expired');
-    }
-    elseif(empty($reqData)){
-        return redirect()->back()->with('error','Invalid QR Code');
+       }
+       elseif($valid == true){
+        $attendance = Attendance::create([
+         'qr_id'=>$reqData->id,
+         'teacher_id'=>$user->id,
+         'punching_time'=>now(),
+         'punching_location'=>'location',
+         'status'=>'1',
+         'device_info'=>json_encode(['ip'=>$request->ip()]),
+        ]);
+        if($attendance){
+         return redirect()->route('admin.backendAdminPage')->with('success','Attendance Mark Successfully');
+        }
+     }
     }
     else{
-       $attendance = Attendance::create([
-        'qr_id'=>$reqData->id,
-        'teacher_id'=>$user->id,
-        'punching_time'=>$currentDateTime,
-        'punching_location'=>'location',
-        'status'=>'1',
-        'device_info'=>$request->ip(),
-       ]);
-       if($attendance){
-        return redirect()->route('admin.backendAdminPage')->with('success','Attendance Mark Successfully');
+        return redirect()->back()->with('error','Invalid QR Code');
        }
-    }
-        
     }
     
 

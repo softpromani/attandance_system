@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="col-6 ps-2">
-                        <a href="{{ route('staff.attendanceMark') }}">
+                        <a href="{{ route('staff.markattendance') }}">
                             <div class="card card-style gradient-red shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Mark Attendance</h3>
