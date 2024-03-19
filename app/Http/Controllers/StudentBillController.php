@@ -43,7 +43,7 @@ class StudentBillController extends Controller
      */
     public function create()
     {
-        $bills=FeeDetail::all();
+        $bills=Fee::all();
         return view('backend.studentsBill',['bills' => $bills]);
     }
 
@@ -62,10 +62,12 @@ class StudentBillController extends Controller
             'late_fee.*' => 'required|numeric',
             'desc.*' => 'required',
             'year.*' => 'required',
-            'totalsum.*' => 'required',
+            'totalsum' => 'required',
         ]);
-        dd($request);
+        // dd($request);
         $fee = Fee::create(['total_fee'=>$request->totalsum,
+        'payment_status'=>'0',
+        'submitted_fee'=>'0.00',
         'student_id'=>$request->studentid,
         ]);
         // dd($fee->id);
@@ -104,24 +106,27 @@ class StudentBillController extends Controller
 
         // dd($id);
             // Retrieve the student along with their fee details and sum of fees paid
-            $student = Student::with(['fees' => function ($query) {
-                $query->select('student_id', DB::raw('SUM(total_fee) as total_paid'))
-                      ->groupBy('student_id');
-            }])->findOrFail($id);
-            $bill = FeeDetail::findOrFail($id);
+            // $student = Student::with(['fees' => function ($query) {
+            //     $query->select('student_id', DB::raw('SUM(total_fee) as total_paid'))
+            //           ->groupBy('student_id');
+            // }])->findOrFail($id);
+            // $bill = FeeDetail::findOrFail($id);
 
-return  view('backend.studentBillPDF', compact('student','bill'));
+            $fee=Fee::with(['student','feeDetails'])->find($id);
+            // dd($fee);
+
+        return  view('backend.studentBillPDF', compact('fee'));
 
     // Generate HTML content for the bill
     // DD($bill);
-    $htmlContent = view('backend.studentBillPDF', compact('student'))->render();
+    // $htmlContent = view('backend.studentBillPDF', compact('student'))->render();
 
 
 
     // Generate HTML content for the bill
-    $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
+    // $bill = View::make('backend.studentBillPDF', compact('bill'))->render();
 
-    return view('backend.studentBillPDF', ['bill' => $bill]);
+    // return view('backend.studentBillPDF', ['bill' => $bill]);
 
 
     }
@@ -134,7 +139,7 @@ return  view('backend.studentBillPDF', compact('student','bill'));
      */
     public function edit($id)
     {
-
+        dd($id);
 
     }
 
@@ -147,7 +152,25 @@ return  view('backend.studentBillPDF', compact('student','bill'));
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request,$id);
+        //     $fee=Fee::find($id)->update(['total_fee'=>$request->totalsum,
+        // 'payment_status'=>'0',
+        // 'submitted_fee'=>'0.00',
+        // 'student_id'=>$request->studentid,
+        // ]);
+        // dd($fee);
+
+
+        // foreach ($data['amount'] as $key => $amount) {
+        //     $feeDetail = FeeDetail::create([
+        //         'amount' => $amount,
+        //         'desc' => $data['desc'][$key],
+        //         'year' => $data['year'][$key],
+        //         'late_fee' => $data['late_fee'][$key],
+        //         'month' => $data['month'][$key],
+        //         'fee_id' => $fee->id // Use the ID of the newly created fee
+        //     ]);
+
     }
 
     /**
@@ -172,10 +195,48 @@ return  view('backend.studentBillPDF', compact('student','bill'));
                 return  view('backend.studentBill',compact('students','months','year'));
     }
 
-    public function months()
+    public function editStudentFee($id)
     {
-        $month=Month::get();
-        dd($month);
+          $fee=Fee::with(['student','feeDetails'])->find($id);
+        //   dd($fee);
+          return view('backend.studentBillEdit',compact('fee'));
     }
+    public function updateStudentFee(Request $request,$id)
+    {
+        // dd($request->all());
 
+        $fee = Fee::find($id);
+        $studentid=$fee->student_id;
+        if ($fee) {
+            $fee->feeDetails()->delete();
+        }
+        // Create a new fee record
+        $fee->update([
+            'total_fee' => $request->totalsum,
+            'payment_status' => 'unpaid',
+            'submitted_fee' => '0.00',
+            'student_id' => $studentid,
+        ]);
+        // dd($fee);
+        $data=$request->all();
+        foreach ($data['amount'] as $key => $amount) {
+            $feeDetail = FeeDetail::create([
+                'amount' => $amount,
+                'desc' => $data['desc'][$key],
+                'year' => $data['year'][$key],
+                'late_fee' => $data['late_fee'][$key],
+                'month' => $data['month'][$key],
+                'fee_id' => $fee->id // Use the ID of the newly created fee
+            ]);
+        }
+
+        if($feeDetail){
+            return redirect()->back()->with('succes' ,'Data Updated Successfully');
+
+        }
+
+else{
+    return redirect()->back()->with('error','something went wrong');
+}
+    }
 }

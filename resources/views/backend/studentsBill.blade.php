@@ -20,18 +20,22 @@
                     <tr  style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
                         <th scope="col" class="color-white">Ammount</th>
-                        <th scope="col" class="color-white">Description</th>
-                        <th scope="col" class="color-white">Action</th>
+                        <th scope="col" class="color-white">Student Name</th>
+                        <th scope="col" class="color-white">View</th>
+                        <th scope="col" class="color-white">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($bills as $bill)
                     <tr style="color:#2F539B;">
                         <th>{{ $loop->index + 1 }}</th>
-                        <th>{{$bill->amount ??'' }}</th>
-                        <th>{{ $bill->desc??'' }}</th>
+                        <th>{{$bill->total_fee ??'' }}</th>
+                        <th>{{ $bill->student->student_name??'' }}</th>
                         <th>
-                            <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
+                            <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank" title="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        </th>
+                        <th>
+                            <a href="{{ route('staff.student-fee.edit' , $bill->id) }}" target="_blank" title="edit"><i class="fas fa-edit"></i></a>
                         </th>
                     </tr>
                     @empty

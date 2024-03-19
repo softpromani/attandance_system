@@ -51,6 +51,8 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth:web'],fun
     Route::get('cpr',[QRController::class,'capture']);
     Route::resource('student-bill',StudentBillController::class);
     Route::get('student-bill/edit/{id}', [StudentBillController::class,'editBill'])->name('student-bill.edit');
+    Route::get('student-fee/edit/{id}', [StudentBillController::class,'editStudentFee'])->name('student-fee.edit');
+    Route::get('student-fee/update/{id}', [StudentBillController::class,'updateStudentFee'])->name('student-fee-update');
     Route::resource('teacher-leaves',TeacherLeaveController::class);
 });
 Route::group([ 'prefix'=>'student','as'=>'student.', 'middleware' => 'auth'],function(){

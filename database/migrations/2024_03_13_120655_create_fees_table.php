@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->integer('total_fee');
+            $table->decimal('total_fee',12,2)->nullable();
+            $table->decimal('submitted_fee',12,2);
+            $table->enum('payment_status',['unpaid','partial-paid','paid']);
             $table->timestamps();
         });
     }

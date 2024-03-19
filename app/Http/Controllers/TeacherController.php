@@ -36,7 +36,7 @@ class TeacherController extends Controller
            $pathToStore=$request->file->store('teacher','public');
         }
 
-        $name = $request->f_name . $request->l_name;
+        $name = $request->f_name .' '. $request->l_name;
         $currentYear = now()->year;
         $count=User::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
         $teacher_id= Carbon::now()->format('Ym') .'000'.$count;
@@ -44,7 +44,7 @@ class TeacherController extends Controller
         'name'=>$name,
         'email'=>$request->email,
         'password'=>Hash::make($request->password),
-         'teacher_id'=>'Emp'.$teacher_id,
+         'teacher_id'=>'staff'.$teacher_id,
          'first_name'=>$request->f_name,
          'last_name'=>$request->l_name,
          'father_name'=>$request->father_name,

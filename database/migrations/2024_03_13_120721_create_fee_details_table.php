@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('desc');
             $table->integer('late_fee');
             $table->integer('amount');
-            $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('fee_id');
+            $table->unsignedBigInteger('student_id')->nullable();
+            $table->unsignedBigInteger('fee_id')->nullable();
             $table->timestamps();
         });
     }
