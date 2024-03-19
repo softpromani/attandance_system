@@ -6,7 +6,8 @@
                 <h2 class="">View Mark</h2>
             </div>
             <div class="text-end col"> 
-                <p style="color: maroon; vertical-align: middle; font-size: 14pt; margin-top: 15px; font-weight: 700; ">{{ \Carbon\Carbon::now()->format('d, M, Y') }}</p>
+                <p style="color: maroon; vertical-align: middle; font-size: 14pt; margin-top: 15px; font-weight: 700; ">{{ \Carbon\Carbon::now('Asia/Kolkata')->format('d, M, Y') }}
+                </p>
             </div>
         </div>
     </div>

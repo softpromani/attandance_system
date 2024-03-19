@@ -1,9 +1,24 @@
-<div id="qrcode"></div>
+<html>
+<body>
+ <style>
+
+ </style>
+
+<div style="margin:22%;">
+    <h2 style="color:brown; font-weight:800; text-align:center;">JSF Academy Barabanki</h2>
+<div id="qrcode" ></div>
+</div>
 <input type="hidden" spellcheck="false" id="text" value="" />
+
+
+
+
 @php $url = url()->current();
 $baseUrl = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . ':' . parse_url($url, PHP_URL_PORT) . '/';
 @endphp
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script type="text/javascript" src="{{asset('frontend/assets/scripts/qrcode.min.js')}}"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> --}}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
     var capture_url = '{{ $baseUrl }}';
@@ -37,3 +52,5 @@ $baseUrl = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOS
         });
     });
 </script>
+</body>
+</html>
