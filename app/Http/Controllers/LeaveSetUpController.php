@@ -38,19 +38,16 @@ class LeaveSetUpController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $request->validate(
             [
-                'type'=>'required|unique:table,column,except,id',
+                'type'=>'required',
                 'year'=>'required',
                 'paid_leave'=>'required',
                 'unpaid_leave'=>'required',
                ]
         );
-    $leave=LeaveType::get();
         $data =LeaveSetup::create( [
-
-            'type'=>$leave,
+            'type'=>$request->type,
             'years' => $request->year,
             'unpaid_leave' => $request->unpaid_leave,
             'paid_leave' => $request->paid_leave,
@@ -59,7 +56,7 @@ class LeaveSetUpController extends Controller
 
         if($data)
         {
-            return redirect()->back()->with('User created sucessfully','success');
+            return redirect()->route('admin.leave-set-up.index')->with('success','Leave Setup Created Successfully');
         }
         else{
 
@@ -103,9 +100,7 @@ class LeaveSetUpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $data = [
-            //Database column_name => Form field name
             'type'=>$request->type,
             'years' => $request->year,
             'unpaid_leave' => $request->unpaid_leave,
@@ -113,11 +108,15 @@ class LeaveSetUpController extends Controller
 
 
         ];
-        // dd($data);
         $student=LeaveSetup::find($id)->update($data);
-        // dd($student);
+        if($student){
+            return redirect()->route('admin.leave-set-up.index')->with('success','Leave Setup Update Successfully');
+        }
+        else{
+            return redirect()->back()->with('success','Leave Setup Update Successfully');
+            }
 
-        return redirect()->route('admin.leave-set-up.index');
+       
     }
 
     /**

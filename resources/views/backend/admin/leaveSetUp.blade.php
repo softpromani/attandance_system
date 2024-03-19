@@ -23,10 +23,10 @@
                 <thead>
                     <tr style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
-                        <th scope="col" class="color-white">QR Code</th>
-                        <th scope="col" class="color-white">Valid From</th>
-                        <th scope="col" class="color-white">Valid To</th>
-                        <th scope="col" class="color-white">Is Active</th>
+                        <th scope="col" class="color-white">Leave Type</th>
+                        <th scope="col" class="color-white">Year</th>
+                        <th scope="col" class="color-white">Paid Leave</th>
+                        <th scope="col" class="color-white">Unpaid Leave</th>
                         <th scope="col" class="color-white">Action</th>
                     </tr>
                 </thead>

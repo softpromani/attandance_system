@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DashboardNotificationEvent;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -72,13 +73,13 @@ class StudentController extends Controller
             'student_image' => $path ?? null,
 
         ];
-       // dd($data);
-
-
         $student = Student::create($data);
-        toast('User created sucessfully','success');
+        if($student){
+            event(new DashboardNotificationEvent($student));
+        }
+        // toast('User created sucessfully','success');
 
-        return redirect()->route('student.student.index', compact('student'));
+        return redirect()->route('student.student.index', compact('student'))->with('success','Student Created Successfully');
     }
 
     /**

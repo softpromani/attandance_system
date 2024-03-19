@@ -6,17 +6,23 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript" src="{{asset('frontend/assets/scripts/sweetalert2.all.min.js')}}" defer=""></script>
-
+<script>
+   $(document).ready(function() {
+  $(".notification-drop .item").on('click',function() {
+    $(this).find('ul').toggle();
+  });
+});
+</script>
 
 <script>
-    {{--  $(document).ready(function() {
-        if (feather) {
-            feather.replace({
-                width: 14,
-                height: 14
-            });
-        }
-    });  --}}
+    // $(document).ready(function() {
+    //     if (feather) {
+    //         feather.replace({
+    //             width: 14,
+    //             height: 14
+    //         });
+    //     }
+    // }); 
     // success message popup notification
 
     @if (session()->has('success'))

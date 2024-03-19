@@ -1,13 +1,24 @@
 <div id="footer-bar" class="footer-bar-1">
-    <a href="{{ route('admin.backendAdminPage') }}" class="active-nav"><i class="fa fa-home"></i><span>Home</span></a>
+    <a href="{{ route('admin.backendAdminPage') }}" class="{{ request()->is('admin/Dashboard') ? 'active-nav' : '' }}"><i class="fa fa-home"></i><span>Home</span></a>
     {{-- <a href="index-components.html"><i class="fa fa-star"></i><span>Features</span></a> --}}
     {{-- <a href="index-pages.html"><i class="fa fa-heart"></i><span>Pages</span></a> --}}
-    {{--  <a href="index-search.html"><i class="fa fa-search"></i><span>Search</span></a>  --}}
     <a href="#" data-menu="menu-settings"><i class="fa fa-cog"></i><span>Settings</span></a>
     @if (auth()->check())
+    @role('admin')
+    <div class="notification-drop">
+        <a href="{{ route('admin.index') }}" class="{{ request()->is('admin/Notifications') ? 'active-nav' : '' }}"> 
+        <div class="py-2 py-sm-0"> 
+                <i class="fa fa-bell notification-bell" aria-hidden="true"></i>
+                @if (count(auth()->user()->unreadnotifications)>0)
+                 <span class="btn__badge badge badge-light pulse-button ">{{ count(auth()->user()->unreadnotifications )}}</span> 
+                @endif
+        </div><span>Notification</span> 
+        </a>
+        </div>
+        @endrole
         <a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i><span>Logout</span></a>
-        <a href="{{Route('admin.showStaff',auth()->user()->id)}}" class="d-block link-dark text-decoration-none " aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+        <a href="{{Route('admin.showStaff',auth()->user()->id)}}" class="d-block link-dark text-decoration-none {{ request()->is('admin/show-staff/*') ? 'active-nav' : '' }}" aria-expanded="false">
+            <img src="https://w7.pngwing.com/pngs/506/568/png-transparent-man-people-person-boy-glasses-icon.png" alt="mdo" width="32" height="32"
                 class="rounded-circle"><span>{{ auth()->user()->name ?? '' }}</span>
         </a>
     @endif
@@ -29,13 +40,13 @@
             </a>
         </div>
         <div class="list-group list-custom-large">
-            <a data-menu="menu-highlights" href="#">
+            {{-- <a data-menu="menu-highlights" href="#">
                 <i class="fa font-14 fa-tint bg-green-dark rounded-s"></i>
                 <span>Page Highlight</span>
                 <strong>16 Colors Highlights Included</strong>
                 <span class="badge bg-highlight color-white">HOT</span>
                 <i class="fa fa-angle-right"></i>
-            </a>
+            </a> --}}
             <a data-menu="menu-backgrounds" href="#" class="border-0">
                 <i class="fa font-14 fa-cog bg-blue-dark rounded-s"></i>
                 <span>Background Color</span>
@@ -46,7 +57,7 @@
         </div>
     </div>
 </div>
-<div id="menu-highlights" class="menu menu-box-bottom menu-box-detached">
+{{-- <div id="menu-highlights" class="menu menu-box-bottom menu-box-detached">
     <div class="menu-title">
         <h1>Highlights</h1>
         <p class="color-highlight">Any Element can have a Highlight Color</p><a href="#" class="close-menu"><i
@@ -91,7 +102,7 @@
             class="mb-3 btn btn-full btn-m rounded-sm bg-highlight shadow-xl text-uppercase font-900 mt-4">Back
             to Settings</a>
     </div>
-</div>
+</div> --}}
 
 <div id="menu-backgrounds" class="menu menu-box-bottom menu-box-detached">
     <div class="menu-title">

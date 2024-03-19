@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -58,5 +60,13 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+    }
+
+    public function attendances(){
+        return $this->hasMany(Attendance::class,'teacher_id');
+    }
+    
+    public function getTodayAttendanceAttribute(){
+        $this->attendances()->whereDate('punching_time', Carbon::today())->get();
     }
 }

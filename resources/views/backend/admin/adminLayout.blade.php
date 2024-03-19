@@ -1,12 +1,9 @@
 @extends('frontend.includes.main')
 @section('content')
-
-    {{-- <div id="preloader">
-        <div class="spinner-border color-highlight" role="status"></div>
-    </div> --}}
     <div id="page">
         <div class="page-content">
-            <div class="content mt-0">
+            <div class="content">
+                <p id="demo" style="color:red;display: inline;">Loading....</p>
                 <div class="row mb-n3">
                     <div class="col-6 pe-2">
                         <a href="{{ route('staff.teacherRegisterData') }}">
@@ -40,7 +37,7 @@
                     </div>
 
                     <div class="col-6 ps-2">
-                        <a href="{{ route('staff.attendanceMark') }}">
+                        <a href="{{ route('staff.markattendance') }}">
                             <div class="card card-style gradient-red shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Mark Attendance</h3>
@@ -108,4 +105,36 @@
     </div>
     @endsection
     @section('script')
-    @endsection
+    <script>
+        // Call getLocation when the page is loaded
+        window.onload = function() {
+            getLocation();
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+            // var xhr = new XMLHttpRequest();
+            // xhr.open("get", "/cpr/"+[latitude,longitude], true);
+            // xhr.setRequestHeader("Content-Type", "application/json");
+
+            // var data = JSON.stringify({
+            //     latitude: latitude,
+            //     longitude: longitude
+            // });
+
+            //  xhr.send(data);
+        }
+    </script>
+        @endsection
