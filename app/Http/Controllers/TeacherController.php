@@ -67,6 +67,7 @@ class TeacherController extends Controller
     }
     public function teacherRegisterData()
     {
+        // dd( User::get());
         if (request()->ajax()) {
             $users = User::get();
             return DataTables::of($users)
@@ -106,7 +107,7 @@ class TeacherController extends Controller
         // dd($request->all());
         if($request->hasFile('file')){
             $file = $request->file('file');
-            $path = $file->store('file');
+            $path = $file->store('teacher','public');
             User::find($id)->update(['file' => $path]);
         }
         
