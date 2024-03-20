@@ -78,7 +78,7 @@ class StudentController extends Controller
                 'class'=>'required',
                 'section'=>'required',
                 'mobile_number'=>'required',
-                'student_image'=>'required',
+                'student_image'=>'nullable',
 
 
 

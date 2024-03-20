@@ -15,4 +15,11 @@ class Fee extends Model
         return $this->hasMany(FeeDetail::class);
     }
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+   
+
 }

@@ -20,8 +20,9 @@
                     <tr  style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
                         <th scope="col" class="color-white">Ammount</th>
-                        <th scope="col" class="color-white">Description</th>
-                        <th scope="col" class="color-white">Action</th>
+                        <th scope="col" class="color-white">Student Name</th>
+                        <th scope="col" class="color-white">View</th>
+                        <th scope="col" class="color-white">Edit</th>
                     </tr>
                 </thead>
                 {{-- <tbody> --}}

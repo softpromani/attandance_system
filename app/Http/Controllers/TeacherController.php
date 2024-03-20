@@ -41,10 +41,10 @@ class TeacherController extends Controller
         $count=User::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
         $teacher_id= Carbon::now()->format('Ym') .'000'.$count;
         $res = User::create([
-         'name'=>$name,
-         'email'=>$request->email,
-         'password'=>Hash::make($request->password),
-         'teacher_id'=>'Emp'.$teacher_id,
+        'name'=>$name,
+        'email'=>$request->email,
+        'password'=>Hash::make($request->password),
+         'teacher_id'=>'staff'.$teacher_id,
          'first_name'=>$request->f_name,
          'last_name'=>$request->l_name,
          'father_name'=>$request->father_name,
