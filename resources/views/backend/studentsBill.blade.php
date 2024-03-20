@@ -3,7 +3,7 @@
 <div class="content ">
 <div class="row">
     <div class="col">
-    <h2 class="">Student Bill</h2>
+    <h2 class="">Student Bill`s</h2>
     </div>
      <div class="text-end col">
         <a href="{{route('staff.student-bill.index')}}">
@@ -15,7 +15,7 @@
 <div class="card card-style">
         <div class="content mb-1 ">
             <div class="table-responsive">
-            <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
+            <table class="table table-borderless rounded-sm shadow-l datatables" style="overflow: hidden;">
                 <thead>
                     <tr  style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
@@ -24,20 +24,23 @@
                         <th scope="col" class="color-white">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @forelse ($bills as $bill)
-                    <tr style="color:#2F539B;">
-                        <th>{{ $loop->index + 1 }}</th>
-                        <th>{{$bill->amount ??'' }}</th>
-                        <th>{{ $bill->desc??'' }}</th>
-                        <th>
-                            <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
-                        </th>
-                    </tr>
-                    @empty
-                        <th style="color:red;text-align:center;">No Data Found</th>
-                    @endforelse
+                {{-- <tbody> --}}
+                    {{-- @forelse ($bills as $bill) --}}
+                    {{-- <tr style="color:#2F539B;"> --}}
+                        {{-- <th>{{ $loop->index + 1 }}</th> --}}
+                        {{-- <th>{{$bill->amount ??'' }}</th> --}}
+                        {{-- <th>{{ $bill->desc??'' }}</th> --}}
+                        {{-- <th> --}}
+                            {{-- <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a> --}}
+                        {{-- </th> --}}
+                    {{-- </tr> --}}
+                    {{-- @empty --}}
+                        {{-- <th style="color:red;text-align:center;">No Data Found</th> --}}
+                    {{-- @endforelse --}}
 
+                {{-- </tbody> --}}
+                <tbody>
+                    <tr></tr>
                 </tbody>
             </table>
             </div>
@@ -45,7 +48,7 @@
 </div>
 @endsection
 @section('script')
-<script>
+{{-- <script>
     $(document).ready(function() {
         $(document).on('change', '.active', function() {
             var statusId = $(this).data('id');
@@ -56,6 +59,33 @@
                 url: newurl,
                 type: 'get',
             });
+        });
+    });
+</script> --}}
+<script>
+    $(document).ready(function() {
+        var dataTable = $('.datatables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('staff.student-bill.create') }}",
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                },
+                {
+                    data: 'amount',
+                    name: 'amount',
+                },
+                {
+                    data: 'desc',
+                    name: 'desc',
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                },
+            ]
         });
     });
 </script>

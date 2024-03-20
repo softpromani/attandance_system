@@ -1,4 +1,5 @@
 @extends('frontend.includes.main')
+
 @section('content')
 
 <div class="content ">
@@ -21,10 +22,10 @@
 <div class="card card-style">
     <div class="content mb-1 ">
         <div class="table-responsive">
-            <table class="table table-borderless text-center sm-4 ">
+            <table class="table datatables  ">
                 <thead>
                     <tr style="background-color:#2F539B; color:white;">
-                        <th scope="col">SR.NO.</th>
+                        <th scope="col">Sr.No</th>
                         <th scope="col">Student Name</th>
                         <th scope="col">Date of Birth</th>
                         <th scope="col">Father Name</th>
@@ -35,7 +36,12 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody style="color:#2F539B;">
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+                {{-- <tbody style="color:#2F539B;">
                     @forelse($students as $student)
                     <tr>
                         <th scope="row">{{ $loop->index+1}}</th>
@@ -65,9 +71,66 @@
                     @empty
                     Student not found
                     @endforelse
-                </tbody>
+                </tbody> --}}
             </table>
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+
+<script>
+    $(document).ready(function() {
+        var dataTable = $('.datatables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('student.student.index') }}",
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                },
+                {
+                    data: 'student_name',
+                    name: 'student_name',
+                },
+                {
+                    data: 'date_of_birth',
+                    name: 'date_of_birth',
+                },
+                {
+                    data: 'father_name',
+                    name: 'father_name',
+                },
+                {
+                    data: 'class',
+                    name: 'class',
+                },
+                {
+                    data: 'section',
+                    name: 'section',
+                },
+                {
+                    data: 'mobile_number',
+                    name: 'mobile_number',
+                },
+                {
+                    data: 'student_image',
+                    name: 'student_image',
+                    render: function (data) {
+                if (data !== null) {
+                    return '<img src="' + data + '" alt="student Img" class="img-thumbnail" style="height: 100px; width:150px;">';
+                } else {
+                    return 'No Image';
+                }
+            }
+        },
+                {
+                    data: 'action',
+                    name: 'action',
+                },
+            ]
+        });
+    });
+</script>
 @endsection

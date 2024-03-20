@@ -1,10 +1,9 @@
 @extends('frontend.includes.main')
-@section('title', 'register')
+@section('title', 'Staff')
 @section('content')
     <div class="card card-style">
         <div class="content mb-0 ">
-            <h3>Teacher Registration</h3>
-            {{--  <form action="{{ route('staff.storeTeacherRegister') }}" method="POST" enctype="multipart/form-data">  --}}
+            <h3>Staff Registration</h3>
 
             <form
                 action="{{ isset($data) ? route('staff.teacherUpdateData', $data->id) : route('staff.storeTeacherRegister') }}"
@@ -75,7 +74,7 @@
                         </div>
                     @endif
                     <div class="input-style has-borders no-icon validate-field mb-4 col-sm-12">
-                        <input type="text" name="father_name" value="{{ $data->fathers_name ?? '' }}"
+                        <input type="text" name="father_name" value="{{ $data->father_name ?? '' }}"
                             class="form-control validate-text" id="form3" placeholder="Teacher Father's Name">
                         @error('father_name')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -156,7 +155,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary mb-5">Submit</button>
+                    <button class="btn btn-primary mb-5">{{ isset($data)?'Update':'Submit' }}</button>
 
                 </div>
             </form>

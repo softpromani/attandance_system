@@ -49,7 +49,7 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     Route::get('teacher-register-data',[TeacherController::class,'teacherRegisterData'])->name('teacherRegisterData');
     Route::get('teacher-edit-data/{id}',[TeacherController::class,'teacherEditData'])->name('teacherEditData');
     Route::post('teacher-update-data/{id}',[TeacherController::class,'teacherUpdateData'])->name('teacherUpdateData');
-    Route::post('teacher-delete-data/{id}',[TeacherController::class,'teacherDeleteData'])->name('teacherDeleteData');
+    Route::post('staff-delete/{id}',[TeacherController::class,'teacherDeleteData'])->name('teacherDeleteData');
     Route::get('teacher-count',[TeacherController::class,'teacherCount'])->name('teacherCount');
     // Route::get('/update-location', [AttendanceController::class, 'updateLocation']);
     Route::get('qr-generate/{id}',[QRController::class,'generateQR'])->name('generate_qr');

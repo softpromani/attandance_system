@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Events\Action;
 use App\Events\DashboardNotificationEvent;
-use App\Models\Teacher;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class TeacherController extends Controller
 {
@@ -19,7 +19,6 @@ class TeacherController extends Controller
     }
     public function storeTeacherRegister(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'f_name' => 'required|string|max:255',
             'l_name' => 'required|string|max:255',
@@ -37,15 +36,14 @@ class TeacherController extends Controller
         {
            $pathToStore=$request->file->store('teacher','public');
         }
-
-        $name = $request->f_name . $request->l_name;
+        $name = $request->f_name .' '. $request->l_name;
         $currentYear = now()->year;
         $count=User::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
         $teacher_id= Carbon::now()->format('Ym') .'000'.$count;
         $res = User::create([
-        'name'=>$name,
-        'email'=>$request->email,
-        'password'=>Hash::make($request->password),
+         'name'=>$name,
+         'email'=>$request->email,
+         'password'=>Hash::make($request->password),
          'teacher_id'=>'Emp'.$teacher_id,
          'first_name'=>$request->f_name,
          'last_name'=>$request->l_name,
@@ -54,7 +52,7 @@ class TeacherController extends Controller
          'mobile_number'=>$request->number,
          'anniversary_date'=>$request->anniversary_date,
          'joining_date'=>$request->joining_date,
-        'teacher_image' => $pathToStore??'',
+         'teacher_image' => $pathToStore??'',
     ]);
     $res->assignRole('staff');
     if($res){
@@ -67,13 +65,34 @@ class TeacherController extends Controller
         }
 
     }
-
     public function teacherRegisterData()
     {
-        $data=User::paginate(10);
-        return view('backend.staff.teachers',compact('data'));
+        if (request()->ajax()) {
+            $users = User::get();
+            return DataTables::of($users)
+                ->addIndexColumn()
+                ->addColumn('image', function($q) {
+                    return asset('storage/'.$q->teacher_image);
+                })
+                ->addColumn('action', function ($row) {
+                    // $id = Crypt::encrypt($row->id); 
+                    $id = $row->id;
+                    $ht = '';
+                        $ht .= '<a href="' . route("staff.teacherEditData", $id) . '" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                    
+                        $ht .= ' <form action="' . route("staff.teacherDeleteData", $id) . '" method="post" style="display:inline">
+                        ' . csrf_field() . '
+                        '.method_field("POST").'
+                        <button type="submit" class="btn btn-link p-0" onclick="return confirm(\'Are you sure you want to delete this Staff?\')">
+                        <i class="fa fa-trash-o" style="color: red; font-size: 20px;"></i>
+                        </button>';
+                    
+                        return $ht; 
+                })
+                ->make(true); 
+    }   
+        return view('backend.staff.teachers');
     }
-
     public function teacherEditData($id)
     {
         $data=User::find($id);
@@ -90,32 +109,41 @@ class TeacherController extends Controller
             $path = $file->store('file');
             User::find($id)->update(['file' => $path]);
         }
-
+        
+        $name = $request->f_name .' '. $request->l_name;
         $data = [
+            'name'=>$name,
             'email'=>$request->email,
             'first_name'=>$request->f_name,
             'last_name'=>$request->l_name,
-            'fathers_name'=>$request->father_name,
+            'father_name'=>$request->father_name,
             'dob'=>$request->dob,
             'mobile_number'=>$request->number,
             'anniversary_date'=>$request->anniversary_date,
             'joining_date'=>$request->joining_date,
-           'teacher_image' => $path ??'',
+            'teacher_image' => $path ??'',
 
 
         ];
         $student=User::find($id)->update($data);
-        // dd($student);
+        if($student){
+            return redirect()->route('staff.teacherRegisterData')->with('success','Staff Update Success');
+        }
+        else{
+            return redirect()->back()->with('error','Ops... Data Not Update');
+        }
 
-        return redirect()->route('staff.teacherRegisterData');
+        
     }
     public function teacherDeleteData($id)
     {
-        // dd($id);
-        $student=Teacher::find($id)->delete();
-        // dd($student);
-
-        return redirect()->back();
+        $Staff=User::find($id)->delete();
+        if($Staff){
+            return redirect()->back()->with('success','Staff Deleted Successfully'); 
+        }
+        else{
+            return redirect()->back()->with('error','Ops... Staff Not Delete');
+        }
     }
 
 }

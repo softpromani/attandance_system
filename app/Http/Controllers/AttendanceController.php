@@ -36,7 +36,8 @@ class AttendanceController extends Controller
         $today_attendance=Attendance::where('teacher_id',Auth::user()->id)->whereDate('punching_time',Carbon::today())->first();
         $punching=$today_attendance?$today_attendance->punching_time:''; 
         $punchout=$today_attendance?$today_attendance->punchout_time:''; 
-
-        return view('backend.staff.attendance_mark',compact('punching','punchout'));
+        $userAttendance = auth()->user()->attendances->all();
+        return view('backend.staff.attendance_mark',compact('punching','punchout','userAttendance'));
     }
+
 }

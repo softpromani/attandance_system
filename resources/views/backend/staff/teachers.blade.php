@@ -20,10 +20,10 @@
     <div class="card card-style">
         <div class="content mb-1 ">
             <div class="table-responsive">
-                <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
+                <table class="table table-borderless text-center rounded-sm shadow-l datatables" style="overflow: hidden;">
                     <thead>
                         <tr style="background-color:#2F539B; ">
-                            <th scope="col" class="color-white">Id</th>
+                            <th scope="col" class="color-white">Sr.No</th>
                             <th scope="col" class="color-white">Name</th>
                             <th scope="col" class="color-white">Father Name</th>
                             <th scope="col" class="color-white">DOB</th>
@@ -39,7 +39,7 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    {{-- <tbody>
                         @foreach ($data as $dt)
                         <tr style="color:#2F539B;">
                                 <th scope="row">{{ $loop->index + 1 }}</th>
@@ -67,14 +67,15 @@
                             </tr>
                         @endforeach
 
-                    </tbody>
+                    </tbody> --}}
+                    <tbody> </tbody>
                 </table>
-                <div class="card-footer">
+                {{-- <div class="card-footer">
                     @if (isset($data))
                         {!! $data->links('pagination::bootstrap-5') !!}
                     @endif
 
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -83,7 +84,6 @@
 @endsection
 @section('script')
     <script>
-        < script >
             // JavaScript functions for edit and delete actions
             function editItem(item) {
                 alert('Editing ' + item);
@@ -97,6 +97,60 @@
             }
         }
     </script>
-    </script>
+    
+<script>
+    $(document).ready(function() {
+        var dataTable = $('.datatables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('staff.teacherRegisterData') }}",
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                },
+                {
+                    data: 'father_name',
+                    name: 'father_name',
+                },
+                {
+                    data: 'dob',
+                    name: 'dob',
+                },
+                {
+                    data: 'mobile_number',
+                    name: 'mobile_number',
+                },
+                {
+                    data: 'anniversary_date',
+                    name: 'anniversary_date',
+                },
+                {
+                    data: 'joining_date',
+                    name: 'joining_date',
+                },
+                {
+                    data: 'image',
+                    name: 'image',
+                    render: function (data) {
+                if (data !== null) {
+                    return '<img src="' + data + '" alt="student Img" class="img-thumbnail" style="height: 100px; width:150px;">';
+                } else {
+                    return 'No Image';
+                }
+            }
+        },
+                {
+                    data: 'action',
+                    name: 'action',
+                },
+            ]
+        });
+    });
+</script>
 
 @endsection

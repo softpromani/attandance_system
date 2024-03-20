@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\DashboardNotificationEvent;
 use App\Models\Student;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller
 {
@@ -15,8 +18,36 @@ class StudentController extends Controller
      */
     public function index()
     {
-       $students = Student::get();
-       return view('backend.staff.studentsshow', compact('students'));
+        
+        if (request()->ajax()) {
+            $students = Student::get();
+            
+            return DataTables::of($students)
+                ->addIndexColumn()
+                ->addColumn('student_image', function($q) {
+                    // return optional($q)->student_image? asset('storage/'.$q->student_image) : '#';
+                    return asset('storage/'.$q->student_image);
+                })
+                ->addColumn('action', function ($row) {
+                    // $id = Crypt::encrypt($row->id); 
+                    $id = $row->id;
+                    $ht = '';
+                        $ht .= '<a href="' . route("student.student.edit", $id) . '" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                    
+                        $ht .= ' <form action="' . route("student.student.destroy", $id) . '" method="post" style="display:inline">
+                        ' . csrf_field() . '
+                        '.method_field("DELETE").'
+                        <button type="submit" class="btn btn-link p-0" onclick="return confirm(\'Are you sure you want to delete this Subject?\')">
+                        <i class="fa fa-trash-o" style="color: red; font-size: 20px;"></i>
+                        </button>';
+                    
+                        return $ht; 
+                })
+          
+            ->make(true);
+    }
+      
+       return view('backend.staff.studentsshow');
     }
 
     /**
@@ -63,7 +94,7 @@ class StudentController extends Controller
             $currentYear = now()->year;
         $data = [
             //Database column_name => Form field name
-            'registration_number' =>'emp'.$currentYear.rand('0','9').'_'. $request->student_name,
+            'registration_number' =>'std'.$currentYear.rand('0','9').'_'. $request->student_name,
             'student_name' => $request->student_name,
             'date_of_birth' => $request->date_of_birth,
             'father_name' => $request->father_name,
@@ -116,8 +147,6 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        // dd($request->all());
         if($request->hasFile('student_image')){
             $file = $request->file('student_image');
             $path = $file->store('student','public');
@@ -133,13 +162,15 @@ class StudentController extends Controller
             'section' => $request->section,
             'mobile_number' => $request->mobile_number,
             'student_image' => $path ?? null,
-
-
         ];
         $student=Student::find($id)->update($data);
-        // dd($student);
-
-        return redirect()->route('student.student.index');
+        if($student){
+            return redirect()->route('student.student.index')->with('success','Student Update Sucessfully');
+        }
+        else{
+            return redirect()->back()->with('error','Student Deleted Sucessfully');
+        }
+        
     }
 
     /**
@@ -150,11 +181,12 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        // dd($id);
         $student=Student::find($id)->delete();
-        // dd($student);
-
-        toast('Student Deleted Sucessfully','success');
-        return redirect()->back();
+        if($student){
+            return redirect()->back()->with('success','Student Deleted Sucessfully');
+        }
+        else{
+            return redirect()->back()->with('error','Ops... Student Not Delete');
+        }
     }
 }

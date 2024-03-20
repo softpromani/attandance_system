@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LeaveSetup;
 use App\Models\LeaveType;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class LeaveSetUpController extends Controller
 {
@@ -15,9 +16,23 @@ class LeaveSetUpController extends Controller
      */
     public function index()
     {
-
-        $leave=LeaveSetup::paginate(5);
-        return view('backend.admin.leaveSetUp',compact('leave'));
+        if (request()->ajax()) {
+            $leave=LeaveSetup::get();
+            
+            return DataTables::of($leave)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    // $id = Crypt::encrypt($row->id); 
+                    $id = $row->id;
+                    $ht = '';
+                        $ht .= '<a href="' . route("admin.leave-set-up.edit", $id) . '" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                    
+                        return $ht; 
+                })
+          
+            ->make(true);
+    }
+        return view('backend.admin.leaveSetUp');
     }
 
     /**
@@ -51,17 +66,13 @@ class LeaveSetUpController extends Controller
             'years' => $request->year,
             'unpaid_leave' => $request->unpaid_leave,
             'paid_leave' => $request->paid_leave,
-
         ]);
-
         if($data)
         {
             return redirect()->route('admin.leave-set-up.index')->with('success','Leave Setup Created Successfully');
         }
         else{
-
             return redirect()->back()->with('error','Something Went Wrong');
-
         }
     }
 

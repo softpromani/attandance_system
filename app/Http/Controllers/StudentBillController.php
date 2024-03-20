@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Yajra\DataTables\Facades\DataTables;
 
 class StudentBillController extends Controller
 {
@@ -43,6 +44,22 @@ class StudentBillController extends Controller
      */
     public function create()
     {
+        if (request()->ajax()) {
+            $bills=FeeDetail::get();
+            
+            return DataTables::of($bills)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    // $id = Crypt::encrypt($row->id); 
+                    $id = $row->id;
+                    $ht = '';
+                        $ht .= '<a href="' . route("staff.student-bill.show", $id) . '" target="_blank" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                    
+                        return $ht; 
+                })
+          
+            ->make(true);
+    }
         $bills=FeeDetail::all();
         return view('backend.studentsBill',['bills' => $bills]);
     }

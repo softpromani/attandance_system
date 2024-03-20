@@ -1,18 +1,10 @@
 <html>
 <body>
- <style>
-
- </style>
-
 <div style="margin:22%;">
     <h2 style="color:brown; font-weight:800; text-align:center;">JSF Academy Barabanki</h2>
 <div id="qrcode" ></div>
 </div>
 <input type="hidden" spellcheck="false" id="text" value="" />
-
-
-
-
 @php $url = url()->current();
 $baseUrl = parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . ':' . parse_url($url, PHP_URL_PORT) . '/';
 @endphp

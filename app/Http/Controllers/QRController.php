@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 
 class QRController extends Controller
@@ -19,8 +20,59 @@ class QRController extends Controller
      */
     public function index()
     {  
-         $qrDatas = QR::paginate(10);
-        return view('backend.admin.qr_generate',compact('qrDatas'));
+        if (request()->ajax()) {
+            $qrDatas = QR::get();
+            
+            return DataTables::of($qrDatas)
+                ->addIndexColumn()
+            ->addColumn('valid_from', function($q) {
+                return $q->valid_from->format('Y M d');
+            })
+            ->addColumn('valid_to', function($q) {
+                return $q->valid_to->format('Y M d');
+            })
+                ->addColumn('action', function ($row) {
+                    // $id = Crypt::encrypt($row->id); 
+                    $id = $row->id;
+                    $ht = '';
+                        $ht .= '<a href="' . route("admin.qr.edit", $id) . '" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                    
+                        $ht .= ' <form action="' . route("admin.qr.destroy", $id) . '" method="post" style="display:inline">
+                        ' . csrf_field() . '
+                        '.method_field("DELETE").'
+                        <button type="submit" class="btn btn-link p-0" onclick="return confirm(\'Are you sure you want to delete this QR?\')">
+                        <i class="fa fa-trash-o" style="color: red; font-size: 20px;"></i>
+                        </button>';
+                        $ht .= '<a href="' . route("staff.generate_qr", $id) . '" id="printButton"
+                                                target="_blank" class="btn btn-link p-0">
+                                                <i class="fa fa-print" aria-hidden="true" style="color: rgb(255, 174, 0); font-size: 20px;"></i>
+                                            </a>';
+                        return $ht; 
+                })
+                
+                ->addColumn('is_active', function ($row) {
+                    // $id = Crypt::encrypt($row->id);
+                    $id = $row->id;
+                    $ht = '
+                    <label class="custom-control-label" for="switch-dark-mode-a'.$id.'">
+                    <input type="checkbox" class="form-check-input active" data-id="' . $id . '"';
+                    $ht .= ($row->is_active == 1) ? 'checked' : '';
+                    $ht .= '>
+                    <span class="switch-toggle-slider">
+                      <span class="switch-on">
+                        <i class="ti ti-check"></i>
+                      </span>
+                      <span class="switch-off">
+                        <i class="ti ti-x"></i>
+                      </span>
+                    </span>
+                  </label>';
+                    return $ht;
+                })
+                ->rawColumns(['is_active','action'])
+            ->make(true);
+            }
+        return view('backend.admin.qr_generate');
     }
 
     /**
