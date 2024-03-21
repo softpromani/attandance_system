@@ -193,7 +193,8 @@ class QRController extends Controller
 
 
     public function generateQR($id){
-        $qr = QR::findOrFail(decrypt($id));
+
+        $qr = QR::findOrFail($id);
         $qrId = $qr->qr_code;
         if ($qr->is_active !== '1') {
             return redirect()->route('admin.qr.index')->with('status', 'This QR status is not active');

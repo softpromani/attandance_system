@@ -68,7 +68,13 @@
                         @endforeach
 
                     </tbody> --}}
-                    <tbody> </tbody>
+                    <tbody> 
+                        <tr>
+                            <th>
+                                
+                            </th>
+                        </tr>
+                    </tbody>
                 </table>
                 {{-- <div class="card-footer">
                     @if (isset($data))
