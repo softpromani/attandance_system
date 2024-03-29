@@ -64,7 +64,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-6 pe-2">
+                    {{-- <div class="col-6 pe-2">
                         <a href="#">
                             <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> --}}
                     @endif
                     @if(auth()->user()->hasAnyRole(['staff','admin']))
                     <div class="col-6 ps-2">
