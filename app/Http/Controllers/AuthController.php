@@ -25,7 +25,7 @@ class AuthController extends Controller
         ]);
 
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember_me)) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
 
             return redirect()->route('admin.backendAdminPage')->with('Success','Login Successfully');
         } else {

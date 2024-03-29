@@ -242,6 +242,8 @@ class QRController extends Controller
         return redirect()->back()->with('error','Invalid QR Code');
        }
     }
+
+    
     
 
 }

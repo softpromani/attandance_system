@@ -99,6 +99,7 @@
                     url: newurl,
                     type: 'get',
                 });
+                
             });
         });
     </script>

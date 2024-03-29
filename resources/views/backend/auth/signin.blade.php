@@ -15,7 +15,7 @@
                         <i class="fa fa-check disabled valid color-green-dark"></i>
                         <em>(required)</em>
                     </div>
-                    <div class="input-style no-borders has-icon validate-field mb-4">
+                    <div class="input-style no-borders has-icon validate-field">
                         <i class="fa fa-lock"></i>
                         <input type="password" name="password" class="form-control validate-password" id="form3a"
                             placeholder="Password">
@@ -23,10 +23,17 @@
                         <i class="fa fa-times disabled invalid color-red-dark"></i>
                         <i class="fa fa-check disabled valid color-green-dark"></i>
                         <em>(required)</em>
+                    
                                 <a href="#" class=" color-highlight font-11 ">Forgot Credentials</a>
+                    </div>
+                    <div class=" mb-4 ">
+                        
+                    <input type="checkbox" name="remember" id="remember" style="visibility: visible;">
+                    <label for="remember" style="visibility: visible;" class="">Remember Me</label>
                     </div>
                     <input type="submit" class="btn btn-m rounded-sm btn-full bg-green-dark text-uppercase font-900">
                 </form>
+                
                 <div class="divider mt-3 mb-3"></div>
             </div>
         </div>
