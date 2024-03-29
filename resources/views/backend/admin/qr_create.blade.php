@@ -8,17 +8,17 @@
                 @isset($edit)
                 @method('put')
                 @endisset
-                <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4">
-                    <input type="date" value="{{ isset($edit)?$edit->valid_from:'' }}" name="from" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="form6" placeholder="Select From ">
+                <div class="input-style input-style-always-active has-borders validate-field mt-4">
+                    <input type="date" value="{{ isset($edit)?date('Y-m-d', strtotime($edit->valid_from)):'' }}" name="from" class="form-control" id="form6" >
                     <label for="form6" class="color-blue-dark font-13">Valid From</label>
                     <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
                     <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
                     </div>
 
 
-                    <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4">
-                        <input type="date" value="{{ isset($edit)?$edit->valid_to:'' }}" name="to" max="2030-01-01" min="2021-01-01" class="form-control validate-text" id="form6" placeholder="Select To">
-                        <label for="form6" class="color-blue-dark font-13">Valid To</label>
+                    <div class="input-style input-style-always-active has-borders validate-field mt-4">
+                        <input type="date" value="{{ isset($edit)?date('Y-m-d', strtotime($edit->valid_to)):'' }}" name="to" class="form-control" id="form7">
+                        <label for="form7" class="color-blue-dark font-13">Valid To</label>
                         <i class="fa fa-check disabled valid me-4 pe-3 font-12 color-green-dark"></i>
                         <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
                         </div>

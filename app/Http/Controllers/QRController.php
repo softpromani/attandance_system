@@ -133,7 +133,7 @@ class QRController extends Controller
     public function edit($id)
     {
         // $qrDatas = QR::all();
-        $edit = QR::find(Crypt::decrypt($id));
+        $edit = QR::find($id);
         return view('backend.admin.qr_create',compact('edit'));
     }
 
@@ -153,10 +153,10 @@ class QRController extends Controller
         ]);
 
         if($qrData){
-            return redirect()->route('admin.qr.index')->with('success','QR Created Successfully');
+            return redirect()->route('admin.qr.index')->with('success','QR Updated Successfully');
         }
         else{
-            return redirect()->back()->with('error','Ops...! QR Not Created');
+            return redirect()->back()->with('error','Ops...! QR Not Update');
         }
     }
 
