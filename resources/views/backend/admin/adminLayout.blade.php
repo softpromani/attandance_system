@@ -31,7 +31,7 @@
                     </div>
                     @endif
                     @if(auth()->user()->hasRole('admin'))
-                    <div class="col-6 pe-2">
+                    <div class="col-6 ps-2">
                         <a href="{{ route('staff.teacherRegisterData') }}">
                             <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">

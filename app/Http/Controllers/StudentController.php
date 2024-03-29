@@ -80,8 +80,6 @@ class StudentController extends Controller
                 'mobile_number'=>'required',
                 'student_image'=>'nullable',
 
-
-
             ]
         );
        // dd($request);
@@ -93,7 +91,6 @@ class StudentController extends Controller
         }
             $currentYear = now()->year;
         $data = [
-            //Database column_name => Form field name
             'registration_number' =>'std'.$currentYear.rand('0','9').'_'. $request->student_name,
             'student_name' => $request->student_name,
             'date_of_birth' => $request->date_of_birth,

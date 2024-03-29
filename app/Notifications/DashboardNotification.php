@@ -61,8 +61,8 @@ class DashboardNotification extends Notification
         $user = $this->user;
 
             return [
-                'name' => $user->name,
-                'id'=>$user->teacher_id,
+                'name' => isset($user->name) ? $user->name : $user->student_name,
+                'id'=> isset($user->teacher_id) ? $user->teacher_id : $user->registration_number,
                 'type'=>'success'
             ];
     }
