@@ -57,7 +57,7 @@
                         </a>
                     </div>
                     <div class="col-6 ps-2">
-                        <a href="{{ route('setmap') }}">
+                        <a href="{{ route('admin.setmap') }}">
                             <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Set Area</h3>

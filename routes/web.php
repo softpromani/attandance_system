@@ -39,13 +39,11 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::get('changeStatus/{id}',[QRController::class,'is_active']);
     Route::post('mark-as-read',[NotificationController::class,'markRead'])->name('markread');
     Route::get('Notifications',[NotificationController::class,'index'])->name('index');
-    
+    Route::get('set-map',[AreaController::class,'index'])->name('setmap');
+    Route::post('set-area',[AreaController::class,'setArea'])->name('setarea');
 
 
 });
- 
-    Route::get('set-map',[AreaController::class,'index'])->name('setmap');
-    Route::post('set-area',[AreaController::class,'setArea'])->name('setarea');
     
 Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],function(){
     Route::get('scanner',[AttendanceController::class,'qrScanner'])->name('qrscanner');
