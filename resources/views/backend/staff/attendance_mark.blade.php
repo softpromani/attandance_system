@@ -1,20 +1,5 @@
 @extends('frontend.includes.main')
 @section('content')
-@section('style') 
- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-  .calendar {
-  margin-top: 20px;
-}
-
-.date-selected {
-  background-color: #007bff;
-  color: #fff;
-}
-
-</style>
-@endsection
 <div class="content ">
     <div class="row">
         <div class="col">
@@ -60,58 +45,60 @@
 <div class="card card-style">
     <div class="content mb-0">
      
-        <div class="container">
-            <h2 class="text-center">Attendance Calendar</h2>
-            <div id="calendar" class="calendar"></div>
-          </div>
-        
-        
-          
+        <div class="table-responsive">
+            <table class="table table-borderless rounded-sm shadow-l datatables" style="overflow: hidden;">
+                <thead>
+                    <tr style="background-color:#2F539B;">
+                        <th scope="col" class="color-white">Sr. No</th>
+                        <th scope="col" class="color-white">Staff Name</th>
+                        <th scope="col" class="color-white">Punching Time</th>
+                        <th scope="col" class="color-white">Punchout Time</th>
+                        <th scope="col" class="color-white">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>        
+     
         
        </div>
 </div>
 @endsection
 @section('script')
 <script>
-    var userAttendance = <?php echo json_encode($userAttendance); ?>;
-
-    // Function to render calendar
-    function renderCalendar() {
-      var currentDate = new Date();
-      var currentMonth = currentDate.getMonth();
-      var currentYear = currentDate.getFullYear();
-      var firstDay = new Date(currentYear, currentMonth, 1);
-      var lastDay = new Date(currentYear, currentMonth + 1, 0);
-      var startingDay = firstDay.getDay();
-      var monthLength = lastDay.getDate();
-
-      var calendarHtml = '<div class="row">';
-      for (var i = 0; i < startingDay; i++) {
-        calendarHtml += '<div class="col border text-center"> </div>';
-      }
-      for (var day = 1; day <= monthLength; day++) {
-        var dateStr = currentYear + '-' + (currentMonth + 1).toString().padStart(2, '0') + '-' + day.toString().padStart(2, '0');
-        var attendance = userAttendance.find(function(item) {
-          return item.date === dateStr;
+    $(document).ready(function() {
+        var dataTable = $('.datatables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('staff.markattendance') }}",
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                },
+                {
+                    data: 'staff',
+                    name: 'staff',
+                },
+                {
+                    data: 'punching_time',
+                    name: 'punching_time',
+                },
+                {
+                    data: 'punchout_time',
+                    name: 'punchout_time',
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                },
+            ]
         });
-        var cellClass = attendance && attendance.status === '1' ? 'date-selected' : '';
-        calendarHtml += '<div class="col border text-center ' + cellClass + '">' + day + '<br>';
-        if (attendance) {
-          calendarHtml += attendance.status === '1' ? 'Present' : 'Absent';
-        } else {
-          calendarHtml += 'N/A';
-        }
-        calendarHtml += '</div>';
-        if ((day + startingDay) % 7 === 0) {
-          calendarHtml += '</div><div class="row">';
-        }
-      }
-      calendarHtml += '</div>';
-      $('#calendar').html(calendarHtml);
-    }
-
-    // Render the calendar initially
-    renderCalendar();
-  </script>
-
+    });
+</script>
 @endsection

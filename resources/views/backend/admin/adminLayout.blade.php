@@ -3,6 +3,7 @@
     <div id="page">
         <div class="card-style">
             <div class="content">
+               
                 <p id="demo" style="color:red;display: inline;">Loading....</p>
                 <div class="row mb-n3">
                     @if(auth()->user()->hasAnyRole(['staff','admin']))
@@ -134,18 +135,19 @@
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
 
-            document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-
-            // var xhr = new XMLHttpRequest();
-            // xhr.open("get", "/cpr/"+[latitude,longitude], true);
-            // xhr.setRequestHeader("Content-Type", "application/json");
-
-            // var data = JSON.stringify({
-            //     latitude: latitude,
-            //     longitude: longitude
-            // });
-
-            //  xhr.send(data);
+            document.getElementById("demo").innerHTML = "Latitude: " + latitude + " Longitude: " + longitude;
+            // var d = document.getElementById("demo").innerHTML;
+            var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/cpr", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Request was successful
+            console.log("Location data sent successfully");
+        }
+    };
+    xhr.send(JSON.stringify({ location: locationData }));
+            
         }
     </script>
         @endsection

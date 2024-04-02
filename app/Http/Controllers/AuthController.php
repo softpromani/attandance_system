@@ -14,11 +14,15 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect()->route('admin.backendAdminPage')->with('Success','Welcome back');
+        }
         return view('backend.auth.signin');
     }
 
     public function login(Request $request)
     {
+
         $request->validate([
             'email' => 'required',
             'password' => 'required',
@@ -53,20 +57,17 @@ class AuthController extends Controller
     public function showStaff($id)
     {
         $staff=User::find($id);
-        // dd($staff);
         return view('backend.admin.staffDetail',compact('staff'));
     }
     public function editStaff($id)
     {
         $staff=User::find($id);
-        // dd($staff);
         return view('backend.admin.staffedit',compact('staff'));
     }
 
     public function staffUpdateData(Request $request, $id)
     {
 
-        // dd($request->all());
         if($request->hasFile('file')){
             $path=$request->file->store('admin','public');
             User::find($id)->update(['file' => $path]);
@@ -86,8 +87,6 @@ class AuthController extends Controller
 
         ];
         $student=User::find($id)->update($data);
-        // dd($student);
-
         return redirect()->back();
     }
 
