@@ -25,21 +25,24 @@
                         <th scope="col" class="color-white">Edit</th>
                     </tr>
                 </thead>
-                {{-- <tbody> --}}
-                    {{-- @forelse ($bills as $bill) --}}
-                    {{-- <tr style="color:#2F539B;"> --}}
-                        {{-- <th>{{ $loop->index + 1 }}</th> --}}
-                        {{-- <th>{{$bill->amount ??'' }}</th> --}}
-                        {{-- <th>{{ $bill->desc??'' }}</th> --}}
-                        {{-- <th> --}}
-                            {{-- <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a> --}}
-                        {{-- </th> --}}
-                    {{-- </tr> --}}
-                    {{-- @empty --}}
-                        {{-- <th style="color:red;text-align:center;">No Data Found</th> --}}
-                    {{-- @endforelse --}}
+                <tbody>
+                    @forelse ($bills as $bill)
+                    <tr style="color:#2F539B;">
+                        <th>{{ $loop->index + 1 }}</th>
+                        <th>{{$bill->amount ??'' }}</th>
+                        <th>{{ $bill->student->student_name ?? ''  }}</th>
+                        <th>
+                            <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        </th>
+                        <th>
+                            <a href="{{ route('staff.student-fee.edit', $bill->id) }}" class="edit-bill" title="Edit"><i class="fas fa-edit"></i></a>
+                        </th>
+                    </tr>
+                    @empty
+                        <th style="color:red;text-align:center;">No Data Found</th>
+                    @endforelse
 
-                {{-- </tbody> --}}
+                </tbody>
                 <tbody>
                     <tr></tr>
                 </tbody>
@@ -49,7 +52,7 @@
 </div>
 @endsection
 @section('script')
-{{-- <script>
+<script>
     $(document).ready(function() {
         $(document).on('change', '.active', function() {
             var statusId = $(this).data('id');
@@ -62,7 +65,7 @@
             });
         });
     });
-</script> --}}
+</script>
 <script>
     $(document).ready(function() {
         var dataTable = $('.datatables').DataTable({
@@ -79,8 +82,8 @@
                     name: 'amount',
                 },
                 {
-                    data: 'desc',
-                    name: 'desc',
+                    data: 'student_name',
+                    name: 'student_name',
                 },
                 {
                     data: 'action',

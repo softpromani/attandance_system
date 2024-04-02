@@ -35,6 +35,7 @@
                 </td>
 
                     <td>
+                        @if($teacherleave->status==0)
                         <form id="approveButton" action="{{ route('staff.approveLeave') }}" method="POST">
                             @csrf
                             <input type="hidden" name="leave_id" value="{{ $teacherleave->id }}">
@@ -48,7 +49,12 @@
                             <input type="hidden" name="action" value="decline">
                             <button id="declineBtn" type="submit" class="btn btn-danger">Decline</button>
                         </form>
-                </td>
+                    @elseif($teacherleave->status==1)
+                        <p class="text-white bg-success rounded-pill">Approved</p>
+                    @elseif($teacherleave->status==2)
+                        <p class="text-white bg-danger rounded-pill">Declined</p>
+                    @endif
+                 </td>
 
             </tr>
             @empty

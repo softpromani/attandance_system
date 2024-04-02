@@ -26,7 +26,7 @@ class TeacherApproveController extends Controller
         if ($action == 'approve') {
             $leave->status = 1;
         } elseif ($action == 'decline') {
-            $leave->status = 0;
+            $leave->status = 2;
         }
 
         $leave->update();
