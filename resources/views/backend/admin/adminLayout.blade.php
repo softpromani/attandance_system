@@ -116,7 +116,7 @@
                     </div>
                     @endif
 
-                    @if(auth()->user()->hasAnyRole(['staff','admin']))
+                    @if(auth()->user()->hasRole('admin'))
 
 
                     <div class="col-6 ps-2">

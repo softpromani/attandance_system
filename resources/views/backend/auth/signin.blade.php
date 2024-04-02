@@ -1,4 +1,5 @@
 @extends('frontend.includes.main')
+
 @section('content')
     <div class="pt-3">
         <div class="card card-style">
@@ -28,8 +29,8 @@
                     </div>
                     <div class=" mb-4 ">
                         
-                    <input type="checkbox" name="remember" id="remember" style="visibility: visible;">
-                    <label for="remember" style="visibility: visible;" class="">Remember Me</label>
+                    <input type="checkbox" name="remember" id="rememberThis" style="opacity: 1 !important;">
+                    <label for="rememberThis" style="opacity: 1 !important;" class="">Remember Me</label>
                     </div>
                     <input type="submit" class="btn btn-m rounded-sm btn-full bg-green-dark text-uppercase font-900">
                 </form>
