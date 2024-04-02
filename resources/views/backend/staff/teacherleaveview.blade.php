@@ -38,16 +38,17 @@
                 <td>
                     <img src="{{asset('storage/'.$teacherleave->file) }}" width="100">
                 </td>
-                @if($teacherleave->status==1)
                 <td>
-                   <p class="text-white bg-success rounded-pill">Approved</p>
-                </td>
-                @else
-                <td>
+                    @if($teacherleave->status==1)
+                    <p class="text-white bg-success rounded-pill">Approved</p>
+                    @elseif($teacherleave->status==2)
+                    <p class="text-dark bg-danger rounded-pill">Declined</p>
+                    @else
                     <p class="text-dark bg-warning rounded-pill">Pending</p>
-                </td>
                     @endif
-                    <td>
+                </td>
+                    @if($teacherleave->status==1)
+                    <td class="disabled">
                     <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
 
                     <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"
@@ -57,7 +58,29 @@
                         <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
                     </form>
                 </td>
+                @elseif($teacherleave->status==0)
+                <td class="disabled">
+                    <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
 
+                    <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this teacher leaves?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
+                    </form>
+                </td>
+                else
+                <td>
+                    <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+
+                    <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this teacher leaves?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
+                    </form>
+                </td>
+                @endif
             </tr>
             @empty
             teacher leaves not found
