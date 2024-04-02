@@ -1,14 +1,15 @@
 @extends('frontend.includes.main')
 @section('content')
-{{--  {{ $teacherleaves }}  --}}
-{{--  <div class="card card-style">  --}}
-    <div class="content mb-5">
-        <a href="{{route('staff.teacher-leaves.index')}}">
-            <div class="text-end mb-2">
-                <button type="button" class="btn btn-primary" title="Teacher Leave"><i
-                        class="fas fa-address-card"></i></button>
-            </div>
-        </a>
+<div class="content ">
+    <div class="row">
+        <div class="col">
+            <h2 class="">Apply Leave</h2>
+        </div>
+        <div class="text-end col">
+            <a href="{{ route('staff.teacher-leaves.index') }}">
+                <button type="button" class="btn btn-success" title="Leave"><i class="fa fa-id-card-o"></i></button>
+            </a>
+        </div>
     </div>
     <div class="card card-style">
         <div class="content mb-1 ">
@@ -22,6 +23,7 @@
                 <th scope="col">Start Date</th>
                 <th scope="col">End Date</th>
                 <th scope="col">File</th>
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -36,7 +38,16 @@
                 <td>
                     <img src="{{asset('storage/'.$teacherleave->file) }}" width="100">
                 </td>
+                @if($teacherleave->status==1)
                 <td>
+                   <p class="text-white bg-success rounded-pill">Approved</p>
+                </td>
+                @else
+                <td>
+                    <p class="text-dark bg-warning rounded-pill">Pending</p>
+                </td>
+                    @endif
+                    <td>
                     <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
 
                     <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"

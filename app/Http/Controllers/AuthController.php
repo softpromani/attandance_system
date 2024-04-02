@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LeaveSetup;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\TeacherLeave;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,7 @@ class AuthController extends Controller
     {
         $teacher=User::all();
         $student=Student::get();
-        $leave=LeaveSetup::get();
+        $leave=TeacherLeave::get();
         $stdnt=$student->count();
         $teach=$teacher->count();
         $lv=$leave->count();

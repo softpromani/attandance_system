@@ -3,7 +3,7 @@
     <div id="page">
         <div class="card-style">
             <div class="content">
-               
+
                 <p id="demo" style="color:red;display: inline;">Loading....</p>
                 <div class="row mb-n3">
                     @if(auth()->user()->hasAnyRole(['staff','admin']))
@@ -20,10 +20,10 @@
                             </div>
                         </a>
                     </div>
-                   
+
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.markattendance') }}">
-                            <div class="card card-style gradient-red shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Mark Attendance</h3>
                                 </div>
@@ -34,7 +34,7 @@
                     @if(auth()->user()->hasRole('admin'))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.teacherRegisterData') }}">
-                            <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3"
+                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Teacher's</h3>
@@ -47,9 +47,13 @@
                             </div>
                         </a>
                     </div>
+
+
+
                     <div class="col-6 ps-2">
                         <a href="{{ route('admin.qr.index') }}">
-                            <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                            <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Generate QR</h3>
                                 </div>
@@ -67,16 +71,15 @@
                     </div>
                     {{-- <div class="col-6 pe-2">
                         <a href="#">
+                    <div class="col-6 pe-2">
+                        <a href="{{ route('admin.leave-set-up.index') }}">
                             <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
-                                    <h3 class="color-white d-block pt-1">Present</h3>
+                                    <h3 class="color-white d-block pt-1">Leave SetUp</h3>
                                 </div>
                                 <div class="card-bottom p-3">
-                                    <h1 class="color-white mb-n1 font-28">35</h1>
-                                    <i class="color-white font-10 fa fa-arrow-up"></i>
-                                    <span class="color-white font-10 font-700">1 New</span>
-                                    <span class="color-white font-10 opacity-60"> vs last 7 days</span>
+                                    <h1 class="color-white mb-n1 font-28">{{ $lv }}</h1>
                                 </div>
                             </div>
                         </a>
@@ -84,7 +87,7 @@
                     @endif
                     @if(auth()->user()->hasAnyRole(['staff','admin']))
                     <div class="col-6 ps-2">
-                        <a href="{{route('staff.student-bill.create')}}">
+                        <a href="{{ route('staff.student-bill.create') }}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
@@ -96,28 +99,72 @@
                                 </div>
                             </div>
                     </div>
+
                     <div class="col-6 ps-2">
-                        <a href="{{ route('admin.leave-set-up.index') }}">
+                        <a href="{{ route('staff.teacher-leaves.create') }}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
-                                    <h3 class="color-white d-block  pt-1">Leave SetUp</h3>
+                                    <h3 class="color-white d-block  pt-1">Leave Apply</h3>
                                 </div>
                                 <div class="card-bottom p-3">
-                                    <h1 class="color-white mb-n1 font-28">{{ $lv }}</h1>
-                                    <span class="color-white font-10 opacity-60">No new Meetings</span>
+                                    {{--  <h1 class="color-white mb-n1 font-28">{{ $lv }}</h1>
+                                    <span class="color-white font-10 opacity-60">No new Meetings</span>  --}}
                                 </div>
                             </div>
                         </a>
                     </div>
                     @endif
+
+                    @if(auth()->user()->hasAnyRole(['staff','admin']))
+
+
+                    <div class="col-6 ps-2">
+                        <a href="{{ route('staff.teacherAllLeave') }}">
+                            <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Approve Leave</h3>
+                                </div>
+                                <div class="card-bottom p-3">
+                                    
+                                </div>
+                            </div>
+                    </div>
+
+                    @endif
+
                 </div>
+
+                    {{--  <div class="col-6 ps-2">
+                        <a href="{{ route('staff.teacher-leaves.create') }}">
+                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Leave Apply</h3>
+                                </div>
+
+                            </div>
+                    </div>  --}}
+
+                    {{--  <div class="col-6 ps-2">
+                        <a href="{{ route('staff.teacherAllLeave') }}">
+                            <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Approve Leave</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>  --}}
+
+                </div>
+
             </div>
 
         </div>
     </div>
-    @endsection
-    @section('script')
+@endsection
+@section('script')
     <script>
         window.onload = function() {
             getLocation();
@@ -147,7 +194,7 @@
         }
     };
     xhr.send(JSON.stringify({ location: locationData }));
-            
+
         }
     </script>
-        @endsection
+@endsection

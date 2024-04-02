@@ -10,6 +10,7 @@ use App\Http\Controllers\QRController;
 use App\Http\Controllers\StudentBillController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherApproveController;
 use App\Http\Controllers\TeacherLeaveController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,8 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     Route::get('student-fee/edit/{id}', [StudentBillController::class,'editStudentFee'])->name('student-fee.edit');
     Route::get('student-fee/update/{id}', [StudentBillController::class,'updateStudentFee'])->name('student-fee-update');
     Route::resource('teacher-leaves',TeacherLeaveController::class);
+    Route::get('teacher-all-leave',[TeacherApproveController::class,'allLeave'])->name('teacherAllLeave');
+    Route::post('approve-leave',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
     Route::get('mark_attendance',[AttendanceController::class,'markAttendance'])->name('markattendance');
 });
 Route::group([ 'prefix'=>'student','as'=>'student.', 'middleware' => 'auth'],function(){

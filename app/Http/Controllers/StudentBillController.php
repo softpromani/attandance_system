@@ -109,7 +109,7 @@ class StudentBillController extends Controller
 
         }
 
-        return redirect()->back()->with('success', 'Data stored successfully');
+        return redirect()->route('staff.student-bill.create')->with('success', 'Data stored successfully');
     }
 
     /**
@@ -248,7 +248,7 @@ class StudentBillController extends Controller
         }
 
         if($feeDetail){
-            return redirect()->back()->with('succes' ,'Data Updated Successfully');
+            return redirect()->route('staff.student-bill.create')->with('succes' ,'Data Updated Successfully');
 
         }
 
