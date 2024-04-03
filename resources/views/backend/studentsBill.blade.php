@@ -25,7 +25,7 @@
                         <th scope="col" class="color-white">Edit</th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @forelse ($bills as $bill)
                     <tr style="color:#2F539B;">
                         <th>{{ $loop->index + 1 }}</th>
@@ -42,7 +42,7 @@
                         <th style="color:red;text-align:center;">No Data Found</th>
                     @endforelse
 
-                </tbody>
+                </tbody> --}}
                 <tbody>
                     <tr></tr>
                 </tbody>
@@ -52,20 +52,6 @@
 </div>
 @endsection
 @section('script')
-<script>
-    $(document).ready(function() {
-        $(document).on('change', '.active', function() {
-            var statusId = $(this).data('id');
-            var isActive = $(this).is(':checked');
-            var newurl = "{{ url('admin/changeStatus') }}/" + statusId;
-           alert(newurl);
-            $.ajax({
-                url: newurl,
-                type: 'get',
-            });
-        });
-    });
-</script>
 <script>
     $(document).ready(function() {
         var dataTable = $('.datatables').DataTable({
@@ -84,6 +70,10 @@
                 {
                     data: 'student_name',
                     name: 'student_name',
+                },
+                {
+                    data: 'view',
+                    name: 'view',
                 },
                 {
                     data: 'action',
