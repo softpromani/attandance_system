@@ -61,7 +61,6 @@
                     {{--  <input type="hidden" value="{{$fee->student_id}}" name="student_id">  --}}
                     @csrf
                     <div class="step" id="step2">
-
                         <table class="table">
                             <thead>
                                 <tr>
@@ -118,7 +117,7 @@
                                 aria-hidden="true"></i></button>
                     </div>
                     <div class="text-end mt-3">
-                        Total Sum:{{$fee->total_fee}} <span id="sum"></span>
+                        Total Sum: <span id="sum">{{$fee->total_fee}} </span>
                         <td><input type="hidden" name="totalsum" value="" class="form-control" id="sum_input" readonly></td>
                     </div>
                     <div class="text-center mt-3">

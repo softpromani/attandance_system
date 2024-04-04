@@ -14,7 +14,7 @@
     <div class="card card-style">
         <div class="content mb-1 ">
             <div class="table-responsive">
-        <table class="table table-borderless text-center rounded-sm shadow-l" style="overflow: hidden;">
+        <table class="table table-borderless text-center rounded-sm shadow-l datatables" style="overflow: hidden;">
             <thead>
                 <tr style="background-color:#2F539B; color:white;">
                 <th scope="col">SR.NO.</th>
@@ -30,57 +30,7 @@
         <tbody style="color:#2F539B;">
             @forelse($teacherleaves as $teacherleave)
             <tr>
-                <th scope="row">{{ $loop->index+1}}</th>
-                <td>{{ $teacherleave->subject ?? '' }}</td>
-                <td>{{ $teacherleave->description ?? '' }}</td>
-                <td>{{ $teacherleave->start_date ?? '' }}</td>
-                <td>{{ $teacherleave->end_date ?? '' }}</td>
-                <td>
-                    <img src="{{asset('storage/'.$teacherleave->file) }}" width="100">
-                </td>
-                <td>
-                    @if($teacherleave->status==1)
-                    <p class="text-white bg-success rounded-pill">Approved</p>
-                    @elseif($teacherleave->status==2)
-                    <p class="text-dark bg-danger rounded-pill">Declined</p>
-                    @else
-                    <p class="text-dark bg-warning rounded-pill">Pending</p>
-                    @endif
-                </td>
-                    @if($teacherleave->status==1)
-                    <td class="disabled">
-                    <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
 
-                    <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this teacher leaves?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
-                    </form>
-                </td>
-                @elseif($teacherleave->status==0)
-                <td class="disabled">
-                    <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-
-                    <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this teacher leaves?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
-                    </form>
-                </td>
-                else
-                <td>
-                    <a href="{{ route('staff.teacher-leaves.edit', $teacherleave->id) }}" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
-
-                    <form action="{{ route('staff.teacher-leaves.destroy', $teacherleave->id)  }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this teacher leaves?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger mt-1" title="Delete"><i class="fas fa-trash-alt" ></i></button>
-                    </form>
-                </td>
-                @endif
             </tr>
             @empty
             teacher leaves not found
@@ -93,3 +43,37 @@
 
 </div>
 @endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            var dataTable = $('.datatables').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('staff.teacher-leaves.create') }}",
+                columns: [
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                    { data: 'subject', name: 'subject' },
+                    { data: 'description', name: 'description' },
+                    { data: 'start_date', name: 'start_date' },
+                    { data: 'end_date', name: 'end_date' },
+                    {
+                        data: 'file',
+                        name: 'file',
+                        render: function(data, type, full, meta) {
+                            if (type === 'display') {
+                                return '<img src="' + data + '" width="100">';
+                            }
+                            return data;
+                        }
+                    },
+                    { data: 'status', name: 'status' },
+                    { data: 'action', name: 'action' }, // Action column for edit
+                    { data: 'delete', name: 'delete' } // New column for delete
+                ]
+            });
+        });
+    </script>
+
+@endsection
+

@@ -45,7 +45,7 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
 
 
 });
-    
+
 Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],function(){
     Route::get('scanner',[AttendanceController::class,'qrScanner'])->name('qrscanner');
     Route::get('teacher-register',[TeacherController::class,'teacherRegister'])->name('TeacherRegester');
@@ -64,7 +64,10 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     Route::get('student-fee/update/{id}', [StudentBillController::class,'updateStudentFee'])->name('student-fee-update');
     Route::resource('teacher-leaves',TeacherLeaveController::class);
     Route::get('teacher-all-leave',[TeacherApproveController::class,'allLeave'])->name('teacherAllLeave');
-    Route::post('approve-leave',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
+    // Route::get('approve-leave',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
+    Route::post('/staff/approve-leave/{id}',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
+    Route::post('/staff/decline-leave/{id}', [TeacherApproveController::class,'declineLeave'])->name('declineLeave');
+
     Route::get('mark_attendance',[AttendanceController::class,'markAttendance'])->name('markattendance');
 });
 Route::group([ 'prefix'=>'student','as'=>'student.', 'middleware' => 'auth'],function(){
