@@ -10,31 +10,37 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('frontend/assets/images/collage/JFS.png') }}" style="border-radius: 25%;">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/styles/bootstrap.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/fonts/css/fontawesome-all.min.css')}}">
-    {{-- <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js"> --}}
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('frontend/assets/app/icons/icon-192x192.png')}}">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" > --}}
 </head>
 <body class="theme-light" data-highlight="highlight-red" data-gradient="body-default"> 
-
         <div id="content" class="card card-style mt-3">
             @include('frontend.includes.header') 
-            
-            <div class="content mb-0">
+            <div class="content ">
                 <button type="button" id="backButton" style="float: left; font-weight:900;">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
-                <div id="map-canvas" style="height: 400px; width: 100%; padding-top:10px;"></div>
-                <h4>Updated Coordinates (X,Y)</h4>
-                
-                    <div id="info" style=" color:red; font-family: Arial; height:200px; font-size: 12px; "></div>
+                <form action="{{ route('admin.setarea') }}" method="post">
+                    @csrf
                    
+                    <div id="map-canvas" style="height: 400px; width: 100%; padding-top:10px;"></div>
+                    <div style=" margin-bottom:10px; ">
+                        <input type="hidden" name="info" id="info">
+                        </div>
+                    <button type="submit" class="btn btn-sm btn-success">Submit</button>
+                </form>
             </div>
-          
         </div>
-      
 {{-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMq4WI77B_DyzBDookMHz6s1qKxANWaqs&libraries=drawing&callback=drawing" ></script> --}}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMq4WI77B_DyzBDookMHz6s1qKxANWaqs&libraries=drawing&callback=InitMap"></script>
-
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&libraries=drawing&callback=InitMap"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{{-- AIzaSyDiYZNxoqXh_D3vJ3zizVbHf-WKWIk9vH0 --}}
+<script>
+     $(document).ready(function() {
+     document.getElementById('backButton').addEventListener('click', function() {
+                window.history.back();
+            });
+        });
+</script>
  
  <script>
     var mapOptions;
@@ -45,7 +51,7 @@
     let lastElement
     
     function InitMap() {
-        var location = new google.maps.LatLng(25.7447252,82.6598815)
+        var location = new google.maps.LatLng(25.667142,82.709240)
         mapOptions = {
             zoom: 12,
             center: location,
@@ -163,6 +169,10 @@
                 coordinates.push(newShape.getPath().getAt(i).toUrlValue(6))
             }
             document.getElementById('info').innerHTML = coordinates
+
+            var data = coordinates;
+    // Set the value of the input box with id "info" to the data
+    document.getElementById("info").value = data;
            
         }
     
@@ -199,10 +209,7 @@
         map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
     
     }
-    document.getElementById('backButton').addEventListener('click', function() {
-                window.history.back();
-            });
-
+   
     InitMap()
     </script>
   

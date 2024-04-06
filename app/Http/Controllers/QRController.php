@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\QR;
+use App\Models\SetArea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
@@ -205,46 +206,85 @@ class QRController extends Controller
 
     public function capture(Request $request , $qr_code)
     {
-      $reqData = QR::active()->where('qr_code',$qr_code)->first();
-      $user = auth()->user();
+        $userLocation = auth()->user()->location;
+        $userCoordinates = explode(',', $userLocation);
+        $userLatitude = (float) $userCoordinates[0]; 
+        $userLongitude = (float) $userCoordinates[1]; 
 
-       
-      if(auth()->user()->attendances == true){
-          $punchout =  Attendance::where('teacher_id',$user->id)->whereDate('punching_time',Carbon::today())->update([
-                'punchout_time'=>\Carbon\Carbon::now('Asia/Kolkata'),
-                'punchout_location'=>'location',
-            ]);
-            if($punchout){
-                return redirect()->route('admin.backendAdminPage')->with('success','Punchout Successfully');
+        $coordi = SetArea::first();
+        $pointsString = $coordi->Coordinates;
+        $pointsArray = explode(',', $pointsString);
+        $allcoordinate = array_chunk($pointsArray, 2);
+        $radius = 3; // assuming the radius is 3 units
+
+        foreach ($allcoordinate as $coordinate) {
+            $distance = $this->calculateDistance($userLatitude, $userLongitude, $coordinate[0], $coordinate[1]);
+        //   dd($distance);
+            if ($distance <= $radius) {
+                
+                $reqData = QR::active()->where('qr_code',$qr_code)->first();
+                $user = auth()->user();
+                if(auth()->user()->attendances == true){
+                    $punchout =  Attendance::where('teacher_id',$user->id)->whereDate('punching_time',Carbon::today())->update([
+                          'punchout_time'=>\Carbon\Carbon::now('Asia/Kolkata'),
+                          'punchout_location'=>$user->location,
+                      ]);
+                      if($punchout){
+                          return redirect()->route('admin.backendAdminPage')->with('success','Punchout Successfully');
+                      }
+                }
+              
+                if($reqData){
+                 $valid = \Carbon\Carbon::now('Asia/Kolkata')->between($reqData->valid_from, $reqData->valid_to);
+                  if($valid == false)
+                 {
+                  return redirect()->back()->with('error','Ops... This QR Code is Expired');
+                 }
+                 elseif($valid == true){
+                  $attendance = Attendance::create([
+                   'qr_id'=>$reqData->id,
+                   'teacher_id'=>$user->id,
+                   'punching_time'=>\Carbon\Carbon::now('Asia/Kolkata'),
+                   'punching_location'=>$user->location,
+                   'status'=>'1',
+                   'device_info'=>json_encode(['ip'=>$request->ip()]),
+                  ]);
+                  if($attendance){
+                   return redirect()->route('admin.backendAdminPage')->with('success','Attendance Mark Successfully');
+                  }
+               }
+              }
+              else{
+                  return redirect()->back()->with('error','Invalid QR Code');
+                 }
+                
             }
-      }
-    
-      if($reqData){
-       $valid = \Carbon\Carbon::now('Asia/Kolkata')->between($reqData->valid_from, $reqData->valid_to);
-        if($valid == false)
-       {
-        return redirect()->back()->with('error','Ops... This QR Code is Expired');
-       }
-       elseif($valid == true){
-        $attendance = Attendance::create([
-         'qr_id'=>$reqData->id,
-         'teacher_id'=>$user->id,
-         'punching_time'=>\Carbon\Carbon::now('Asia/Kolkata'),
-         'punching_location'=>'location',
-         'status'=>'1',
-         'device_info'=>json_encode(['ip'=>$request->ip()]),
-        ]);
-        if($attendance){
-         return redirect()->route('admin.backendAdminPage')->with('success','Attendance Mark Successfully');
-        }
-     }
+            else{
+                return redirect()->route('admin.backendAdminPage')->with('warning','You are in Restricted Area');
+            }
+        } 
     }
-    else{
-        return redirect()->back()->with('error','Invalid QR Code');
-       }
+    
+    private function calculateDistance($latitude1, $longitude1, $latitude2, $longitude2)
+    {
+        $earthRadius = 6371; // in kilometers
+        
+        $lat1 = deg2rad((float) $latitude1);
+        $lon1 = deg2rad((float) $longitude1);
+        $lat2 = deg2rad((float) $latitude2);
+        $lon2 = deg2rad((float) $longitude2);
+        
+        $dlat = $lat2 - $lat1;
+        $dlon = $lon2 - $lon1;
+        
+        $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlon / 2) * sin($dlon / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        
+        $distance = $earthRadius * $c;
+        
+        return $distance;
     }
 
-    
     
 
 }

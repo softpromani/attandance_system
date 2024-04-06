@@ -12,11 +12,12 @@ class AreaController extends Controller
     }
 
     public function setArea(Request $request){
-        dd($request->all());
-        $coordinates = $request->input('coordinates');
-       $data = SetArea::create([
-            'Coordinates'=>$coordinates
-        ]);
+       $user = auth()->user()->id;
+       $data = SetArea::updateOrCreate(['user_id'   => $user],
+             [
+            'Coordinates'=>json_encode($request->info),
+            ]
+    );
         if($data){
             return redirect()->back()->with('success','Area set successfully');
         }

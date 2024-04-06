@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('set_areas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('Coordinates');
             $table->timestamps();
         });

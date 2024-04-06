@@ -55,7 +55,7 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     Route::post('teacher-update-data/{id}',[TeacherController::class,'teacherUpdateData'])->name('teacherUpdateData');
     Route::post('staff-delete/{id}',[TeacherController::class,'teacherDeleteData'])->name('teacherDeleteData');
     Route::get('teacher-count',[TeacherController::class,'teacherCount'])->name('teacherCount');
-    // Route::get('/update-location', [AttendanceController::class, 'updateLocation']);
+    Route::post('update-location', [AttendanceController::class, 'updateLocation'])->name('updatelocation');
     Route::get('qr-generate/{id}',[QRController::class,'generateQR'])->name('generate_qr');
     Route::get('cpr/{id}',[QRController::class,'capture']);
     Route::resource('student-bill',StudentBillController::class);
