@@ -25,11 +25,11 @@
                         <th scope="col" class="color-white">Edit</th>
                     </tr>
                 </thead>
-                {{-- <tbody>
+                <tbody>
                     @forelse ($bills as $bill)
                     <tr style="color:#2F539B;">
                         <th>{{ $loop->index + 1 }}</th>
-                        <th>{{$bill->amount ??'' }}</th>
+                        <th>{{$bill->total_fee ??'' }}</th>
                         <th>{{ $bill->student->student_name ?? ''  }}</th>
                         <th>
                             <a href="{{ route('staff.student-bill.show' , $bill->id) }}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
@@ -42,7 +42,7 @@
                         <th style="color:red;text-align:center;">No Data Found</th>
                     @endforelse
 
-                </tbody> --}}
+                </tbody>
                 <tbody>
                     <tr></tr>
                 </tbody>
@@ -64,8 +64,8 @@
                     name: 'DT_RowIndex',
                 },
                 {
-                    data: 'amount',
-                    name: 'amount',
+                    data: 'total_fee',
+                    name: 'total_fee',
                 },
                 {
                     data: 'student_name',

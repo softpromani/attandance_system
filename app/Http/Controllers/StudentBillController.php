@@ -45,19 +45,19 @@ class StudentBillController extends Controller
     public function create()
     {
         if (request()->ajax()) {
-            $bills=FeeDetail::get();
+            $bills=Fee::with('student')->get();
             // dd($bills);
             return DataTables::of($bills)
                 ->addIndexColumn()
                 ->addColumn('student_name',function($q){
-                    return $q->student;
+                    return $q->student->student_name;
                 })
                 ->addColumn('action', function ($row) {
                     $id = $row->id;
                     $ht = '';
-                        $ht .= '<a href="' . route("staff.student-bill.show", $id) . '" target="_blank" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
-                    
-                        return $ht; 
+                        $ht .= '<a href="' . route("staff.student-fee.edit", $id) . '" target="_blank" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+
+                        return $ht;
                 })
                 ->addColumn('view',function($q){
                     $id = $q->id;
@@ -66,10 +66,10 @@ class StudentBillController extends Controller
                  return $ht;
                 })
                 ->rawColumns(['action','view'])
-          
+
             ->make(true);
     }
-        $bills=FeeDetail::all();
+        $bills=Fee::with('student')->get();
         return view('backend.studentsBill',compact('bills'));
     }
 
