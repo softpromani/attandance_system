@@ -61,7 +61,7 @@ class TeacherController extends Controller
       }
         if($res)
         {
-            return redirect()->route('staff.teacherRegisterData');
+            return redirect()->route('staff.teacherRegisterData')->with('success','Staff Register Successfully');
         }
 
     }
