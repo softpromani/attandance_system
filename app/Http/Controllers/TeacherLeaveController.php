@@ -34,16 +34,16 @@ class TeacherLeaveController extends Controller
             $teacherleaves = TeacherLeave::get();
 
             return DataTables::of($teacherleaves)
-                ->addIndexColumn() // Add DT_RowIndex field
-                ->addColumn('status_column', function ($row) {
-                    if ($row->status == 0) {
-                        return '<p class="text-dark bg-warning rounded-pill">Pending</p>';
-                    } elseif ($row->status == 1) {
-                        return '<p class="text-white bg-success rounded-pill">Approved</p>';
-                    } elseif ($row->status == 2) {
-                        return '<p class="text-dark bg-danger rounded-pill">Declined</p>';
-                    }
-                })
+            ->addIndexColumn()
+            ->addColumn('status', function ($row) {
+                if ($row->status == 0) {
+                    return '<p class="text-dark bg-warning rounded-pill">Pending</p>';
+                } elseif ($row->status == 1) {
+                    return '<p class="text-white bg-success rounded-pill">Approved</p>';
+                } elseif ($row->status == 2) {
+                    return '<p class="text-dark bg-danger rounded-pill">Declined</p>';
+                }
+            })
                 ->addColumn('file', function ($row) {
                     return [
                         'display' => '<img src="' . asset('storage/' . $row->file) . '" width="100">',
@@ -51,21 +51,20 @@ class TeacherLeaveController extends Controller
                     ];
                 })
                 ->addColumn('action', function ($row) {
-                    $id = $row->id;
-                    $editLink = route("staff.teacher-leaves.edit", $id);
-                    $editButton = '<a href="' . $editLink . '" target="_blank" class="btn btn-link p-0" style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
-                    return $editButton;
+                    if($row->status == 0){
+                        $id = $row->id;
+                        $editLink = route("staff.teacher-leaves.edit", $id);
+                        $editButton = '<a href="' . $editLink . '" target="_blank" class="btn btn-link p-0 " style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                        $editButton .= '<form action="' . route('staff.teacher-leaves.destroy', $id) . '"  method="POST" onsubmit="return confirm(\'Are you sure you want to delete this record?\')">';
+                        $editButton .= csrf_field();
+                        $editButton .= method_field('DELETE');
+                        $editButton .= '<button type="submit" class="btn btn-danger"><i class="fa fa-trash " aria-hidden="true"></i></button>';
+                        $editButton .= '</form>';
+                        return $editButton;
+                    }
+                    return '';
                 })
-                ->addColumn('delete', function ($row) {
-                    $id = $row->id;
-                    $form = '<form action="' . route('staff.teacher-leaves.destroy', $id) . '" method="POST" onsubmit="return confirm(\'Are you sure you want to delete this record?\')">';
-                    $form .= csrf_field();
-                    $form .= method_field('DELETE');
-                    $form .= '<button type="submit" class="btn btn-danger">Delete</button>';
-                    $form .= '</form>';
-                    return $form;
-                })
-                ->rawColumns(['status_column', 'image', 'action', 'delete'])
+                ->rawColumns(['status', 'image', 'action', 'delete'])
                 ->make(true);
         }
 
