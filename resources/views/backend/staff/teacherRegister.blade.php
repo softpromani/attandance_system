@@ -75,11 +75,11 @@
                     @endif
                     <div class="input-style has-borders no-icon validate-field mb-4 col-sm-12 input-style-always-active">
                         <input type="text" name="father_name" value="{{ $data->father_name ?? '' }}"
-                            class="form-control validate-text" id="form3" placeholder="Teacher Father's Name">
+                            class="form-control validate-text" id="form3" placeholder="Father's Name">
                         @error('father_name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
-                        <label for="form3" class="color-highlight"> Father Name</label>
+                        <label for="form3" class="color-highlight">Father's Name</label>
                         <i class="fa fa-times disabled invalid color-red-dark"></i>
                         <i class="fa fa-check disabled valid color-green-dark"></i>
 
@@ -137,7 +137,7 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                                 <label for="form7" class="color-highlight">Enter Anniversary Date</label>
-
+                                
                             </div>
                         </div>
                     </div>

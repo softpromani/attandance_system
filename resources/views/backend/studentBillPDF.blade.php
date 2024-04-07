@@ -1,7 +1,4 @@
-{{--  @extends('frontend.includes.main')
-@section('content')  --}}
-
-@extends('frontend.includes.head')
+@include('frontend.includes.head')
 
 @section('style')
 <style>
@@ -29,7 +26,7 @@
             <h4>J.S.F. Academy Barabanki</h4>
         </div>
     </div>
-    <a onclick="printDiv('printable-content')" style="float:right; color:red;" class="btn btn-sm border"><strong>Print</strong></a>
+    <a onclick="window.print()" style="float:right; color:red;" class="btn btn-sm border"><strong>Print</strong></a>
     <div class="row">
         <div class="col-sm-4 col-md-6">
             <p>Student Name:- &nbsp;&nbsp;{{ $fee->student->student_name }}</p>
@@ -73,25 +70,6 @@
     </table>
 </div>
 </div>
-{{--  <div class="row mt-3 ">
-    <div class="col text-center">
-        <button onclick="printDiv('printable-content')" class="btn btn-primary">Print</button>
-    </div>
-</div>  --}}
-{{--  @endsection  --}}
 
-{{--  @section('script')  --}}
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<!-- Include custom JavaScript for printing -->
-<script>
-    function printDiv(divId) {
-        var content = document.getElementById(divId).innerHTML;
-        var printWindow = window.print();
-        printWindow.document.write('<html><head><title>Print</title></head><body>' + content + '</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    }
-</script>
-{{--  @endsection  --}}
 
-@extends('frontend.includes.foot')
+@include('frontend.includes.foot')
