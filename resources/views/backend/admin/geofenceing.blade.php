@@ -51,7 +51,7 @@
     let lastElement
     
     function InitMap() {
-        var location = new google.maps.LatLng(25.667142,82.709240)
+        var location = new google.maps.LatLng(26.915106,81.193206)
         mapOptions = {
             zoom: 12,
             center: location,
