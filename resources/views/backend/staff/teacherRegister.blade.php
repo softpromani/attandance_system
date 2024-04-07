@@ -79,7 +79,7 @@
                         @error('father_name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
-                        <label for="form3" class="color-highlight">Teacher Father Nmae</label>
+                        <label for="form3" class="color-highlight"> Father Name</label>
                         <i class="fa fa-times disabled invalid color-red-dark"></i>
                         <i class="fa fa-check disabled valid color-green-dark"></i>
 
@@ -107,7 +107,7 @@
                         </div>
                     @else
                         <div class="validate-field mb-4 col-sm-12 input-style-always-active">
-                            <label for="form4" class="color-highlight">Teacher Profile Picture</label>
+                            <label for="form4" class="color-highlight"> Profile Picture</label>
                             <input type="file" name="file" class="form-control validate-text" id="form4"
                                 placeholder="">
                             <i class="fa fa-times disabled invalid color-red-dark"></i>
@@ -136,7 +136,7 @@
                                 @error('anniversary_date')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-                                <label for="form7" class="color-highlight">Enter Your Anniversry Date</label>
+                                <label for="form7" class="color-highlight">Enter Anniversary Date</label>
 
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                                 @error('joining_date')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-                                <label for="form7" class="color-highlight">Enter your Joining Date</label>
+                                <label for="form7" class="color-highlight">Enter Joining Date</label>
 
                             </div>
                         </div>
