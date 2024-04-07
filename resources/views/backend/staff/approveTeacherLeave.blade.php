@@ -209,7 +209,7 @@
                 { data: 'description', name: 'description' },
                 { data: 'start_date', name: 'start_date' },
                 { data: 'end_date', name: 'end_date' },
-                { data: 'status_column', name: 'status_column' },
+                { data: 'status', name: 'status' },
                 {
                     data: 'action',
                     name: 'action',
@@ -224,15 +224,15 @@
                         var approveRoute = "{{ route('staff.approveLeave', ':id') }}".replace(':id', leaveId);
                         var declineRoute = "{{ route('staff.declineLeave', ':id') }}".replace(':id', leaveId);
                         // Return the buttons as HTML
-                        if(full.status == 0){
+                        if(full.status !== 0){
                             var buttons = '<form action="' + approveRoute + '" method="POST">' + '{{ csrf_field() }}' +
-                                '<button type="submit" class="btn btn-success">Approve</button></form>';
+                                '<button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button></form>';
                   buttons += '<form action="' + declineRoute + '" method="POST">' + '{{ csrf_field() }}' +
-                             '<button type="submit" class="btn btn-danger">Decline</button></form>';
+                             '<button type="submit" class="btn btn-danger mt-1"><i class="fa fa-times" aria-hidden="true"></i></button></form>';
                   return buttons;
+              }
                         }
 
-                    }
                 }
             ],
             rowCallback: function(row, data) {

@@ -30,15 +30,21 @@ class TeacherApproveController extends Controller
                     return '<img src="' . asset('storage/' . $row->file) . '" width="100">';
                 })
                 ->addColumn('action', function ($row) {
-                    $approveRoute = route('staff.approveLeave', $row->id);
-                    $declineRoute = route('staff.declineLeave', $row->id);
+                    // Check if the status is 0 (pending)
+                    if ($row->status === 0) {
+                        $approveRoute = route('staff.approveLeave', $row->id);
+                        $declineRoute = route('staff.declineLeave', $row->id);
 
-                    $buttons = '<form action="' . $approveRoute . '" method="POST">' . csrf_field() .
-                        '<button type="submit" class="btn btn-success">Approve</button></form>';
-                    $buttons .= '<form action="' . $declineRoute . '" method="POST">' . csrf_field() .
-                        '<button type="submit" class="btn btn-danger">Decline</button></form>';
+                        $buttons = '<form action="' . $approveRoute . '" method="POST">' . csrf_field() .
+                            '<button type="submit" class="btn btn-success">Approve</button></form>';
+                        $buttons .= '<form action="' . $declineRoute . '" method="POST">' . csrf_field() .
+                            '<button type="submit" class="btn btn-danger">Decline</button></form>';
 
-                    return $buttons;
+                        return $buttons;
+                    } else {
+                        // If status is not 0, return an empty string (hide the buttons)
+                        return '';
+                    }
                 })
                 ->rawColumns(['status', 'file', 'action']) // Declare rawColumns
                 ->make(true);

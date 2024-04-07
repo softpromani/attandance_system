@@ -45,35 +45,34 @@
 @endsection
 
 @section('script')
-    <script>
-        $(document).ready(function() {
-            var dataTable = $('.datatables').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('staff.teacher-leaves.create') }}",
-                columns: [
-                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                    { data: 'subject', name: 'subject' },
-                    { data: 'description', name: 'description' },
-                    { data: 'start_date', name: 'start_date' },
-                    { data: 'end_date', name: 'end_date' },
-                    {
-                        data: 'file',
-                        name: 'file',
-                        render: function(data, type, full, meta) {
-                            if (type === 'display') {
-                                return '<img src="' + data + '" width="100">';
-                            }
-                            return data;
+<script>
+    $(document).ready(function() {
+        var dataTable = $('.datatables').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('staff.teacher-leaves.create') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'subject', name: 'subject' },
+                { data: 'description', name: 'description' },
+                { data: 'start_date', name: 'start_date' },
+                { data: 'end_date', name: 'end_date' },
+                {
+                    data: 'file',
+                    name: 'file',
+                    render: function(data, type, full, meta) {
+                        if (type === 'display') {
+                            return '<img src="' + data + '" width="100">';
                         }
-                    },
-                    { data: 'status', name: 'status' },
-                    { data: 'action', name: 'action' }, // Action column for edit
-                    { data: 'delete', name: 'delete' } // New column for delete
-                ]
-            });
+                        return data;
+                    }
+                },
+                { data: 'status', name: 'status' }, // Include the status column
+                { data: 'action', name: 'action' }, // Action column for edit
+                { data: 'delete', name: 'delete' } // New column for delete
+            ]
         });
+    });
     </script>
-
 @endsection
 
