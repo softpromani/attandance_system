@@ -25,7 +25,7 @@ class TeacherController extends Controller
             'father_name' => 'required|string|max:255',
             'number' => 'required|string|regex:/^[0-9]+$/|max:12', // Assuming a maximum length of 12 digits and only numeric
             'dob' => 'required|date|before_or_equal:today',
-            'anniversary_date' => 'required|date|before_or_equal:today',
+            'anniversary_date' => 'nullable|date|before_or_equal:today',
             'joining_date' => 'required|date|before_or_equal:today',
             'file' => 'nullable|file|mimes:jpeg,png|max:2048', // Assuming a maximum file size of 2 MB
             'password' => 'required|string|min:8', // Adjust the minimum length as needed
@@ -38,7 +38,8 @@ class TeacherController extends Controller
         }
         $name = $request->f_name .' '. $request->l_name;
         $currentYear = now()->year;
-        $count=User::whereYear('created_at',Carbon::now()->format('Y'))->count()+1;
+        $count=User::latest()->first()->id??0;
+        $count=$count+1;
         $teacher_id= Carbon::now()->format('Ym') .'000'.$count;
         $res = User::create([
         'name'=>$name,
@@ -69,7 +70,9 @@ class TeacherController extends Controller
     {
         // dd( User::get());
         if (request()->ajax()) {
-            $users = User::get();
+            $users = User::whereHas('roles', function ($query) {
+    return $query->where('name','!=', 'admin');
+})->get();
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('image', function($q) {

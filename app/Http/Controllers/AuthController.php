@@ -40,7 +40,9 @@ class AuthController extends Controller
 
     public function backendLoginPage()
     {
-        $teacher=User::all();
+        $teacher=User::whereHas('roles', function ($query) {
+    return $query->where('name','!=', 'admin');
+})->get();
         $student=Student::get();
         $leave=TeacherLeave::get();
         $stdnt=$student->count();

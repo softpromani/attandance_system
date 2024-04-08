@@ -20,13 +20,23 @@
                         </a>
                     </div>
                     <div class="col-6 ps-2">
+                        @if(auth()->user()->hasRole('admin'))
                         <a href="{{ route('staff.markattendance') }}">
+                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Attendance List</h3>
+                                </div>
+                            </div>
+                        </a>
+                        @elseif(auth()->user()->hasRole('staff'))
+                         <a href="{{ route('staff.markattendance') }}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Mark Attendance</h3>
                                 </div>
                             </div>
                         </a>
+                        @endif
                     </div>
                     @endif
                     @if(auth()->user()->hasRole('admin'))
@@ -74,7 +84,7 @@
                         </a>
                     </div>
                     @endif
-                    @if(auth()->user()->hasAnyRole(['staff','admin']))
+                    @if(auth()->user()->hasRole('admin'))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.student-bill.create') }}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
@@ -88,6 +98,8 @@
                             </div>
                         </a>
                     </div>
+                    @endif
+                     @if(auth()->user()->hasRole('staff'))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.teacher-leaves.create') }}">
                             <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
