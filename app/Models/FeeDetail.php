@@ -10,14 +10,14 @@ class FeeDetail extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function year()
+    public function feeyear()
     {
-        return $this->belongsTo(Year::class, 'year_id');
+        return $this->belongsTo(Year::class,'year');
     }
 
-    public function month()
+    public function feemonth()
     {
-        return $this->belongsTo(Month::class, 'month_id');
+        return $this->belongsTo(Month::class,'month');
     }
 
 }

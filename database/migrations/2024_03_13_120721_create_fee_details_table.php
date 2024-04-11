@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('fee_details', function (Blueprint $table) {
             $table->id();
             $table->integer('year');
-            $table->string('month');
+            $table->integer('month');
             $table->string('desc');
             $table->integer('late_fee');
-            $table->integer('amount');
+            $table->decimal('amount', 10, 2);
             $table->unsignedBigInteger('fee_id')->nullable();
             $table->timestamps();
         });

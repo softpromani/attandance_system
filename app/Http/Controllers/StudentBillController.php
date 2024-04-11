@@ -85,12 +85,11 @@ class StudentBillController extends Controller
         $data = $request->validate([
             'amount.*' => 'required|numeric',
             'month.*' => 'required',
-            'late_fee.*' => 'required|numeric',
             'desc.*' => 'required',
             'year.*' => 'required',
             'totalsum' => 'required',
         ]);
-        // dd($request);
+
         $fee = Fee::create(['total_fee'=>$request->totalsum,
         'payment_status'=>'0',
         'submitted_fee'=>'0.00',
@@ -111,14 +110,18 @@ class StudentBillController extends Controller
                 'amount' => $amount,
                 'desc' => $data['desc'][$key],
                 'year' => $data['year'][$key],
-                'late_fee' => $data['late_fee'][$key],
+                'late_fee' => isset($data['late_fee'][$key]) ? $data['late_fee'][$key] : '0',
                 'month' => $data['month'][$key],
-                'fee_id' => $fee->id // Use the ID of the newly created fee
+                'fee_id' => $fee->id 
             ]);
-
         }
-
-        return redirect()->route('staff.student-bill.create')->with('success', 'Data stored successfully');
+        if($feeDetail){
+            return redirect()->route('staff.student-bill.create')->with('success', 'Data stored successfully');
+        }
+        else{
+            return redirect()->back()->with('error','Ops.... Bill Not Created');
+        }
+       
     }
 
     /**

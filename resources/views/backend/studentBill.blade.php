@@ -1,5 +1,5 @@
 @extends('frontend.includes.main')
-@section('title', 'mark')
+@section('title', 'Bill')
 @section('style')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
@@ -7,7 +7,7 @@
 
     <div class="card card-style">
         <div class="card-header row">
-            <div class="form-group col-6">
+            <div class="form-group col-sm-6">
                 <label for="studentSelect">Select Students</label>
                 <select class="form-select js-example-basic-single" id="studentSelect">
                     <!-- Option for default selection -->
@@ -17,42 +17,28 @@
         </div>
         @if (isset($students))
             <div class="card-body">
-                <div class="content">
-                    <div class="container mt-5">
-                        <div class="row mb-3">
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Reg. No :</strong></p>&nbsp;&nbsp; <p>{{ $students->registration_number ?? '' }}
-                                </p>
+                <div class="content row">
+                            <div class="col-sm-6">
+                                <p><b>Reg. No :</b> {{ $students->registration_number ?? '' }} </p>
                             </div>
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Student Name :</strong></p>&nbsp;&nbsp; <p>{{ $students->student_name ?? '' }}
-                                </p>
+                            <div class="col-sm-6">
+                                <p><b>Student Name :</b> {{ $students->student_name ?? '' }} </p>
                             </div>
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Father Name :</strong></p>&nbsp;&nbsp; <p>{{ $students->father_name ?? '' }}</p>
+                            <div class="col-sm-6">
+                                <p><b>Father Name :</b> {{ $students->father_name ?? '' }}</p>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Date Of birth :</strong></p>&nbsp;&nbsp; <p>{{ $students->date_of_birth ?? '' }}
-                                </p>
+                            <div class="col-sm-6">
+                                <p><b>Date Of birth :</b> {{ $students->date_of_birth ?? '' }} </p>
                             </div>
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Mobile Number :</strong></p>&nbsp;&nbsp; <p>{{ $students->mobile_number ?? '' }}
-                                </p>
+                            <div class="col-sm-6">
+                                <p><b>Mobile Number :</b> {{ $students->mobile_number ?? '' }}</p>
                             </div>
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Class :</strong></p>&nbsp;&nbsp; <p>{{ $students->class ?? '' }}</p>
+                            <div class="col-sm-6">
+                                <p><b>Class :</b> {{ $students->class ?? '' }}</p>
                             </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-4 d-flex">
-                                <p><strong>Section :</strong></p>&nbsp;&nbsp; <p>{{ $students->section ?? '' }}</p>
+                            <div class="col-sm-6">
+                                <p><b>Section :</b> {{ $students->section ?? '' }}</p>
                             </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         @endif
@@ -60,13 +46,13 @@
     @if (isset($students))
         <div class="card card-style">
             <div class="card-header">
-                Billing
+            Invoice
             </div>
             <div class="container mb-5">
                 <form id="stepForm" method="POST" action="{{ route('staff.student-bill.store') }}"
                     enctype="multipart/form-data">
                     @csrf
-                    <div class="step" id="step2">
+                    <div class="step table-responsive" id="step2">
                         <input type="hidden" value="{{$students->id}}" name="studentid">
                         <table class="table">
                             <thead>
@@ -81,7 +67,6 @@
                                 </tr>
                             </thead>
                             <tbody id="feeDetails">
-                                <!-- Dynamic rows will be added here -->
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-success add-row"><i class="fa fa-plus"
@@ -162,7 +147,7 @@
                         <tr>
                             <td>${rowNumber}</td>
                             <td>
-                                <select name="year[]" class="form-control year">
+                                <select name="year[]" class="form-control year" style="width: 110px;">
                                     <option value="">Select Year</option>
                                     @isset($year)
                                     @foreach($year as $yr)
@@ -173,26 +158,26 @@
                                 </select>
                             </td>
                             <td>
-                                <select name="month[]" class="form-control month">
+                                <select name="month[]" class="form-control month" style="width: 120px;">
                                     <option value="" >Select Month</option>
                                     @isset($months)
                                     @foreach($months as $month)
                                     <option value="{{ $month->id }}">{{ $month->month }}</option>
                                     @endforeach
                                     @endisset
-
                                 </select>
                             </td>
-                            <td><input type="text" name="desc[]" class="form-control desc"></td>
-                            <td><input type="number" name="late_fee[]" class="form-control feeDetails latefee"></td>
-                            <td><input type="number" name="amount[]" class="form-control feeDetails amount"></td>
-                            <td><input type="hidden" name="student_id" class="form-control "></td>
-                            <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
-                        </tr>
+                            <td><input type="text" name="desc[]" class="form-control desc"style="width: 200px;"></td>
+                            <td><input type="number" name="late_fee[]" class="form-control feeDetails latefee" style="width: 110px;"></td>
+                            <td><input type="number" name="amount[]" class="form-control feeDetails amount" style="width: 110px;"></td>
+                            <td><span class="remove-row" style="cursor: pointer; color:red;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
+                           <input type="hidden" name="student_id" class="form-control ">
+                            </tr>
                     `;
                     $("#feeDetails").append(newRow);
                     rowNumber++;
                 });
+               
 
                 // Dynamic row removal
                 $("#feeDetails").on("click", ".remove-row", function() {
