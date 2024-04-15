@@ -3,12 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\SetArea;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
 {
     public function index(){
-        return view('backend.admin.geofenceing');
+      
+        if (auth()->check() && auth()->user()->roles[0]['name'] == 'admin') {
+            return view('backend.admin.geofenceing');
+        }
+        else{
+            return redirect()->route('admin.backendAdminPage')->with('error','You Are Not Admin');
+        }
+       
+        
+        // dd($request->location);
     }
 
     public function setArea(Request $request){

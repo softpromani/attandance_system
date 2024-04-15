@@ -61,6 +61,7 @@
                     <tr style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
                         <th scope="col" class="color-white">Staff Name</th>
+                        <th scope="col" class="color-white">Role</th>
                         <th scope="col" class="color-white">Punching Time</th>
                         <th scope="col" class="color-white">Punchout Time</th>
                         <th scope="col" class="color-white">Status</th>
@@ -97,6 +98,10 @@
                 {
                     data: 'staff',
                     name: 'staff',
+                },
+                {
+                    data: 'role',
+                    name: 'role',
                 },
                 {
                     data: 'punching_time',

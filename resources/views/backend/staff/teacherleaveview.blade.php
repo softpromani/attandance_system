@@ -17,17 +17,20 @@
         <table class="table table-borderless text-center rounded-sm shadow-l datatables" style="overflow: hidden;">
             <thead>
                 <tr style="background-color:#2F539B; color:white;">
-                <th scope="col">SR.NO.</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Description</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">File</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="color-white">Sr.No.</th>
+                <th scope="col" class="color-white">Subject</th>
+                <th scope="col" class="color-white">Description</th>
+                <th scope="col" class="color-white">Start Date</th>
+                <th scope="col" class="color-white">End Date</th>
+                <th scope="col" class="color-white">File</th>
+                <th scope="col" class="color-white">Status</th>
+                <th scope="col" class="color-white ">Action</th>
             </tr>
         </thead>
-        <tbody style="color:#2F539B;">
+        <tbody>
+            
+        </tbody>
+        {{-- <tbody style="color:#2F539B;">
             @forelse($teacherleaves as $teacherleave)
             <tr>
 
@@ -35,7 +38,7 @@
             @empty
             teacher leaves not found
             @endforelse
-        </tbody>
+        </tbody> --}}
     </table>
         </div>
 </div>
@@ -69,7 +72,6 @@
                 },
                 { data: 'status', name: 'status' }, // Include the status column
                 { data: 'action', name: 'action' }, // Action column for edit
-                { data: 'delete', name: 'delete' } // New column for delete
             ]
         });
     });

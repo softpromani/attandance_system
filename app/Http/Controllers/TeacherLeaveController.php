@@ -64,7 +64,7 @@ class TeacherLeaveController extends Controller
                     }
                     return '';
                 })
-                ->rawColumns(['status', 'image', 'action', 'delete'])
+                ->rawColumns(['status', 'image', 'action'])
                 ->make(true);
         }
 

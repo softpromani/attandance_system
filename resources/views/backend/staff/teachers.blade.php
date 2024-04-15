@@ -1,10 +1,10 @@
 @extends('frontend.includes.main')
-@section('title', 'mark')
+@section('title', 'Staff')
 @section('content')
     <div class="content ">
         <div class="row">
             <div class="col">
-                <h2 class="">Teacher Data</h2>
+                <h2 class="">Staff Data</h2>
             </div>
             <div class="text-end col">
                 <a href="{{ route('staff.TeacherRegester') }}">
@@ -20,11 +20,12 @@
     <div class="card card-style">
         <div class="content mb-1 ">
             <div class="table-responsive">
-                <table class="table table-borderless text-center rounded-sm shadow-l datatables" style="overflow: hidden;">
+                <table class="table table-borderless rounded-sm shadow-l datatables" style="overflow: hidden;">
                     <thead>
-                        <tr style="background-color:#2F539B; ">
+                        <tr style="background-color:#2F539B;  ">
                             <th scope="col" class="color-white">Sr.No</th>
                             <th scope="col" class="color-white">Name</th>
+                            <th scope="col" class="color-white">Role</th>
                             <th scope="col" class="color-white">Father Name</th>
                             <th scope="col" class="color-white">DOB</th>
                             <th scope="col" class="color-white">Mobile Number
@@ -39,6 +40,9 @@
 
                         </tr>
                     </thead>
+                    <tbody>
+                        <td></td>
+                    </tbody>
                     {{-- <tbody>
                         @foreach ($data as $dt)
                         <tr style="color:#2F539B;">
@@ -118,6 +122,10 @@
                 {
                     data: 'name',
                     name: 'name',
+                },
+                {
+                    data: 'role',
+                    name: 'role',
                 },
                 {
                     data: 'father_name',

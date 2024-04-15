@@ -25,8 +25,8 @@ class TeacherController extends Controller
             'father_name' => 'required|string|max:255',
             'number' => 'required|string|regex:/^[0-9]+$/|max:12', // Assuming a maximum length of 12 digits and only numeric
             'dob' => 'required|date|before_or_equal:today',
-            'anniversary_date' => 'nullable|date|before_or_equal:today',
-            'joining_date' => 'required|date|before_or_equal:today',
+            // 'anniversary_date' => 'nullable|date|before_or_equal:today',
+            // 'joining_date' => 'required|date|before_or_equal:today',
             'file' => 'nullable|file|mimes:jpeg,png|max:2048', // Assuming a maximum file size of 2 MB
             'password' => 'required|string|min:8', // Adjust the minimum length as needed
             'email' => 'required|email|unique:users,email|max:255',
@@ -55,7 +55,7 @@ class TeacherController extends Controller
          'joining_date'=>$request->joining_date,
          'teacher_image' => $pathToStore??'',
     ]);
-    $res->assignRole('staff');
+    $res->assignRole($request->role);
     if($res){
         event(new DashboardNotificationEvent($res));
         event(new Action($res)); 
@@ -71,12 +71,15 @@ class TeacherController extends Controller
         // dd( User::get());
         if (request()->ajax()) {
             $users = User::whereHas('roles', function ($query) {
-    return $query->where('name','!=', 'admin');
-})->get();
+            return $query->where('name','!=', 'admin');
+        })->get();
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('image', function($q) {
                     return asset('storage/'.$q->teacher_image);
+                })
+                ->addColumn('role', function($q) {
+                    return ucfirst($q->roles[0]['name']);
                 })
                 ->addColumn('action', function ($row) {
                     // $id = Crypt::encrypt($row->id); 
@@ -130,6 +133,10 @@ class TeacherController extends Controller
 
         ];
         $student=User::find($id)->update($data);
+        if($request->role){
+            $role = User::find($id);
+            $role->syncRoles([$request->role]);
+        }
         if($student){
             return redirect()->route('staff.teacherRegisterData')->with('success','Staff Update Success');
         }

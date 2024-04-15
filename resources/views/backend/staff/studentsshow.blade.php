@@ -24,16 +24,16 @@
         <div class="table-responsive">
             <table class="table datatables  ">
                 <thead>
-                    <tr style="background-color:#2F539B; color:white;">
-                        <th scope="col">Sr.No</th>
-                        <th scope="col">Student Name</th>
-                        <th scope="col">Date of Birth</th>
-                        <th scope="col">Father Name</th>
-                        <th scope="col">Class</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Mobile Number</th>
-                        <th scope="col">Student Image</th>
-                        <th scope="col">Action</th>
+                    <tr style="background-color:#2F539B;">
+                        <th scope="col" class="color-white">Sr.No</th>
+                        <th scope="col" class="color-white">Student Name</th>
+                        <th scope="col" class="color-white">Date of Birth</th>
+                        <th scope="col" class="color-white">Father Name</th>
+                        <th scope="col" class="color-white" >Class</th>
+                        <th scope="col" class="color-white">Section</th>
+                        <th scope="col" class="color-white">Mobile Number</th>
+                        <th scope="col" class="color-white">Student Image</th>
+                        <th scope="col" class="color-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -32,6 +32,9 @@ class AttendanceController extends Controller
             ->addColumn('staff', function($q) {
                 return $q->user->name;
             })
+            ->addColumn('role', function($q) {
+                return ucfirst($q->user->roles[0]['name']);
+            })
             ->addColumn('punching_time', function($q) {
                 return \Carbon\Carbon::parse($q->punching_time)->format('d F , Y h:i A');
             })
@@ -55,7 +58,7 @@ class AttendanceController extends Controller
         return view('backend.staff.attendance_mark',compact('punching','punchout'));
     }
     public function updateLocation(Request $request){
-      $updateData = User::where('id',auth()->user()->id)->update(['location' => json_encode($request->location)]);
+      $updateData = User::where('id',auth()->user()->id)->update(['location' => $request->location]);
         if($updateData){
             return redirect()->back();
         }

@@ -6,6 +6,8 @@ use App\Events\DashboardNotificationEvent;
 use App\Models\Student;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -82,16 +84,16 @@ class StudentController extends Controller
 
             ]
         );
-       // dd($request);
-        //dd($request->all());
-
+        $count=Student::latest()->first()->id??0;
+        $count=$count+1;
+        
         if($request->hasFile('student_image')){
             $file = $request->file('student_image');
             $path = $file->store('student','public');
         }
             $currentYear = now()->year;
         $data = [
-            'registration_number' =>'std'.$currentYear.rand('0','9').'_'. $request->student_name,
+            'registration_number' =>'STD'.$currentYear.rand('0','9').'00'.$count,
             'student_name' => $request->student_name,
             'date_of_birth' => $request->date_of_birth,
             'father_name' => $request->father_name,
@@ -105,7 +107,6 @@ class StudentController extends Controller
         if($student){
             event(new DashboardNotificationEvent($student));
         }
-        // toast('User created sucessfully','success');
 
         return redirect()->route('student.student.index', compact('student'))->with('success','Student Created Successfully');
     }
@@ -130,7 +131,6 @@ class StudentController extends Controller
     public function edit($id)
     {
         $editstudent = Student::find($id);
-        // dd($edituser);
         $students = Student::get();
         return view('backend.staff.studentregister', compact('editstudent','students'));
     }
@@ -151,7 +151,6 @@ class StudentController extends Controller
         }
 
         $data = [
-            //Database column_name => Form field name
             'student_name' => $request->student_name,
             'date_of_birth' => $request->date_of_birth,
             'father_name' => $request->father_name,

@@ -4,12 +4,15 @@
     <div id="page">
         <div class="card-style">
             <div class="content">
-                <p id="demo" style="color:red;display: inline;">Loading....</p>
+                <i class="fas fa-map-marker-alt" style="color:green;"></i> 
+                <div id="demo" style="color:red;display: inline;">
+                    Loading....
+                </div>
                 <div class="row mb-n3">
                     @if(auth()->user()->hasAnyRole(['staff','admin']))
                     <div class="col-6 ps-2">
                         <a href="{{ route('student.student.index') }}">
-                            <div class="card card-style gradient-green shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                            <div class="card card-style bg-danger shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Student's</h3>
                                 </div>
@@ -19,6 +22,7 @@
                             </div>
                         </a>
                     </div>
+                    @endif
                     <div class="col-6 ps-2">
                         @if(auth()->user()->hasRole('admin'))
                         <a href="{{ route('staff.markattendance') }}">
@@ -28,7 +32,7 @@
                                 </div>
                             </div>
                         </a>
-                        @elseif(auth()->user()->hasRole('staff'))
+                        @elseif(auth()->user()->hasAnyRole(['staff','driver']))
                          <a href="{{ route('staff.markattendance') }}">
                             <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
@@ -38,11 +42,12 @@
                         </a>
                         @endif
                     </div>
-                    @endif
+
+
                     @if(auth()->user()->hasRole('admin'))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.teacherRegisterData') }}">
-                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                            <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Teacher's</h3>
                                 </div>
@@ -63,7 +68,7 @@
                     </div>
                     <div class="col-6 ps-2">
                         <a href="{{ route('admin.setmap') }}">
-                            <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                            <div class="card card-style bg-success shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Set Area</h3>
                                 </div>
@@ -87,7 +92,7 @@
                     @if(auth()->user()->hasRole('admin'))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.student-bill.create') }}">
-                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
+                            <div class="card card-style bg-info shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Student Bill</h3>
@@ -99,7 +104,7 @@
                         </a>
                     </div>
                     @endif
-                     @if(auth()->user()->hasRole('staff'))
+                     @if(auth()->user()->hasAnyRole(['staff','driver']))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.teacher-leaves.create') }}">
                             <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
@@ -118,7 +123,7 @@
                     @if(auth()->user()->hasRole('admin'))
                     <div class="col-6 ps-2">
                         <a href="{{ route('staff.teacherAllLeave') }}">
-                            <div class="card card-style gradient-yellow shadow-bg shadow-bg-m mx-0 mb-3"
+                            <div class="card card-style bg-secondary shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Approve Leave</h3>
@@ -136,7 +141,7 @@
         </div>
 @endsection
 @section('script')
-    <script>
+    {{-- <script>
         window.onload = function() {
             getLocation();
         };
@@ -152,5 +157,83 @@
             var longitude = position.coords.longitude;
             document.getElementById("demo").innerHTML = "Latitude: " + latitude + " Longitude: " + longitude;
         }
+    </script> --}}
+    <script>
+        window.onload = function() {
+            getLocation();
+        };
+    
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+    
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+           
+            getAddress(latitude, longitude);
+            var locationData = latitude + ',' + longitude;
+    
+    // Create a new FormData object
+    var formData = new FormData();
+    formData.append('location', locationData);
+
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
+
+    // Set up the request
+    xhr.open('POST', "{{ route('staff.updatelocation') }}", true);
+    xhr.setRequestHeader('X-CSRF-TOKEN', "{{ csrf_token() }}");
+
+    // Set the callback function to handle the response
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log('Form submitted successfully');
+        }
+    };
+
+    // Send the request with the form data
+    xhr.send(formData);
+        }
+        function getAddress(latitude, longitude) {
+    var geocoder = new google.maps.Geocoder();
+    var latlng = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
+
+    geocoder.geocode({ 'location': latlng }, function(results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+                var addressComponents = results[0].address_components;
+                var formattedAddress = '';
+
+                // Extract specific address components
+                for (var i = 0; i < addressComponents.length; i++) {
+                    if (addressComponents[i].types.includes('street_number') || 
+                        addressComponents[i].types.includes('route') ||
+                        addressComponents[i].types.includes('sublocality') ||
+                        addressComponents[i].types.includes('neighborhood')) {
+                        formattedAddress += addressComponents[i].long_name + ', ';
+                    }
+                }
+
+                // Remove trailing comma and space
+                formattedAddress = formattedAddress.replace(/, $/, '');
+
+                document.getElementById("demo").innerHTML = formattedAddress;
+            } else {
+                document.getElementById("demo").innerHTML = "Address not found";
+            }
+        } else {
+            document.getElementById("demo").innerHTML = "Geocoder failed due to: " + status;
+        }
+    });
+}
+
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&libraries=places"></script>
+
+    
 @endsection
