@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+
 class AuthController extends Controller
 {
     public function showLoginForm()
@@ -23,14 +24,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
+        $userData = Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember);
 
-
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+        if ($userData) {
+            auth()->user()->update(['fcm_key'=>$request->fcm_token]);
 
             return redirect()->route('admin.backendAdminPage')->with('Success','Login Successfully');
         } else {

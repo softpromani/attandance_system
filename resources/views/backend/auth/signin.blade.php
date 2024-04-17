@@ -7,6 +7,7 @@
                 <h1 class="text-center font-800 font-40 pt-2 mb-1">Sign In</h1>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
+                    <input type="hidden" name="fcm_token" id="fcm_token" value="">
                     <div class="input-style no-borders has-icon validate-field mb-4">
                         <i class="fa fa-user"></i>
                         <input type="name" name="email" class="form-control validate-name" id="form1a"
@@ -41,4 +42,39 @@
     </div>
 @endsection
 @section('script')
+ <script
+src="https://code.jquery.com/jquery-3.4.1.min.js"
+integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyCMq4WI77B_DyzBDookMHz6s1qKxANWaqs",
+        authDomain: "attendance-417410.firebaseapp.com",
+        projectId: "attendance-417410",
+        storageBucket: "attendance-417410.appspot.com",
+        messagingSenderId: "412414167773",
+        appId: "1:412414167773:web:8b32778f5c41afef7ee934",
+        measurementId: "G-H8V5EVEZZ8"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+const messaging = firebase.messaging();
+
+// Request permission and get token
+messaging.requestPermission()
+    .then(() => {
+        console.log('Notification permission granted.');
+        return messaging.getToken();
+    })
+    .then((token) => {
+        // console.log('FCM token:', token);
+        document.getElementById('fcm_token').value = token; // Set FCM token value to a hidden input field
+    })
+    .catch((err) => {
+        console.log('Error getting permission or token:', err);
+    });
+</script> 
 @endsection

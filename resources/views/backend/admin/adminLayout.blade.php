@@ -158,7 +158,7 @@
             document.getElementById("demo").innerHTML = "Latitude: " + latitude + " Longitude: " + longitude;
         }
     </script> --}}
-    <script>
+     <script>
         window.onload = function() {
             getLocation();
         };
@@ -177,11 +177,11 @@
            
             getAddress(latitude, longitude);
             var locationData = latitude + ',' + longitude;
+            
     
     // Create a new FormData object
     var formData = new FormData();
     formData.append('location', locationData);
-
     // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
 
@@ -233,7 +233,7 @@
 }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}&libraries=places"></script> 
 
     
 @endsection

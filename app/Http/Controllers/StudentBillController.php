@@ -10,6 +10,7 @@ use App\Models\StudentBill;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
@@ -88,10 +89,24 @@ class StudentBillController extends Controller
             'desc.*' => 'required',
             'year.*' => 'required',
             'totalsum' => 'required',
+            'late_fee'=>'nullable',
         ]);
 
-        $fee = Fee::create(['total_fee'=>$request->totalsum,
-        'payment_status'=>'0',
+        // Get the current year
+        $year = Carbon::now()->year;
+        // Find the latest invoice number for the current year
+        $latestInvoice = Fee::whereYear('created_at', $year)->latest()->first();
+        // If no invoice exists for the current year, start from 1, otherwise increment the last invoice number
+        $number = $latestInvoice ? $latestInvoice->invoice_no + 1 : 1;
+        // Format the invoice number with leading zeros if needed
+        $formattedNumber = str_pad($number, 4, '0', STR_PAD_LEFT);
+        // Generate the year-based invoice number
+        $invoiceNumber = $year . $formattedNumber;
+
+        $fee = Fee::create([
+        'total_fee'=>$request->totalsum,
+        'invoice_no'=>$invoiceNumber,
+        'payment_status'=>'paid',
         'submitted_fee'=>'0.00',
         'student_id'=>$request->studentid,
         ]);

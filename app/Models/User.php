@@ -34,7 +34,8 @@ class User extends Authenticatable
         'joining_date',
         'teacher_image',
         'first_name',
-        'last_name'
+        'last_name',
+        'fcm_key'
 
     ];
 

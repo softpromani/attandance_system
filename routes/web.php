@@ -25,9 +25,11 @@ Route::get('sign-in', function () {
 });
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('Getlogin');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 //role:admin
 //role:staff
 Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],function(){
+    Route::get('send-push-notification', [AuthController::class, 'sendPushNotification']);
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('show-staff/{id}', [AuthController::class, 'showStaff'])->name('showStaff');
     Route::get('edit-staff/{id}', [AuthController::class, 'editStaff'])->name('editStaff');

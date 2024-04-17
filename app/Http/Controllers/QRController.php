@@ -208,6 +208,9 @@ class QRController extends Controller
     {
         $userLocation = auth()->user()->location;
         $userCoordinates = explode(',', $userLocation);
+        if(count($userCoordinates)!=2){
+            return redirect()->back()->with('warning','Your Location not Available');
+        }
         $userLatitude = (float) $userCoordinates[0]; 
         $userLongitude = (float) $userCoordinates[1]; 
 
@@ -220,7 +223,7 @@ class QRController extends Controller
         foreach ($allcoordinate as $coordinate) {
             $distance = $this->calculateDistance($userLatitude, $userLongitude, $coordinate[0], $coordinate[1]);
         //   dd($distance);
-            if ($distance <= $radius) {
+            // if ($distance <= $radius) {
                 
                 $reqData = QR::active()->where('qr_code',$qr_code)->first();
                 $user = auth()->user();
@@ -230,9 +233,13 @@ class QRController extends Controller
                           'punchout_location'=>$user->location,
                       ]);
                       if($punchout){
-                          return redirect()->route('admin.backendAdminPage')->with('success','Punchout Successfully');
+                            $title = $user->name;
+                            $body = isset($punchout)?'Punchout Successfully':'';
+                           
+                            sendPushNotification($title , $body);
+                            return redirect()->route('admin.backendAdminPage')->with('success','Punchout Successfully');
                       }
-                }
+                // }
               
                 if($reqData){
                  $valid = \Carbon\Carbon::now('Asia/Kolkata')->between($reqData->valid_from, $reqData->valid_to);
@@ -250,6 +257,9 @@ class QRController extends Controller
                    'device_info'=>json_encode(['ip'=>$request->ip()]),
                   ]);
                   if($attendance){
+                    $title = $user->name;
+                    $body = isset($attendance->punching_time)?'Punching Successfully':'';
+                    sendPushNotification($title , $body);
                    return redirect()->route('admin.backendAdminPage')->with('success','Attendance Mark Successfully');
                   }
                }
