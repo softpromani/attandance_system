@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
    
     $url = 'https://fcm.googleapis.com/fcm/send';
     $fcmTokens = User::whereNotNull('fcm_key')->pluck('fcm_key')->all();
-    dd($fcmTokens);
+    // dd($fcmTokens);
     $serverKey = 'AAAAYAXMyt0:APA91bETArIf0HeAsXN8pHqtclKhhCK0kq4g16nssyaWOAouHYbcYz8PkqwrjhpjclnbWqsk1iCSz_BC-EGN2MaXOnJJaPmUwLpe5WulIYxPGN2aOWnCgUeYMGo0ilrmldk1TitD0P-k';
     $data = [
         "registration_ids" => $fcmTokens,
