@@ -45,7 +45,7 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::get('set-map',[AreaController::class,'index'])->name('setmap');
     Route::post('set-area',[AreaController::class,'setArea'])->name('setarea');
     Route::post('send-noti',[StudentController::class,'firebaseNoti'])->name('firebaseNoti');
-    Route::get('push',[StudentController::class,'getfirebaseNoti']);
+    Route::get('push',[StudentController::class,'getfirebaseNoti'])->name('push');
 
 
 });

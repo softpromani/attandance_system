@@ -2,12 +2,16 @@
 @section('title', 'Dashboard')
 @section('content')
     <div id="page">
+
         <div class="card-style">
             <div class="content">
                 <i class="fas fa-map-marker-alt" style="color:green;"></i> 
                 <div id="demo" style="color:red;display: inline;">
                     Loading....
                 </div>
+                @if (auth()->user()->hasRole('admin'))
+                    <a href="{{ route('admin.push') }}" class="btn btn-success btn-sm m-2">Push Notification</a>
+                @endif
                 <div class="row mb-n3">
                     @if(auth()->user()->hasAnyRole(['staff','admin']))
                     <div class="col-6 ps-2">
