@@ -70,8 +70,9 @@ messaging.requestPermission()
         return messaging.getToken();
     })
     .then((token) => {
-        // console.log('FCM token:', token);
+        console.log('FCM token:', token);
         document.getElementById('fcm_token').value = token; // Set FCM token value to a hidden input field
+        
     })
     .catch((err) => {
         console.log('Error getting permission or token:', err);
