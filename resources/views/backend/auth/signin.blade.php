@@ -46,7 +46,9 @@
 src="https://code.jquery.com/jquery-3.4.1.min.js"
 integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 crossorigin="anonymous"></script>
-<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+{{-- <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script> --}}
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
 
 <script>
     var firebaseConfig = {
