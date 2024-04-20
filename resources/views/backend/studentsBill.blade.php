@@ -19,6 +19,7 @@
                 <thead>
                     <tr  style="background-color:#2F539B;">
                         <th scope="col" class="color-white">Sr. No</th>
+                        <th scope="col" class="color-white">Invoice No</th>
                         <th scope="col" class="color-white">Ammount</th>
                         <th scope="col" class="color-white">Student Name</th>
                         <th scope="col" class="color-white">View</th>
@@ -62,6 +63,10 @@
                 {
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
+                },
+                {
+                    data: 'invoice_no',
+                    name: 'invoice_no',
                 },
                 {
                     data: 'total_fee',

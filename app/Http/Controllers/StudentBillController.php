@@ -10,6 +10,7 @@ use App\Models\StudentBill;
 use App\Models\Year;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use DateTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -92,17 +93,26 @@ class StudentBillController extends Controller
             'late_fee'=>'nullable',
         ]);
 
-        // Get the current year
-        $year = Carbon::now()->year;
-        // Find the latest invoice number for the current year
-        $latestInvoice = Fee::whereYear('created_at', $year)->latest()->first();
-        // If no invoice exists for the current year, start from 1, otherwise increment the last invoice number
-        $number = $latestInvoice ? $latestInvoice->invoice_no + 1 : 1;
+        // finance year
+        $today=new DateTime(); // today's date
+        $currentYear=(int)$today->format('Y');
+        $currentMonth=(int)$today->format('m');
+        if($currentMonth < 4){
+            $financialYearStart=$currentYear-1;
+            $financialYearEnd=$currentYear;
+        }
+        else{
+            $financialYearStart=$currentYear;
+            $financialYearEnd=$currentYear+1;
+        }
+
+        $financialYear=sprintf("%d-%d",$financialYearStart,substr($financialYearEnd,-2));
+        $number=Fee::currentYearInvoices()->count() + 1;
         // Format the invoice number with leading zeros if needed
         $formattedNumber = str_pad($number, 4, '0', STR_PAD_LEFT);
         // Generate the year-based invoice number
-        $invoiceNumber = $year . $formattedNumber;
-
+        $invoiceNumber = $financialYear.'/'. $formattedNumber;
+        // dd($invoiceNumber);
         $fee = Fee::create([
         'total_fee'=>$request->totalsum,
         'invoice_no'=>$invoiceNumber,

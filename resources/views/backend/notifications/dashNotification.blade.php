@@ -29,7 +29,7 @@
 
 <div class="card card-style">
     <div class="content mb-5 scrollable-content">
-            @forelse ( auth()->user()->unreadNotifications  as $notification )
+            @forelse ( auth()->user()->unreadNotifications as $notification )
                 <div class="list-item d-flex align-items-start">
                     <div class="me-1">
                         <div class="avatar">

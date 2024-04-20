@@ -43,21 +43,22 @@
                     </div>
                 </div>
                 <div class="row border-bottom">
-                        <div class="col-md-6 d-flex justify-content-between">
-                            <h6><b>Name:-</b>&nbsp;&nbsp;{{ $fee->student->student_name }}</h6>&nbsp;&nbsp;
-                            <h6><b>Date:-</b>&nbsp;&nbsp;{{ $fee->student->created_at->format('d-M-Y') }}</h6>
-                        </div>
-                        <div class="col-md-6">
-                        <h6><b>Father:-</b>&nbsp;&nbsp;{{ $fee->student->father_name }}</h6>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-between">
-                            <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->class }}</h6>&nbsp;&nbsp;
-                            <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->section  }}</h6>
-                        </div>
-                            <div class="col-md-6">
-                                <h6><b>Roll No:-</b>&nbsp;&nbsp;{{ $fee->student->registration_number }}</h6>
-                        </div>
-                </div>
+                    <div class="col-md-6 d-flex justify-content-between">
+                        <h6><b>Invoice No:-</b>&nbsp;&nbsp;{{ $fee->invoice_no }}</h6>&nbsp;&nbsp;
+                        <h6><b>Date:-</b>&nbsp;&nbsp;{{  $fee->created_at->format('d-m-y') }}</h6>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-between">
+                        <h6><b>Name:-</b>&nbsp;&nbsp;{{ $fee->student->student_name }}</h6>&nbsp;&nbsp;
+                    <h6><b>Father:-</b>&nbsp;&nbsp;{{ $fee->student->father_name }}</h6>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-between">
+                        <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->class }}</h6>&nbsp;&nbsp;
+                        <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->section  }}</h6>
+                    </div>
+                        <div class="col-md-6 ">
+                            <h6><b>Roll No:-</b>&nbsp;&nbsp;{{ $fee->student->registration_number }}</h6>
+                    </div>
+            </div>
             <div class="row m-0 p-0">
                 <div class="col-sm-12 p-0 m-0">
                     <table class="table table-bordered text-center w-100" style="font-size:12px;">
@@ -118,17 +119,18 @@
                 </div>
                 <div class="row border-bottom">
                         <div class="col-md-6 d-flex justify-content-between">
-                            <h6><b>Name:-</b>&nbsp;&nbsp;{{ $fee->student->student_name }}</h6>&nbsp;&nbsp;
-                            <h6><b>Date:-</b>&nbsp;&nbsp;{{ $fee->student->created_at->format('d-M-Y') }}</h6>
+                            <h6><b>Invoice No:-</b>&nbsp;&nbsp;{{ $fee->invoice_no }}</h6>&nbsp;&nbsp;
+                            <h6><b>Date:-</b>&nbsp;&nbsp;{{ $fee->student->created_at->format('d-m-y') }}</h6>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 d-flex justify-content-between">
+                            <h6><b>Name:-</b>&nbsp;&nbsp;{{ $fee->student->student_name }}</h6>&nbsp;&nbsp;
                         <h6><b>Father:-</b>&nbsp;&nbsp;{{ $fee->student->father_name }}</h6>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between">
                             <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->class }}</h6>&nbsp;&nbsp;
                             <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->section  }}</h6>
                         </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 ">
                                 <h6><b>Roll No:-</b>&nbsp;&nbsp;{{ $fee->student->registration_number }}</h6>
                         </div>
                 </div>

@@ -185,4 +185,19 @@ class StudentController extends Controller
             return redirect()->back()->with('error','Ops... Student Not Delete');
         }
     }
+    public function getfirebaseNoti(){
+        return view('backend.notifications.notificationpush');
+    }
+    public function firebaseNoti(Request $request){
+
+        $title = $request->title;
+        $body = $request->body;
+       $data = sendPushNotification($title , $body);
+       if($data){
+        return redirect()->route('admin.backendAdminPage')->with('success','Push Notification Send Successfully');
+       }
+       else{
+        return redirect()->back()->with('error','Ops... Push Notification Not Send ');
+       }
+    }
 }
