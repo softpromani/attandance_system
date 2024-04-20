@@ -22,8 +22,8 @@
   const analytics = getAnalytics(app);
 </script> */}
 
-importScripts('https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/10.11.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/4.11.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/4.11.0/firebase-messaging.js');
 
 firebase.initializeApp({
     apiKey: "AIzaSyCMq4WI77B_DyzBDookMHz6s1qKxANWaqs",
