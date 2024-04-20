@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Log;
         'Authorization' => 'key=' . $serverKey,
         'Content-Type' => 'application/json',
     ])->post($url, $data);
-    
+    dd($response);
     if ($response->successful()) {
         
         $responseData = $response->json(); 
