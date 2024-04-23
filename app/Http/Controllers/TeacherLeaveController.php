@@ -32,7 +32,7 @@ class TeacherLeaveController extends Controller
 
         if (request()->ajax()) {
             $teacherleaves = TeacherLeave::get();
-
+            
             return DataTables::of($teacherleaves)
             ->addIndexColumn()
             ->addColumn('status', function ($row) {
@@ -44,6 +44,9 @@ class TeacherLeaveController extends Controller
                     return '<p class="text-dark bg-danger rounded-pill">Declined</p>';
                 }
             })
+                ->addColumn('name', function ($q){
+                    return optional($q->UserName)->name;
+                    })
                 ->addColumn('file', function ($row) {
                     return [
                         'display' => '<img src="' . asset('storage/' . $row->file) . '" width="100">',
@@ -99,6 +102,7 @@ class TeacherLeaveController extends Controller
             $path = $file->store('teacherleaves','public');
         }
             $currentYear = now()->year;
+            $userId = auth()->user()->id;
         $data = [
             //Database column_name => Form field name
             'leave_type' => $request->leave_type,
@@ -106,6 +110,7 @@ class TeacherLeaveController extends Controller
             'description' => $request->description,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
+            'user_id' =>$userId,
             'file' => $path ?? null,
 
         ];
@@ -163,7 +168,6 @@ class TeacherLeaveController extends Controller
         }
 
         $data = [
-            //Database column_name => Form field name
 
             'leave_type' => $request->leave_type,
             'subject' => $request->subject,

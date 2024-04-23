@@ -14,7 +14,6 @@ class TeacherApproveController extends Controller
 
         if (request()->ajax()) {
             $teacherleaves = TeacherLeave::get();
-
             return DataTables::of($teacherleaves)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {

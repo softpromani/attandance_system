@@ -10,4 +10,8 @@ class TeacherLeave extends Model
 {
     use HasFactory, SoftDeletes;
     protected $guarded=[];
+
+    public function UserName(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

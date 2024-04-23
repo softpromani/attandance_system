@@ -12,14 +12,15 @@
             <div class="table-responsive">
         <table class="table table-borderless text-center rounded-sm shadow-l datatables" style="overflow: hidden;">
             <thead>
-                <tr style="background-color:#2F539B; color:white;">
-                <th scope="col">SR.NO.</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Description</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <tr style="background-color:#2F539B; ">
+                <th scope="col" class="color-white">SR.NO.</th>
+                <th scope="col" class="color-white">User Name</th>
+                <th scope="col" class="color-white">Subject</th>
+                <th scope="col" class="color-white">Description</th>
+                <th scope="col" class="color-white">Start Date</th>
+                <th scope="col" class="color-white">End Date</th>
+                <th scope="col" class="color-white">Status</th>
+                <th scope="col" class="color-white">Action</th>
             </tr>
         </thead>
         <tbody style="color:#2F539B;">
@@ -204,7 +205,11 @@
             serverSide: true,
             ajax: "{{ route('staff.teacher-leaves.create') }}",
             columns: [
-                { data: 'id', name: 'id' },
+                {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                    },
+                { data: 'name', name: 'name' },
                 { data: 'subject', name: 'subject' },
                 { data: 'description', name: 'description' },
                 { data: 'start_date', name: 'start_date' },
@@ -213,10 +218,10 @@
                 {
                     data: 'action',
                     name: 'action',
-                    orderable: false, // Prevent sorting on this column
-                    searchable: false, // Prevent searching on this column
+                    orderable: false, 
+                    searchable: false,
                     render: function(data, type, full, meta) {
-                        // Get the leave ID from the data-id attribute of the row
+                        
                         console.log('render');
                         console.log(full);
                         var leaveId = full.id;
