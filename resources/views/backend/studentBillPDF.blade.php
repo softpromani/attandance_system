@@ -61,11 +61,12 @@
             </div>
             <div class="row m-0 p-0">
                 <div class="col-sm-12 p-0 m-0">
-                    <table class="table table-bordered text-center w-100" style="font-size:12px;">
+                    <table class="table table-bordered text-center w-100" style="font-size:11px;">
                         <thead>
                             <tr style="background-color: #2F539B; color: white; ">
                                 <th scope="col">Sr.No.</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Desc.</th>
+                                <th scope="col">Fee Type</th>
                                 <th scope="col">Month</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">Amount</th>
@@ -76,6 +77,7 @@
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $fe->desc }}</td>
+                                <td>{{ $fe->feetype->fee_type??'' }}</td>
                                 <td>{{ $fe->feemonth->month}}</td>
                                 <td>{{ $fe->feeyear->year }}</td>
                                 <td>&#x20B9; {{ $fe->amount }}</td>
@@ -85,11 +87,11 @@
                         <tfoot>
                             <tr>
                                 <td><b>Total</b></td>
-                                <td colspan="3"></td>
+                                <td colspan="4"></td>
                                 <td> <b>&#x20B9; {{ $fee->total_fee }} </b></td>
                             </tr>
                             <tr>
-                                <td colspan="3" rowspan="2">
+                                <td colspan="4" rowspan="3">
                                     <h6>Sig.<img src="{{ asset('frontend/assets/images/signature.jpg') }}" alt="img" height="40" width="100"></h6>
                                 </td>
                                 <th>Paid</th>
@@ -120,7 +122,7 @@
                 <div class="row border-bottom">
                         <div class="col-md-6 d-flex justify-content-between">
                             <h6><b>Invoice No:-</b>&nbsp;&nbsp;{{ $fee->invoice_no }}</h6>&nbsp;&nbsp;
-                            <h6><b>Date:-</b>&nbsp;&nbsp;{{ $fee->student->created_at->format('d-m-y') }}</h6>
+                            <h6><b>Date:-</b>&nbsp;&nbsp;{{ $fee->created_at->format('d-m-y') }}</h6>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between">
                             <h6><b>Name:-</b>&nbsp;&nbsp;{{ $fee->student->student_name }}</h6>&nbsp;&nbsp;
@@ -136,11 +138,12 @@
                 </div>
             <div class="row m-0 p-0">
                 <div class="col-sm-12 p-0 m-0">
-                    <table class="table table-bordered text-center w-100" style="font-size:12px;">
+                    <table class="table table-bordered text-center w-100" style="font-size:11px;">
                         <thead>
                             <tr style="background-color: #2F539B; color: white; ">
                                 <th scope="col">Sr.No.</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Desc.</th>
+                                <th scope="col">Fee Type</th>
                                 <th scope="col">Month</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">Amount</th>
@@ -151,6 +154,7 @@
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $fe->desc }}</td>
+                                <td>{{ $fe->feetype->fee_type??'' }}</td>
                                 <td>{{ $fe->feemonth->month}}</td>
                                 <td>{{ $fe->feeyear->year }}</td>
                                 <td>&#x20B9; {{ $fe->amount }}</td>
@@ -160,11 +164,11 @@
                         <tfoot>
                             <tr>
                                 <td><b>Total</b></td>
-                                <td colspan="3"></td>
+                                <td colspan="4"></td>
                                 <td> <b>&#x20B9; {{ $fee->total_fee }} </b></td>
                             </tr>
                             <tr>
-                                <td colspan="3" rowspan="2">
+                                <td colspan="4" rowspan="3">
                                     <h6>Sig.<img src="{{ asset('frontend/assets/images/signature.jpg') }}" alt="img" height="40" width="100"></h6>
                                 </td>
                                 <th>Paid</th>

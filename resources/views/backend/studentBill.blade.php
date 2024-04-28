@@ -60,6 +60,7 @@
                                     <th>Sr. No</th>
                                     <th>Year</th>
                                     <th>Month</th>
+                                    <th>Fee Type</th>
                                     <th>Description</th>
                                     <th>Late Fee</th>
                                     <th>Amount</th>
@@ -148,7 +149,7 @@
                             <td>${rowNumber}</td>
                             <td>
                                 <select name="year[]" class="form-control year" style="width: 110px;">
-                                    <option value="">Select Year</option>
+                                    <option value="" disabled selected>Select Year</option>
                                     @isset($year)
                                     @foreach($year as $yr)
                                     <option value="{{ $yr->id }}">{{ $yr->year}}</option>
@@ -159,10 +160,20 @@
                             </td>
                             <td>
                                 <select name="month[]" class="form-control month" style="width: 120px;">
-                                    <option value="" >Select Month</option>
+                                    <option value="" disabled selected>Select Month</option>
                                     @isset($months)
                                     @foreach($months as $month)
                                     <option value="{{ $month->id }}">{{ $month->month }}</option>
+                                    @endforeach
+                                    @endisset
+                                </select>
+                            </td>
+                            <td>
+                                <select name="fee_type[]" class="form-control fee_type" style="width: 120px;">
+                                    <option value="" disabled selected>Fee Type</option>
+                                    @isset($feeTypes)
+                                    @foreach($feeTypes as $feeType)
+                                    <option value="{{ $feeType->id }}">{{ $feeType->fee_type }}</option>
                                     @endforeach
                                     @endisset
                                 </select>

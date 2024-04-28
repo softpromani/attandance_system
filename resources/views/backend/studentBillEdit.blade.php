@@ -60,13 +60,14 @@
                     enctype="multipart/form-data">
                     {{--  <input type="hidden" value="{{$fee->student_id}}" name="student_id">  --}}
                     @csrf
-                    <div class="step" id="step2">
+                    <div class="step table-responsive" id="step2">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Sr. No</th>
                                     <th>Year</th>
                                     <th>Month</th>
+                                    <th>Fee Type</th>
                                     <th>Description</th>
                                     <th>Late Fee</th>
                                     <th>Amount</th>
@@ -81,7 +82,7 @@
                                     <td>{{$loop->index+1}}</td>
 
                                     <td>
-                                        <select name="year[]" class="form-control year">
+                                        <select name="year[]" class="form-control year"  style="width: 110px;">
                                             <option value="">Select Year</option>
                                             @isset($year)
                                             @foreach($year as $yr)
@@ -92,8 +93,7 @@
                                         </select>
                                     </td>
                                     <td>
-
-                                        <select name="month[]" class="form-control month">
+                                        <select name="month[]" class="form-control month" style="width: 120px;">
                                             <option value="" >Select Month</option>
                                             @isset($month)
                                             @foreach($month as $mnth)
@@ -103,11 +103,20 @@
 
                                         </select>
                                     </td>
-                                    <td><input type="text" name="desc[]" class="form-control desc" value="{{$fd->desc}}"></td>
-                                    <td><input type="number" name="late_fee[]" class="form-control feeDetails latefee" value="{{$fd->late_fee}}"></td>
-                                    <td><input type="number" name="amount[]" class="form-control feeDetails amount" value="{{$fd->amount}}"></td>
-                                    <td><input type="hidden" name="student_id" class="form-control "></td>
-                                    <td><span class="remove-row" style="cursor: pointer;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
+                                    <td>
+                                        <select name="fee_type[]" class="form-control fee_type" style="width: 120px;">
+                                            @isset($feeTypes)
+                                            @foreach($feeTypes as $feeType)
+                                            <option value="{{ $feeType->id }}" @selected( $feeType->id==$fd->feetype_id)>{{ $feeType->fee_type }}</option>
+                                            @endforeach
+                                            @endisset
+                                        </select>
+                                    </td>
+                                    <td><input type="text" name="desc[]" class="form-control desc" value="{{$fd->desc}}" style="width: 200px;"></td>
+                                    <td><input type="number" name="late_fee[]" class="form-control feeDetails latefee" value="{{$fd->late_fee}}" style="width: 110px;"></td>
+                                    <td><input type="number" name="amount[]" class="form-control feeDetails amount" value="{{$fd->amount}}" style="width: 110px;"></td>
+                                    <input type="hidden" name="student_id" class="form-control ">
+                                    <td><span class="remove-row" style="cursor: pointer;color:red;"><i class="fa fa-minus-circle" aria-hidden="true"></i></span></td>
                                 </tr>
                                 @endforeach
                                @endisset
@@ -213,6 +222,16 @@
                                     @endforeach
                                     @endisset
 
+                                </select>
+                            </td>
+                            <td>
+                                <select name="fee_type[]" class="form-control fee_type" style="width: 120px;">
+                                    <option value="" disabled selected>Fee Type</option>
+                                    @isset($feeTypes)
+                                    @foreach($feeTypes as $feeType)
+                                    <option value="{{ $feeType->id }}">{{ $feeType->fee_type }}</option>
+                                    @endforeach
+                                    @endisset
                                 </select>
                             </td>
                         <hr>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fee;
 use App\Models\FeeDetail;
+use App\Models\FeeType;
 use App\Models\Month;
 use App\Models\Student;
 use App\Models\StudentBill;
@@ -242,18 +243,20 @@ class StudentBillController extends Controller
 
         $months=Month::get();
         $year=Year::get();
+        $feeTypes = FeeType::get();
         $students = Student::find($id);
         if (!$students) {
             return response()->json(['error' => 'Student not found'], 404);
         }
-                return  view('backend.studentBill',compact('students','months','year'));
+                return  view('backend.studentBill',compact('students','months','year','feeTypes'));
     }
 
     public function editStudentFee($id)
     {
           $fee=Fee::with(['student','feeDetails'])->find($id);
         //   dd($fee);
-          return view('backend.studentBillEdit',compact('fee'));
+        $feeTypes = FeeType::get();
+          return view('backend.studentBillEdit',compact('fee','feeTypes'));
     }
     public function updateStudentFee(Request $request,$id)
     {
@@ -280,6 +283,7 @@ class StudentBillController extends Controller
                 'year' => $data['year'][$key],
                 'late_fee' => $data['late_fee'][$key],
                 'month' => $data['month'][$key],
+                'feetype_id' => $data['fee_type'][$key],
                 'fee_id' => $fee->id // Use the ID of the newly created fee
             ]);
         }

@@ -19,5 +19,9 @@ class FeeDetail extends Model
     {
         return $this->belongsTo(Month::class,'month');
     }
+    public function feetype()
+    {
+        return $this->belongsTo(FeeType::class,'feetype_id');
+    }
 
 }

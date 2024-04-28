@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             yearSeeder::class,
             monthSeeder::class,
             LeaveTypeSeeder::class,
+            FeeTypeSeeder::class,
             // Add more seeders as needed
         ]);
     }
