@@ -16,15 +16,23 @@ class AttendanceController extends Controller
     public function qrScanner(){
         return view('backend.staff.scanner');
     }
-    public function markAttendance(){
-
-
-        if (request()->ajax()) {
-
+    public function markAttendance(Request $request)
+    {
+        if ($request->ajax()) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+    
+            $query = \App\Models\Attendance::query();
+    
+            if ($startDate && $endDate) {
+               $data = $query->whereBetween('created_at', [$startDate, $endDate]);
+               $data->get();
+            }
+    
             if (auth()->user()->hasRole('admin')) {
-                $userAttendance = \App\Models\Attendance::all();
+                $userAttendance = $query->latest()->get();
             } else {
-                $userAttendance = auth()->user()->attendances;
+                $userAttendance = auth()->user()->attendances()->latest()->get();
             }
 
             return DataTables::of($userAttendance)

@@ -109,7 +109,7 @@
                             results: $.map(data.studentData, function(student) {
                                 return {
                                     id: student.id,
-                                    text: student.student_name
+                                    text: student.student_name + '/' + student.class + ' (' + student.father_name + ')' 
                                 };
                             })
                         };

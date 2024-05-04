@@ -45,10 +45,19 @@ class StudentBillController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         if (request()->ajax()) {
-            $bills=Fee::with('student')->get();
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+           
+            $query =Fee::query();
+    
+            if ($startDate && $endDate) {
+               $data = $query->whereBetween('created_at', [$startDate, $endDate]);
+                $data->get();
+            }
+            $bills=$query->with('student')->get();
             // dd($bills);
             return DataTables::of($bills)
                 ->addIndexColumn()

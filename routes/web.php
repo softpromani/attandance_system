@@ -12,6 +12,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherApproveController;
 use App\Http\Controllers\TeacherLeaveController;
+use App\Http\Controllers\TodayHistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +47,7 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::post('set-area',[AreaController::class,'setArea'])->name('setarea');
     Route::post('send-noti',[StudentController::class,'firebaseNoti'])->name('firebaseNoti');
     Route::get('push',[StudentController::class,'getfirebaseNoti'])->name('push');
+    Route::get('view-history',[TodayHistoryController::class,'viewHistory'])->name('viewhistory');
 
 
 });

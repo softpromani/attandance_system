@@ -25,7 +25,7 @@
     </div>
 
     <div id="menu-settings" class="menu menu-box-bottom menu-box-detached">
-        <div class="menu-title mt-0 pt-0"><h1>Settings</h1><p class="color-highlight">Flexible and Easy to Use</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
+        <div class="menu-title mt-0 pt-0"><h1>Settings</h1><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
         <div class="divider divider-margins mb-n2"></div>
         <div class="content">
         <div class="list-group list-custom-small">
@@ -39,6 +39,15 @@
                 <i class="fa fa-angle-right"></i>
             </a>
         </div>
+        @if(auth()->check() && auth()->user()->hasRole('admin'))
+    <div class="list-group list-custom-small">
+        <a href="{{ route('admin.setmap') }}" class="pb-2 ms-n1">
+            <i class="fa fa-map-marker font-12 rounded-s bg-warning color-white me-3"></i>
+            <span>Set Area</span>
+        </a>
+    </div>
+        @endif
+
         <div class="list-group list-custom-large">
             {{-- <a data-menu="menu-highlights" href="#">
                 <i class="fa font-14 fa-tint bg-green-dark rounded-s"></i>

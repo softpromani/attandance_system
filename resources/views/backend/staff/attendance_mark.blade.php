@@ -1,5 +1,9 @@
 @extends('frontend.includes.main')
 @section('content')
+@section('style')
+
+
+@endsection
 <div class="content ">
     <div class="row">
         <div class="col">
@@ -52,9 +56,17 @@
         </p>
     </div>
 </div>
+
 <div class="card card-style">
     <div class="content mb-0">
-     
+
+        <div class="d-flex align-items-center">
+          <span style="color:#2F539B;"><strong>Filter-</strong></span>&nbsp;
+            <input type="date" class="form-control form-control-sm" id="start_date_input">
+            <span class="mx-2" style="color:#2F539B;"><small>To</small></span>
+            <input type="date" class="form-control form-control-sm" id="end_date_input">
+        </div>
+        
         <div class="table-responsive">
             <table class="table table-borderless rounded-sm shadow-l datatables" style="overflow: hidden;">
                 <thead>
@@ -81,7 +93,7 @@
 </div>
 @endsection
 @section('script')
-<script>
+{{-- <script>
     $(document).ready(function() {
         document.getElementById('backButton').addEventListener('click', function() {
                 window.history.back();
@@ -119,5 +131,60 @@
         });
     });
    
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+        document.getElementById('backButton').addEventListener('click', function() {
+                window.history.back();
+            });
+    var dataTable = $('.datatables').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('staff.markattendance') }}",
+            data: function(d) {
+                d.start_date = $('#start_date_input').val();
+                d.end_date = $('#end_date_input').val();
+            }
+        },
+        columns: [
+            {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                },
+                {
+                    data: 'staff',
+                    name: 'staff',
+                },
+                {
+                    data: 'role',
+                    name: 'role',
+                },
+                {
+                    data: 'punching_time',
+                    name: 'punching_time',
+                },
+                {
+                    data: 'punchout_time',
+                    name: 'punchout_time',
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                },
+        ]
+    });
+     // Event listener for start_date input change
+     $('#start_date_input').on('change', function() {
+        dataTable.ajax.reload();
+    });
+
+    // Event listener for end_date input change
+    $('#end_date_input').on('change', function() {
+        dataTable.ajax.reload();
+    });
+});
 </script>
+
 @endsection

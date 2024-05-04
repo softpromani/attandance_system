@@ -71,17 +71,17 @@
                         </a>
                     </div>
                     <div class="col-6 ps-2">
-                        <a href="{{ route('admin.setmap') }}">
-                            <div class="card card-style bg-success shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                        <a href="{{ route('admin.viewhistory') }}">
+                            <div class="card card-style bg-primary bg-opacity-25 shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
-                                    <h3 class="color-white d-block  pt-1">Set Area</h3>
+                                    <h3 class="color-white d-block  pt-1">Today History</h3>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <div class="col-6 pe-2">
                         <a href="{{ route('admin.leave-set-up.index') }}">
-                            <div class="card card-style gradient-blue shadow-bg shadow-bg-m mx-0 mb-3"
+                            <div class="card card-style bg-success shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block pt-1">Leave SetUp</h3>
