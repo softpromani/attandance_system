@@ -34,10 +34,10 @@
                                 <p><b>Mobile Number :</b> {{ $students->mobile_number ?? '' }}</p>
                             </div>
                             <div class="col-sm-6">
-                                <p><b>Class :</b> {{ $students->class ?? '' }}</p>
+                                <p><b>Class :</b> {{ $students->className->class??'No class'}}</p>
                             </div>
                             <div class="col-sm-6">
-                                <p><b>Section :</b> {{ $students->section ?? '' }}</p>
+                                <p><b>Section :</b> {{ $students->sectionName->section??'No section';}}</p>
                             </div>
                 </div>
             </div>

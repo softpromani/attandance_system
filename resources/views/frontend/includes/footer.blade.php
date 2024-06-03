@@ -39,14 +39,14 @@
                 <i class="fa fa-angle-right"></i>
             </a>
         </div>
-        @if(auth()->check() && auth()->user()->hasRole('admin'))
+        {{-- @if(auth()->check() && auth()->user()->hasRole('admin'))
     <div class="list-group list-custom-small">
         <a href="{{ route('admin.setmap') }}" class="pb-2 ms-n1">
             <i class="fa fa-map-marker font-12 rounded-s bg-warning color-white me-3"></i>
             <span>Set Area</span>
         </a>
     </div>
-        @endif
+        @endif --}}
 
         <div class="list-group list-custom-large">
             {{-- <a data-menu="menu-highlights" href="#">

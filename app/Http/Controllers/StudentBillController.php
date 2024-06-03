@@ -67,14 +67,14 @@ class StudentBillController extends Controller
                 ->addColumn('action', function ($row) {
                     $id = $row->id;
                     $ht = '';
-                        $ht .= '<a href="' . route("staff.student-fee.edit", $id) . '" target="_blank" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
+                        $ht .= '<a href="' . route("staff.student-fee.edit", $id) . '" class="btn btn-link p-0 "style="display:inline"><i class="fa fa-edit me-1" style="color:blue; font-size:20px;"></i></a>';
 
                         return $ht;
                 })
                 ->addColumn('view',function($q){
                     $id = $q->id;
                     $ht = '';
-                  $ht = '<a href="'. route('staff.student-bill.show' , $id).'" target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>';
+                  $ht = '<a href="'. route('staff.student-bill.show' , $id).'" ><i class="fa fa-download" aria-hidden="true"></i></a>';
                  return $ht;
                 })
                 ->rawColumns(['action','view'])
@@ -271,18 +271,21 @@ class StudentBillController extends Controller
     {
         // dd($request->all());
 
-        $fee = Fee::find($id);
+        $fee = Fee::find($id);;
         $studentid=$fee->student_id;
         if ($fee) {
             $fee->feeDetails()->delete();
         }
         // Create a new fee record
+        $totalFee = $request->has('totalsum') ? $request->totalsum : $fee->total_fee;
+
         $fee->update([
-            'total_fee' => $request->totalsum,
+            'total_fee' => $totalFee,
             'payment_status' => 'unpaid',
             'submitted_fee' => '0.00',
             'student_id' => $studentid,
         ]);
+        
         // dd($fee);
         $data=$request->all();
         foreach ($data['amount'] as $key => $amount) {
@@ -290,7 +293,7 @@ class StudentBillController extends Controller
                 'amount' => $amount,
                 'desc' => $data['desc'][$key],
                 'year' => $data['year'][$key],
-                'late_fee' => $data['late_fee'][$key],
+                'late_fee' => $data['late_fee'][$key] ?? '0.00',
                 'month' => $data['month'][$key],
                 'feetype_id' => $data['fee_type'][$key],
                 'fee_id' => $fee->id // Use the ID of the newly created fee

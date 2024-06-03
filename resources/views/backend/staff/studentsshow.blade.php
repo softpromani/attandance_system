@@ -1,5 +1,4 @@
 @extends('frontend.includes.main')
-
 @section('content')
 
 <div class="content ">
@@ -28,6 +27,7 @@
                         <th scope="col" class="color-white">Sr.No</th>
                         <th scope="col" class="color-white">Student Name</th>
                         <th scope="col" class="color-white">Date of Birth</th>
+                        <th scope="col" class="color-white">Gender</th>
                         <th scope="col" class="color-white">Father Name</th>
                         <th scope="col" class="color-white" >Class</th>
                         <th scope="col" class="color-white">Section</th>
@@ -97,6 +97,10 @@
                 {
                     data: 'date_of_birth',
                     name: 'date_of_birth',
+                },
+                {
+                    data: 'gender',
+                    name: 'gender',
                 },
                 {
                     data: 'father_name',

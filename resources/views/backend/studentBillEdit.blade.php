@@ -33,13 +33,13 @@
                                 </p>
                             </div>
                             <div class="col-md-4 d-flex">
-                                <p><strong>Class :</strong></p>&nbsp;&nbsp; <p>{{ $fee->student->class ?? '' }}</p>
+                                <p><strong>Class :</strong></p>&nbsp;&nbsp; <p>{{ $fee->student->className->class??'No class' }}</p>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-4 d-flex">
-                                <p><strong>Section :</strong></p>&nbsp;&nbsp; <p>{{ $fee->student->section ?? '' }}</p>
+                                <p><strong>Section :</strong></p>&nbsp;&nbsp; <p>{{ $fee->student->sectionName->section??'No section' }}</p>
                             </div>
                         </div>
                     </div>

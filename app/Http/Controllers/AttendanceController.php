@@ -19,6 +19,7 @@ class AttendanceController extends Controller
     public function markAttendance(Request $request)
     {
         if ($request->ajax()) {
+            
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
     
@@ -26,7 +27,7 @@ class AttendanceController extends Controller
     
             if ($startDate && $endDate) {
                $data = $query->whereBetween('created_at', [$startDate, $endDate]);
-               $data->get();
+               $data->latest()->get();
             }
     
             if (auth()->user()->hasRole('admin')) {
@@ -62,8 +63,14 @@ class AttendanceController extends Controller
         $today_attendance=Attendance::where('teacher_id',Auth::user()->id)->whereDate('punching_time',Carbon::today())->first();
         $punching=$today_attendance?$today_attendance->punching_time:''; 
         $punchout=$today_attendance?$today_attendance->punchout_time:''; 
-        
-        return view('backend.staff.attendance_mark',compact('punching','punchout'));
+        $allAttendance = Attendance::where('teacher_id', Auth::user()->id)
+        ->get()
+        ->map(function ($attendance) {
+            return date('Y-m-d', strtotime($attendance->punching_time)); // Format date as YYYY-MM-DD
+        })
+        ->toArray(); 
+        $users = User::all();
+        return view('backend.staff.attendance_mark',compact('punching','punchout','users','allAttendance'));
     }
     public function updateLocation(Request $request){
       $updateData = User::where('id',auth()->user()->id)->update(['location' => $request->location]);
@@ -73,6 +80,16 @@ class AttendanceController extends Controller
         else{
             return redirect()->route('admin.backendAdminPage')->with('warning','Please Allow The Location...!');
         }
+    }
+    public function selectUser(Request $request){
+        $allAttendance = Attendance::where('teacher_id', $request->userId)
+        ->get()
+        ->map(function ($attendance) {
+            return date('Y-m-d', strtotime($attendance->punching_time)); // Format date as YYYY-MM-DD
+        })
+        ->toArray();
+        return response()->json(['attendance'=>$allAttendance]);
+
     }
 
 }

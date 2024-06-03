@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-6 ps-2">
                         <a href="{{ route('admin.viewhistory') }}">
-                            <div class="card card-style bg-primary bg-opacity-25 shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
+                            <div class="card card-style demo-color bg-orange-dark shadow-bg shadow-bg-m mx-0 mb-3" data-card-height="130">
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Today History</h3>
                                 </div>
@@ -134,6 +134,36 @@
                                 </div>
                                 <div class="card-bottom p-3">
                                     
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 ps-2">
+                        <a href="{{ route('admin.systemSetting') }}">
+                            <div class="card card-style demo-color bg-magenta-dark shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">System Setting</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 ps-2">
+                        <a href="{{ route('admin.getreport') }}">
+                            <div class="card card-style demo-color bg-pink-dark shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Report</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 ps-2">
+                        <a href="{{ route('admin.getevent') }}">
+                            <div class="card card-style demo-color bg-brown-dark shadow-bg shadow-bg-m mx-0 mb-3"
+                                data-card-height="130">
+                                <div class="card-top p-3">
+                                    <h3 class="color-white d-block  pt-1">Event</h3>
                                 </div>
                             </div>
                         </a>

@@ -52,8 +52,8 @@
                     <h6><b>Father:-</b>&nbsp;&nbsp;{{ $fee->student->father_name }}</h6>
                     </div>
                     <div class="col-md-6 d-flex justify-content-between">
-                        <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->class }}</h6>&nbsp;&nbsp;
-                        <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->section  }}</h6>
+                        <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->className->class??'No class'  }}</h6>&nbsp;&nbsp;
+                        <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->sectionName->section??'No section'  }}</h6>
                     </div>
                         <div class="col-md-6 ">
                             <h6><b>Roll No:-</b>&nbsp;&nbsp;{{ $fee->student->registration_number }}</h6>
@@ -129,8 +129,8 @@
                         <h6><b>Father:-</b>&nbsp;&nbsp;{{ $fee->student->father_name }}</h6>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between">
-                            <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->class }}</h6>&nbsp;&nbsp;
-                            <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->section  }}</h6>
+                            <h6><b>Class:-</b>&nbsp;&nbsp;{{ $fee->student->className->class??'No class'  }}</h6>&nbsp;&nbsp;
+                            <h6><b>Section:-</b>&nbsp;&nbsp;{{ $fee->student->sectionName->section??'No section'  }}</h6>
                         </div>
                             <div class="col-md-6 ">
                                 <h6><b>Roll No:-</b>&nbsp;&nbsp;{{ $fee->student->registration_number }}</h6>

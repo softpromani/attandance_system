@@ -46,7 +46,7 @@ class QRController extends Controller
                         <i class="fa fa-trash-o" style="color: red; font-size: 20px;"></i>
                         </button>';
                         $ht .= '<a href="' . route("staff.generate_qr", $id) . '" id="printButton"
-                                                target="_blank" class="btn btn-link p-0">
+                                                 class="btn btn-link p-0">
                                                 <i class="fa fa-print" aria-hidden="true" style="color: rgb(255, 174, 0); font-size: 20px;"></i>
                                             </a>';
                         return $ht; 

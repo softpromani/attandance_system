@@ -4,12 +4,16 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\ClassController;
 use App\Http\Controllers\LeaveSetUpController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\QRController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentBillController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SystemSettingController;
 use App\Http\Controllers\TeacherApproveController;
 use App\Http\Controllers\TeacherLeaveController;
 use App\Http\Controllers\TodayHistoryController;
@@ -48,6 +52,14 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::post('send-noti',[StudentController::class,'firebaseNoti'])->name('firebaseNoti');
     Route::get('push',[StudentController::class,'getfirebaseNoti'])->name('push');
     Route::get('view-history',[TodayHistoryController::class,'viewHistory'])->name('viewhistory');
+    Route::get('system-setting',[SystemSettingController::class,'systemSetting'])->name('systemSetting');
+    Route::resource('section',SectionController::class);
+    Route::resource('jsfclass',ClassController::class);
+    Route::get('report',[ReportController::class,'getReport'])->name('getreport');
+    Route::get('event',[ReportController::class,'getEvent'])->name('getevent');
+    Route::get('view-std-report',[ReportController::class,'viewStudentReport'])->name('viewstudentreport');
+    Route::get('view-std-fee-report',[ReportController::class,'viewStudentFeeReport'])->name('viewstdfeereport');
+    Route::get('select-user',[AttendanceController::class,'selectUser'])->name('selectuser');
 
 
 });
@@ -73,11 +85,12 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     // Route::get('approve-leave',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
     Route::post('/staff/approve-leave/{id}',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
     Route::post('/staff/decline-leave/{id}', [TeacherApproveController::class,'declineLeave'])->name('declineLeave');
-
     Route::get('mark_attendance',[AttendanceController::class,'markAttendance'])->name('markattendance');
+    
 });
 Route::group([ 'prefix'=>'student','as'=>'student.', 'middleware' => 'auth'],function(){
     Route::resource('student',StudentController::class);
+    Route::get('sub-section/{id}',[StudentController::class,'subSection']);
     Route::get('bill',[BillController::class,'index'])->name('bills');
     Route::resource('leave-set-up',LeaveSetUpController::class);
 });

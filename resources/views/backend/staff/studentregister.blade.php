@@ -1,5 +1,7 @@
 @extends('frontend.includes.main')
 @section('content')
+@section('style')
+@endsection
     <div class="card card-style">
 
         @foreach ($errors->all() as $e)
@@ -42,6 +44,21 @@
                         <i class="fa fa-check disabled valid color-green-dark"></i>
                         <em>(required)</em>
                     </div>
+                    <div class="input-style input-style-always-active has-borders validate-field mt-4 col-sm-12">
+                        <label for="gender" class="color-blue-dark font-13">
+                            Gender 
+                        </label>
+                        <select class="form-select" id="gender" aria-label="Default select example" name="gender">
+                            <option selected disabled>select Gender</option>
+                            <option value="male" {{ (old('gender') ?? $editstudent->gender ?? '') == 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ (old('gender') ?? $editstudent->gender ?? '') == 'female' ? 'selected' : '' }}>Female</option>
+                        </select>
+                        <i class="fa fa-times disabled invalid color-red-dark"></i>
+                        <i class="fa fa-check disabled valid color-green-dark"></i>
+                        
+                        {{-- <em>(required)</em> --}}
+                    </div>
+                    
                     <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
                         <i class="fa fa-user font-12"></i>
                         <input type="text" class="form-control validate-name" name="father_name" id="f1a"
@@ -57,12 +74,18 @@
                     </div>
                     <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
                         <i class="fa fa-building font-12"></i>
-                        <input type="text" class="form-control validate-name" name="class" id="f1abcd"
+                        {{-- <input type="text" class="form-control validate-name" name="class" id="f1abcd"
                             placeholder="Class" value="{{ isset($editstudent) ? $editstudent->class : '' }}"
                             value="{{ old('student_name') }}">
                         @error('class')
                             <div <span class="text-danger">{{ $message }}</span></div>
-                        @enderror
+                        @enderror --}}
+                        <select class="form-select class_name" aria-label="Default select example" name="classId">
+                            <option selected disabled> select Class</option>
+                            @foreach ($classData as $cd )
+                            <option value="{{$cd->id }}" >{{ $cd->class }}</option>
+                            @endforeach
+                          </select>
                         <label for="f1abcd" class="color-blue-dark font-13">Class</label>
                         <i class="fa fa-times disabled invalid color-red-dark"></i>
                         <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -70,12 +93,15 @@
                     </div>
                     <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
                         <i class="fa fa-building font-12"></i>
-                        <input type="text" class="form-control validate-name" name="section" id="f1abcd"
+                        {{-- <input type="text" class="form-control validate-name" name="section" id="f1abcd"
                             placeholder="Sectioon" value="{{ isset($editstudent) ? $editstudent->section : '' }}"
                             value="{{ old('section') }}">
                         @error('section')
                             <div <span class="text-danger">{{ $message }}</span></div>
-                        @enderror
+                        @enderror --}}
+                        <select class="form-select" id="select2Success" aria-label="Default select example" name="sectionId">
+                                        
+                        </select>
                         <label for="f1abcd" class="color-blue-dark font-13">Section</label>
                         <i class="fa fa-times disabled invalid color-red-dark"></i>
                         <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -118,4 +144,23 @@
     </div>
     </div>
     </div>
+@endsection
+@section('script')
+
+<script>
+    $(document).ready(function () {
+        $('.class_name').on('change', function () { 
+        var class_id=$(this).val();
+        var new_url = "{{url('student/sub-section')}}"+'/'+class_id;
+        // alert(new_url);
+          $.ajax({
+            type: "get",
+            url: new_url,
+            success: function (response) {
+                $('#select2Success').html(response);
+            }
+          });
+       });
+    });
+</script>
 @endsection

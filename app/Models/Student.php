@@ -16,5 +16,13 @@ class Student extends Model
     {
         return $this->hasMany(Fee::class);
     }
+    public function className()
+    {
+        return $this->belongsTo(AddClass::class,'class');
+    }
+    public function sectionName()
+    {
+        return $this->belongsTo(Section::class,'section');
+    }
 
 }
