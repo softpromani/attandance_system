@@ -172,7 +172,8 @@ class StudentController extends Controller
         $classData = AddClass::all();
         $editstudent = Student::find($id);
         $students = Student::get();
-        return view('backend.staff.studentregister', compact('editstudent','students','classData'));
+        $sections = Section::where('class_id', $editstudent->class)->get();
+        return view('backend.staff.studentregister', compact('editstudent','students','classData','sections'));
     }
 
     /**
@@ -185,10 +186,11 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
-        if($request->hasFile('student_image')){
+        if ($request->hasFile('student_image')) {
             $file = $request->file('student_image');
-            $path = $file->store('student','public');
-            Student::find($id)->update(['student_image' => $path]);
+            $path = $file->store('student', 'public');
+            // Add the new image path to the data array
+            $data['student_image'] = $path;
         }
 
         $data = [
@@ -199,7 +201,6 @@ class StudentController extends Controller
             'class' => $request->classId,
             'section' => $request->sectionId,
             'mobile_number' => $request->mobile_number,
-            'student_image' => $path ?? null,
         ];
         $student=Student::find($id)->update($data);
         if($student){

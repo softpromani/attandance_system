@@ -99,19 +99,21 @@
                     @isset($edit)
                     @method('put')
                     @endisset
-                <div class="input-style has-borders no-icon validate-field input-style-always-active pt-2">
-                    <label for="form5a" class="color-green-dark">Select Class</label>
-                    <select id="form5a" name="ClassId">
-                        <option selected disabled>select Class</option>
-                        @foreach ($classes as $cl )
-                        <option value="{{$cl->id }}" @if(isset($edit)?$edit->classId:'') selected @endif>{{ $cl->class }}</option>
-                        @endforeach
-                    </select>
-                    <span><i class="fa fa-chevron-down"></i></span>
-                    <i class="fa fa-check disabled valid color-green-dark"></i>
-                    <i class="fa fa-check disabled invalid color-red-dark"></i>
-                    <em></em>
+                    <div class="input-style has-borders no-icon validate-field input-style-always-active pt-2">
+                        <label for="form5a" class="color-green-dark">Select Class</label>
+                        <select id="form5a" name="ClassId">
+                            <option selected disabled>select Class</option>
+                            @foreach ($classes as $cl)
+                            <option value="{{ $cl->id }}" @if(isset($edit) && $edit->class_id == $cl->id) selected @endif>{{ $cl->class }}</option>
+                            @endforeach
+                        </select>
+                        <span><i class="fa fa-chevron-down"></i></span>
+                        <i class="fa fa-check disabled valid color-green-dark"></i>
+                        <i class="fa fa-check disabled invalid color-red-dark"></i>
+                        <em></em>
                     </div>
+                    
+                    
                     <div class="input-style input-style-always-active has-borders validate-field mt-4">
                         <input type="text" name="section" class="form-control" value="{{ isset($edit)?$edit->section:'' }}" id="form6" placeholder="Enter section name" required>
                         <label for="form6" class="color-green-dark font-13">Section</label>

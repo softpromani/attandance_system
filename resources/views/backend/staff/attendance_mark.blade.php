@@ -291,8 +291,6 @@
 
         $(document).on('change', '#userId', function () {
             var userId = document.querySelector('.users').value;
-            alert('fun run');
-            // Sending AJAX request
             $.ajax({
                 url: '{{ route("admin.selectuser") }}',
                 type: 'GET',

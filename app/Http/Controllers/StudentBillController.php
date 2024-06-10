@@ -28,18 +28,21 @@ class StudentBillController extends Controller
     {
         if ($req->ajax() && $req->has('term')) {
             $term = $req->input('term');
-
-            // Perform a search based on the student name
-            $students = Student::where('student_name', 'like', '%' . $term . '%')->get();
-
-            // Return the result as JSON
-            return response()->json(['studentData' => $students]);
+            $students = Student::where('student_name', 'like', '%' . $term . '%')
+                ->with('className') // Eager load the className relationship
+                ->get();
+            $studentData = $students->map(function($student) {
+                return [
+                    'id' => $student->id,
+                    'text' => $student->student_name . '/' . ($student->className->class ?? 'Unknown Class') . ' (' . $student->father_name . ')'
+                ];
+            });
+            return response()->json(['studentData' => $studentData]);
         }
-
-        $studentData=Student::get();
+        $studentData = Student::with('className')->get();
         return view('backend.studentBill', compact('studentData'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -277,15 +280,23 @@ class StudentBillController extends Controller
             $fee->feeDetails()->delete();
         }
         // Create a new fee record
-        $totalFee = $request->has('totalsum') ? $request->totalsum : $fee->total_fee;
-
-        $fee->update([
-            'total_fee' => $totalFee,
-            'payment_status' => 'unpaid',
-            'submitted_fee' => '0.00',
-            'student_id' => $studentid,
-        ]);
-        
+        if ($request->totalsum) {
+            $totalFee = $request->totalsum;
+            $allfee = [
+                'total_fee' => $totalFee,
+                'payment_status' => 'unpaid',
+                'submitted_fee' => '0.00',
+                'student_id' => $studentid,
+            ];
+        } else {
+            // Retain existing total_fee value
+            $allfee = [
+                'payment_status' => 'unpaid',
+                'submitted_fee' => '0.00',
+                'student_id' => $studentid,
+            ];
+        }
+        $fee->update($allfee);
         // dd($fee);
         $data=$request->all();
         foreach ($data['amount'] as $key => $amount) {

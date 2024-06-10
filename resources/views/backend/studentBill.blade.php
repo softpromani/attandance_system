@@ -97,23 +97,24 @@
     <script>
         $(document).ready(function() {
             // Initialize Select2 with AJAX support
+
             $('.js-example-basic-single').select2({
                 ajax: {
                     url: '{{ route('staff.student-bill.index') }}',
                     type: 'GET',
                     dataType: 'json',
                     delay: 250, // Add a delay to avoid too many requests while typing
-                    processResults: function(data) {
-                        // Process the fetched data and return it in the format expected by Select2
-                        return {
-                            results: $.map(data.studentData, function(student) {
-                                return {
-                                    id: student.id,
-                                    text: student.student_name + '/' + student.class + ' (' + student.father_name + ')' 
-                                };
-                            })
+                    data: function(params) {
+            return {
+                            term: params.term // Pass the search term to the server
                         };
                     },
+                    processResults: function(data) {
+            // The studentData is already transformed by the controller
+            return {
+                results: data.studentData
+            };
+        },
                     cache: true
                 }
             });
@@ -246,7 +247,7 @@
             // Your existing code for sum calculation
 
             // After updating the sum, call the function to update the hidden input
-            updatetotalsum();
+            updateTotalSum();
         }
     </script>
 @endsection

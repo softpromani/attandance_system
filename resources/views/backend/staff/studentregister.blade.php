@@ -83,7 +83,7 @@
                         <select class="form-select class_name" aria-label="Default select example" name="classId">
                             <option selected disabled> select Class</option>
                             @foreach ($classData as $cd )
-                            <option value="{{$cd->id }}" >{{ $cd->class }}</option>
+                            <option value="{{$cd->id }}" @if(isset($editstudent) && $editstudent->class == $cd->id) selected @endif >{{ $cd->class }}</option>
                             @endforeach
                           </select>
                         <label for="f1abcd" class="color-blue-dark font-13">Class</label>
@@ -91,16 +91,33 @@
                         <i class="fa fa-check disabled valid color-green-dark"></i>
                         <em>(required)</em>
                     </div>
-                    <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
+                    {{-- <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
                         <i class="fa fa-building font-12"></i>
-                        {{-- <input type="text" class="form-control validate-name" name="section" id="f1abcd"
+                         <input type="text" class="form-control validate-name" name="section" id="f1abcd"
                             placeholder="Sectioon" value="{{ isset($editstudent) ? $editstudent->section : '' }}"
                             value="{{ old('section') }}">
-                        @error('section')
-                            <div <span class="text-danger">{{ $message }}</span></div>
-                        @enderror --}}
+                            @error('section')
+                                <div <span class="text-danger">{{ $message }}</span></div>
+                            @enderror 
                         <select class="form-select" id="select2Success" aria-label="Default select example" name="sectionId">
                                         
+                        </select>
+                        <label for="f1abcd" class="color-blue-dark font-13">Section</label>
+                        <i class="fa fa-times disabled invalid color-red-dark"></i>
+                        <i class="fa fa-check disabled valid color-green-dark"></i>
+                        <em>(required)</em>
+                    </div> --}}
+                    <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
+                        <i class="fa fa-building font-12"></i>
+                        <select class="form-select" id="select2Success" aria-label="Default select example" name="sectionId">
+                            <option selected disabled>Select Section</option>
+                            @if(isset($sections))
+                                @foreach($sections as $section)
+                                    <option value="{{ $section->id }}" @if(isset($editstudent) && $editstudent->section == $section->id) selected @endif>
+                                        {{ $section->section }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
                         <label for="f1abcd" class="color-blue-dark font-13">Section</label>
                         <i class="fa fa-times disabled invalid color-red-dark"></i>
@@ -161,6 +178,19 @@
             }
           });
        });
+
+       @if(isset($edit))
+            var class_id = '{{ $edit->classId }}';
+            var new_url = "{{ url('student/sub-section') }}" + '/' + class_id;
+            $.ajax({
+                type: "GET",
+                url: new_url,
+                success: function (response) {
+                    $('#select2Success').html(response);
+                    $('#select2Success').val('{{ $edit->sectionId }}').change();
+                }
+            });
+        @endif
     });
 </script>
 @endsection
