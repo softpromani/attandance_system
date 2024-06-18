@@ -11,13 +11,35 @@
             </a>
         </div>
     </div>
+    <div class="col-md-6 ps-2">
+        <div class="card card-style bg-success shadow-bg shadow-bg-m mx-0" data-card-height="150">
+            <div class="card-top p-3">
+                <h5 class="color-white d-block text-end fs-6 fs-sm-5 fs-md-4 fs-lg-3">Casual</h5>
+                <h5 class="color-white d-block text-end fs-6 fs-sm-5 fs-md-4 fs-lg-3">P ({{$casuale->paid_leave??'0' }}) , Un ({{ $casuale->unpaid_leave??'0' }})</h5>
+               
+                @if ($allleaves[0]['leave_type'] == 'casual leave')    
+                
+                <h1 class="color-white mb-n1 text-start fs-4 fs-sm-3 fs-md-2 fs-lg-1">{{ $allleaves[1]['leave_count'] }}/{{ $totalsickLeave??'0' }}</h1>
+                @endif
+            </div>
+            <div class="card-top p-3">
+                <h5 class="color-white d-block fs-6 fs-sm-5 fs-md-4 fs-lg-3">Sick</h5>
+                <h5 class="color-white d-block fs-6 fs-sm-5 fs-md-4 fs-lg-3">P ({{$sickle->paid_leave??'0' }}) , Un ({{ $sickle->unpaid_leave??'0' }})</h5>
+                @if ($allleaves[1]['leave_type'] == 'sick leave')    
+                <h1 class="color-white mb-n1 text-end fs-4 fs-sm-3 fs-md-2 fs-lg-1">{{ $allleaves[0]['leave_count']}}/{{ $totalcasualLeave??'0' }}</h1>
+                @endif
+            </div>
+           
+        </div>
+    </div>
     <div class="card card-style">
         <div class="content mb-1 ">
             <div class="table-responsive">
-        <table class="table table-borderless text-center rounded-sm shadow-l datatables" style="overflow: hidden;">
+        <table class="table table-borderless rounded-sm shadow-l datatables" style="overflow: hidden;">
             <thead>
                 <tr style="background-color:#2F539B; color:white;">
-                <th scope="col" class="color-white">Sr.No.</th>
+                <th scope="col" class="color-white ">Sr.No.</th>
+                <th scope="col" class="color-white">Leave Type</th>
                 <th scope="col" class="color-white">Subject</th>
                 <th scope="col" class="color-white">Description</th>
                 <th scope="col" class="color-white">Start Date</th>
@@ -56,6 +78,7 @@
             ajax: "{{ route('staff.teacher-leaves.create') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'leave_type', name: 'leave_type' },
                 { data: 'subject', name: 'subject' },
                 { data: 'description', name: 'description' },
                 { data: 'start_date', name: 'start_date' },
@@ -63,13 +86,14 @@
                 {
                     data: 'file',
                     name: 'file',
-                    render: function(data, type, full, meta) {
-                        if (type === 'display') {
-                            return '<img src="' + data + '" width="100">';
-                        }
-                        return data;
-                    }
-                },
+                    render: function (data) {
+                if (data !== null) {
+                    return '<img src="' + data + '" alt=" Img" class="img-thumbnail" style="height: 100px; width:150px;">';
+                } else {
+                    return 'No Image';
+                }
+            }
+        },
                 { data: 'status', name: 'status' }, // Include the status column
                 { data: 'action', name: 'action' }, // Action column for edit
             ]

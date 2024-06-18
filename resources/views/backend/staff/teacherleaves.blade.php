@@ -19,12 +19,44 @@
     <div class="input-style input-style-always-active has-borders has-icon validate-field mt-4 col-sm-12">
         <i class="fa fa-user font-12"></i>
         <!-- Select box -->
+        {{-- <select class="form-select" name="leave_type" id="f1a">
+                @forelse ( $leave as $l )
+                @if ($l->name == 'casual leave' )
+                @if ($allleaves[0]['leave_count'] = $totalcasualLeave)
+                <option value="{{$l->id}}" {{ isset($editteacherleave)?($editteacherleave->leave_type == $l->id ?'selected':''):'' }}>{{ $l->name ?? 'NA'}}</option>
+                @endif
+                @endif
+                @empty
+                <option value="">Null</option>
+                @endforelse
+        </select> --}}
         <select class="form-select" name="leave_type" id="f1a">
-            @forelse ( $leave as $l )
-            <option value="{{$l->id}}" {{ isset($editteacherleave)?($editteacherleave->leave_type == $l->id ?'selected':''):'' }}>{{ $l->name ?? 'NA'}}</option>
+            @forelse ($leave as $l)
+                @php
+                    $isDisabled = false;
+                    $optionText = $l->name ?? 'NA';
+                    // Check if it's casual leave and if the user has exhausted it
+                    if ($l->name === 'casual leave' && isset($allleaves[0]) && $allleaves[0]['leave_count'] >= $totalcasualLeave) {
+                        $isDisabled = true;
+                        $optionText = 'Connect to Admin';
+                    }
+                    // Check if it's sick leave and if the user has exhausted it
+                    if ($l->name === 'sick leave' && isset($allleaves[1]) && $allleaves[1]['leave_count'] >= $totalsickLeave) {
+                        $isDisabled = true;
+                        $optionText = 'Connect to Admin';
+                    }
+                @endphp
+                @if (!$isDisabled)
+                    <option value="{{ $l->id }}" {{ isset($editteacherleave) && $editteacherleave->leave_type == $l->id ? 'selected' : '' }}>
+                        {{ $l->name ?? 'NA' }}
+                    </option>
+                @endif
             @empty
-
+                <option value="" disabled>No leave types available</option>
             @endforelse
+            @if ($isDisabled)
+                <option value="" disabled> For Leave Connect to Admin</option>
+            @endif
         </select>
         <!-- Error message -->
         @error('leave_type')

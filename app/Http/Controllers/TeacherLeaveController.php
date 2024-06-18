@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LeaveSetup;
 use App\Models\LeaveType;
 use Illuminate\Support\Facades\File;
 use App\Models\TeacherLeave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class TeacherLeaveController extends Controller
@@ -18,7 +20,29 @@ class TeacherLeaveController extends Controller
     public function index()
     {   $leave = LeaveType::get();
         $teacherleaves = TeacherLeave::get();
-       return view('backend.staff.teacherleaves', compact('teacherleaves','leave'));
+        $currentYear = date('Y');
+
+        $leaveSetup = LeaveSetup::all();
+        $sickle = $leaveSetup->where('type','sick')->where('years',$currentYear)->first();
+        if ($sickle) {
+            $totalsickLeave = $sickle->paid_leave + $sickle->unpaid_leave;
+        } 
+        $casuale = $leaveSetup->where('type','casual')->where('years',$currentYear)->first();
+        if ($casuale) {
+            $totalcasualLeave = $casuale->paid_leave + $casuale->unpaid_leave;
+        } 
+        // dd($totalcasualLeave , $totalsickLeave);
+        $totalleaves =  TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
+        ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
+        ->groupBy('leave_types.name')
+        ->get();
+
+        $allleaves = array();
+        foreach($totalleaves as $tl){
+            $allleaves[] = $tl;  
+        }
+        // dd($allleaves);
+       return view('backend.staff.teacherleaves', compact('teacherleaves','leave','totalsickLeave','totalcasualLeave','allleaves'));
 
     }
 
@@ -31,27 +55,29 @@ class TeacherLeaveController extends Controller
     {
 
         if (request()->ajax()) {
-            $teacherleaves = TeacherLeave::get();
+            $userId =  auth()->user()->id;
+            $teacherleaves = TeacherLeave::where('user_id',$userId)->get();
             
             return DataTables::of($teacherleaves)
             ->addIndexColumn()
             ->addColumn('status', function ($row) {
                 if ($row->status == 0) {
-                    return '<p class="text-dark bg-warning rounded-pill">Pending</p>';
+                    return '<p class="text-dark bg-warning rounded-pill text-center">Pending</p>';
                 } elseif ($row->status == 1) {
-                    return '<p class="text-white bg-success rounded-pill">Approved</p>';
+                    return '<p class="text-white bg-success rounded-pill text-center">Approved</p>';
                 } elseif ($row->status == 2) {
-                    return '<p class="text-dark bg-danger rounded-pill">Declined</p>';
+                    return '<p class="text-dark bg-danger rounded-pill text-center">Declined</p>';
                 }
             })
                 ->addColumn('name', function ($q){
                     return optional($q->UserName)->name;
                     })
-                ->addColumn('file', function ($row) {
-                    return [
-                        'display' => '<img src="' . asset('storage/' . $row->file) . '" width="100">',
-                        'sort' => $row->file, // You might need to adjust this if you want to allow sorting
-                    ];
+                    ->addColumn('leave_type', function($q){
+                        return $q->LeaveTypes->name??'N/A';
+                    })
+                ->addColumn('file', function ($q) {
+                   
+                    return asset('storage/'.$q->file);
                 })
                 ->addColumn('action', function ($row) {
                     if($row->status == 0){
@@ -70,11 +96,28 @@ class TeacherLeaveController extends Controller
                 ->rawColumns(['status', 'image', 'action'])
                 ->make(true);
         }
-
-
-        $teacherleaves = TeacherLeave::get();
-        // dd($teacherleaves);
-        return view('backend.staff.teacherleaveview', compact('teacherleaves'));
+        $userId =  auth()->user()->id;
+        $currentYear = date('Y');
+        $leaveSetup = LeaveSetup::all();
+        // if(isset($leaveSetup) && $leaveSetup->type['sick']){
+        $sickle = $leaveSetup->where('type','sick')->where('years',$currentYear)->first();
+        $totalsickLeave = 0;
+        if ($sickle) {
+            $totalsickLeave = ($sickle->paid_leave ?? 0) + ($sickle->unpaid_leave ?? 0);
+        }
+        // }
+        // if(isset($leaveSetup) && $leaveSetup->type == 'casual'){
+        $casuale = $leaveSetup->where('type','casual')->where('years',$currentYear)->first();
+        $totalcasualLeave = 0;
+        if ($casuale) {
+            $totalcasualLeave = ($casuale->paid_leave ?? 0) + ($casuale->unpaid_leave ?? 0);
+        }
+        // }
+        $allleaves =  TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
+        ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
+        ->groupBy('leave_types.name')
+        ->get();
+        return view('backend.staff.teacherleaveview', compact('allleaves','sickle','casuale','totalsickLeave','totalcasualLeave'));
 
 
     }
@@ -141,7 +184,6 @@ class TeacherLeaveController extends Controller
     {
         $leave = LeaveType::get();
         $editteacherleave = TeacherLeave::find($id);
-        // dd($editteacherleave);
         $teacherleaves = TeacherLeave::get();
         return view('backend.staff.teacherleaves', compact('editteacherleave','teacherleaves','leave'));
     }

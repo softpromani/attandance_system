@@ -14,4 +14,7 @@ class TeacherLeave extends Model
     public function UserName(){
         return $this->belongsTo(User::class,'user_id');
     }
+    public function LeaveTypes(){
+        return $this->belongsTo(LeaveType::class,'leave_type');
+    }
 }

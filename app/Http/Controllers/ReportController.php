@@ -118,10 +118,10 @@ class ReportController extends Controller
             return DataTables::of($sections)
                 ->addIndexColumn()
             ->addColumn('class', function($q) {
-                return $q->className->class;
+                return $q->className->class??'N/A';
             })
             ->addColumn('section', function($q) {
-                return $q->section; 
+                return $q->section??'N/A'; 
             })
             ->addColumn('girls', function($q) {
                 return $q->students()->where('gender', 'female')->count();
