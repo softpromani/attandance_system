@@ -24,13 +24,15 @@ class TeacherLeaveController extends Controller
 
         $leaveSetup = LeaveSetup::all();
         $sickle = $leaveSetup->where('type','sick')->where('years',$currentYear)->first();
+        $totalsickLeave = 0;
         if ($sickle) {
-            $totalsickLeave = $sickle->paid_leave + $sickle->unpaid_leave;
-        } 
+            $totalsickLeave = ($sickle->paid_leave ?? 0) + ($sickle->unpaid_leave ?? 0);
+        }
         $casuale = $leaveSetup->where('type','casual')->where('years',$currentYear)->first();
+        $totalcasualLeave = 0;
         if ($casuale) {
-            $totalcasualLeave = $casuale->paid_leave + $casuale->unpaid_leave;
-        } 
+            $totalcasualLeave = ($casuale->paid_leave ?? 0) + ($casuale->unpaid_leave ?? 0);
+        }
         // dd($totalcasualLeave , $totalsickLeave);
         $totalleaves =  TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
         ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
