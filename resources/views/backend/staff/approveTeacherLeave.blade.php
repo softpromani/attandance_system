@@ -19,11 +19,12 @@
                 <th scope="col" class="color-white">Description</th>
                 <th scope="col" class="color-white">Start Date</th>
                 <th scope="col" class="color-white">End Date</th>
+                <th scope="col" class="color-white">File</th>
                 <th scope="col" class="color-white">Status</th>
                 <th scope="col" class="color-white">Action</th>
             </tr>
         </thead>
-        <tbody style="color:#2F539B;">
+        {{-- <tbody style="color:#2F539B;">
             @forelse($teacherleaves as $teacherleave)
             <tr>
                 <th scope="row">{{ $loop->index+1}}</th>
@@ -35,7 +36,7 @@
                     <img src="{{asset('storage/'.$teacherleave->file) }}" width="100">
                 </td>
 
-                    {{--  <td>
+                     <td>
                         @if($teacherleave->status==0)
                         <form id="approveButton" action="{{ route('staff.approveLeave') }}" method="POST">
                             @csrf
@@ -55,13 +56,13 @@
                     @elseif($teacherleave->status==2)
                         <p class="text-white bg-danger rounded-pill">Declined</p>
                     @endif
-                 </td>  --}}
+                 </td>  
 
             </tr>
             @empty
             teacher leaves not found
             @endforelse
-        </tbody>
+        </tbody> --}}
     </table>
         </div>
 </div>
@@ -80,14 +81,9 @@
     approveButton.addEventListener('click', function() {
         // Disable the "Decline" button
         declineButton.disabled = true;
-
-        // You can also update the server using AJAX if needed
-        // Example: make an AJAX request to update the status to "approve"
     });
 
     declineButton.addEventListener('click', function() {
-        // Nothing needs to be done here
-        // The "Decline" button will remain enabled
     });
 </script>
 
@@ -203,7 +199,7 @@
         var dataTable = $('.datatables').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('staff.teacher-leaves.create') }}",
+            ajax: "{{ route('admin.teacherAllLeave') }}",
             columns: [
                 {
                         data: 'DT_RowIndex',
@@ -214,6 +210,17 @@
                 { data: 'description', name: 'description' },
                 { data: 'start_date', name: 'start_date' },
                 { data: 'end_date', name: 'end_date' },
+                {
+                    data: 'file',
+                    name: 'file',
+                    render: function (data) {
+                if (data !== null) {
+                    return '<img src="' + data + '" alt="file" class="img-thumbnail" style="height: 100px; width:150px;">';
+                } else {
+                    return 'No Image';
+                }
+            }
+        },
                 { data: 'status', name: 'status' },
                 {
                     data: 'action',

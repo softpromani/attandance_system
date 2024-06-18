@@ -126,7 +126,7 @@
                     @endif
                     @if(auth()->user()->hasRole('admin'))
                     <div class="col-6 ps-2">
-                        <a href="{{ route('staff.teacherAllLeave') }}">
+                        <a href="{{ route('admin.teacherAllLeave') }}">
                             <div class="card card-style bg-secondary shadow-bg shadow-bg-m mx-0 mb-3"
                                 data-card-height="130">
                                 <div class="card-top p-3">

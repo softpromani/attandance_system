@@ -119,6 +119,7 @@ class TeacherLeaveController extends Controller
         ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
         ->groupBy('leave_types.name')
         ->get();
+        dd($allleaves);
         return view('backend.staff.teacherleaveview', compact('allleaves','sickle','casuale','totalsickLeave','totalcasualLeave'));
 
 

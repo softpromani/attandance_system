@@ -13,7 +13,14 @@ class TeacherApproveController extends Controller
     {
 
         if (request()->ajax()) {
-            $teacherleaves = TeacherLeave::get();
+            $query = TeacherLeave::query();
+            $userId = auth()->user()->id;
+            if (auth()->user()->hasRole('admin')) {
+                $teacherleaves = $query->latest()->get();
+            } else {
+                $teacherleaves = $query->where('user_id',$userId)->latest();
+            }
+           
             return DataTables::of($teacherleaves)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
@@ -26,7 +33,10 @@ class TeacherApproveController extends Controller
                     }
                 })
                 ->addColumn('file', function ($row) {
-                    return '<img src="' . asset('storage/' . $row->file) . '" width="100">';
+                    return asset('storage/'.$row->file);
+                })
+                ->addColumn('name', function ($row) {
+                    return$row->UserName->name;
                 })
                 ->addColumn('action', function ($row) {
                     // Check if the status is 0 (pending)

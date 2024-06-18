@@ -61,6 +61,7 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::get('view-std-fee-report',[ReportController::class,'viewStudentFeeReport'])->name('viewstdfeereport');
     Route::get('select-user',[AttendanceController::class,'selectUser'])->name('selectuser');
 
+    Route::get('teacher-all-leave',[TeacherApproveController::class,'allLeave'])->name('teacherAllLeave');
 
 });
 
@@ -81,7 +82,6 @@ Route::group([ 'prefix'=>'staff','as'=>'staff.', 'middleware' => 'auth'],functio
     Route::get('student-fee/edit/{id}', [StudentBillController::class,'editStudentFee'])->name('student-fee.edit');
     Route::get('student-fee/update/{id}', [StudentBillController::class,'updateStudentFee'])->name('student-fee-update');
     Route::resource('teacher-leaves',TeacherLeaveController::class);
-    Route::get('teacher-all-leave',[TeacherApproveController::class,'allLeave'])->name('teacherAllLeave');
     // Route::get('approve-leave',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
     Route::post('/staff/approve-leave/{id}',[TeacherApproveController::class,'approveLeave'])->name('approveLeave');
     Route::post('/staff/decline-leave/{id}', [TeacherApproveController::class,'declineLeave'])->name('declineLeave');
