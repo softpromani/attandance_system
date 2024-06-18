@@ -17,25 +17,28 @@
                 <h5 class="color-white d-block text-end fs-6 fs-sm-5 fs-md-4 fs-lg-3">Casual</h5>
                 <h5 class="color-white d-block text-end fs-6 fs-sm-5 fs-md-4 fs-lg-3">P ({{$casuale->paid_leave??'0' }}) , Un ({{ $casuale->unpaid_leave??'0' }})</h5>
                
-                @if ($allleaves[0]['leave_type'] == 'casual leave')    
-                
-                {{-- <h1 class="color-white mb-n1 text-start fs-4 fs-sm-3 fs-md-2 fs-lg-1">{{ $allleaves[1]['leave_count'] }}/{{ $totalsickLeave??'0' }}</h1> --}}
+                @if (isset($allleaves[0]) && $allleaves[0]['leave_type'] == 'casual leave')
                 <h1 class="color-white mb-n1 text-start fs-4 fs-sm-3 fs-md-2 fs-lg-1">
                     {{ isset($allleaves[1]['leave_count']) ? $allleaves[1]['leave_count'] : 0 }}/{{ $totalsickLeave ?? '0' }}
-                </h1>                
-                @endif
+                </h1>
+            @endif
             </div>
             <div class="card-top p-3">
                 <h5 class="color-white d-block fs-6 fs-sm-5 fs-md-4 fs-lg-3">Sick</h5>
                 <h5 class="color-white d-block fs-6 fs-sm-5 fs-md-4 fs-lg-3">P ({{$sickle->paid_leave??'0' }}) , Un ({{ $sickle->unpaid_leave??'0' }})</h5>
-                @if ($allleaves[1]['leave_type'] == 'sick leave')    
-                {{-- <h1 class="color-white mb-n1 text-end fs-4 fs-sm-3 fs-md-2 fs-lg-1">
-                    {{ $allleaves[0]['leave_count']}}/{{ $totalcasualLeave??'0' }}
-                </h1> --}}
+                {{-- @if ($allleaves[1]['leave_type'] == 'sick leave')    
+                    <h1 class="color-white mb-n1 text-end fs-4 fs-sm-3 fs-md-2 fs-lg-1">
+                        {{ $allleaves[0]['leave_count']}}/{{ $totalcasualLeave??'0' }}
+                    </h1>
+                    <h1 class="color-white mb-n1 text-start fs-4 fs-sm-3 fs-md-2 fs-lg-1">
+                        {{ isset($allleaves[0]['leave_count']) ? $allleaves[0]['leave_count'] : 0 }}/{{ $totalcasualLeave ?? '0' }}
+                    </h1>  
+                @endif --}}
+                @if (isset($allleaves[1]) && $allleaves[1]['leave_type'] == 'sick leave')
                 <h1 class="color-white mb-n1 text-start fs-4 fs-sm-3 fs-md-2 fs-lg-1">
-                    {{ isset($allleaves[0]['leave_count']) ? $allleaves[0]['leave_count'] : 0 }}/{{ $totalcasualLeave ?? '0' }}
-                </h1>  
-                @endif
+                    {{ isset($allleaves[1]['leave_count']) ? $allleaves[1]['leave_count'] : 0 }}/{{ $totalsickLeave ?? '0' }}
+                </h1>
+                 @endif
             </div>
            
         </div>
