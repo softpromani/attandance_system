@@ -22,7 +22,7 @@ class SectionController extends Controller
             return DataTables::of($classes)
                 ->addIndexColumn()
                 ->addColumn('clname', function($q) {
-                    return $q->className->class;
+                    return $q->className->class??'N/A';
                 })
                 ->addColumn('action', function ($row) {
                     $id = $row->id;

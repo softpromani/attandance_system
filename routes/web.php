@@ -60,7 +60,6 @@ Route::group([ 'prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'],functio
     Route::get('view-std-report',[ReportController::class,'viewStudentReport'])->name('viewstudentreport');
     Route::get('view-std-fee-report',[ReportController::class,'viewStudentFeeReport'])->name('viewstdfeereport');
     Route::get('select-user',[AttendanceController::class,'selectUser'])->name('selectuser');
-
     Route::get('teacher-all-leave',[TeacherApproveController::class,'allLeave'])->name('teacherAllLeave');
 
 });

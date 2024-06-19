@@ -86,9 +86,9 @@
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block pt-1">Leave SetUp</h3>
                                 </div>
-                                <div class="card-bottom p-3">
+                                {{-- <div class="card-bottom p-3">
                                     <h1 class="color-white mb-n1 font-28">{{ $lv }}</h1>
-                                </div>
+                                </div> --}}
                             </div>
                         </a>
                     </div>
@@ -101,9 +101,9 @@
                                 <div class="card-top p-3">
                                     <h3 class="color-white d-block  pt-1">Student Bill</h3>
                                 </div>
-                                <div class="card-bottom p-3">
+                                {{-- <div class="card-bottom p-3">
                                     <h1 class="color-white mb-n1 font-28">{{ $lv }}</h1>
-                                </div>
+                                </div> --}}
                             </div>
                         </a>
                     </div>
