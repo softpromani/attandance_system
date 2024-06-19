@@ -36,7 +36,8 @@ class TeacherApproveController extends Controller
                     return asset('storage/'.$row->file);
                 })
                 ->addColumn('name', function ($row) {
-                    return$row->UserName->name;
+                    // return $row->UserName->name??'N/A';
+                    return isset($row->UserName)?$row->UserName->name:'N/A';
                 })
                 ->addColumn('action', function ($row) {
                     // Check if the status is 0 (pending)
@@ -65,32 +66,32 @@ class TeacherApproveController extends Controller
     }
 
     // public function approveLeave(Request $request)
-    // {
-    //     // Validate the incoming request
-    //     $request->validate([
-    //         'leave_id' => 'required|exists:teacher_leaves,id',
-    //         'action' => 'required|in:approve,decline',
-    //     ]);
+            // {
+            //     // Validate the incoming request
+            //     $request->validate([
+            //         'leave_id' => 'required|exists:teacher_leaves,id',
+            //         'action' => 'required|in:approve,decline',
+            //     ]);
 
-    //     $leaveId = $request->input('leave_id');
-    //     $action = $request->input('action');
+            //     $leaveId = $request->input('leave_id');
+            //     $action = $request->input('action');
 
-    //     // Find the leave by ID
-    //     $leave = TeacherLeave::findOrFail($leaveId);
+            //     // Find the leave by ID
+            //     $leave = TeacherLeave::findOrFail($leaveId);
 
-    //     // Update the status based on the action
-    //     if ($action == 'approve') {
-    //         $leave->status = 1; // Approved
-    //     } elseif ($action == 'decline') {
-    //         $leave->status = 2; // Declined
-    //     }
+            //     // Update the status based on the action
+            //     if ($action == 'approve') {
+            //         $leave->status = 1; // Approved
+            //     } elseif ($action == 'decline') {
+            //         $leave->status = 2; // Declined
+            //     }
 
-    //     // Save the updated leave status
-    //     $leave->save();
+            //     // Save the updated leave status
+            //     $leave->save();
 
-    //     // Redirect back with a success message
-    //     return redirect()->back()->with('success', 'Leave request ' . ucfirst($action) . 'd successfully.');
-    // }
+            //     // Redirect back with a success message
+            //     return redirect()->back()->with('success', 'Leave request ' . ucfirst($action) . 'd successfully.');
+            // }
 
 
     public function approveLeave(Request $request, $id)

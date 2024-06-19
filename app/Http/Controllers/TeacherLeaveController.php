@@ -72,7 +72,7 @@ class TeacherLeaveController extends Controller
                 }
             })
                 ->addColumn('name', function ($q){
-                    return optional($q->UserName)->name;
+                    return optional($q->UserName)->name??'N/A';
                     })
                     ->addColumn('leave_type', function($q){
                         return $q->LeaveTypes->name??'N/A';
@@ -119,7 +119,7 @@ class TeacherLeaveController extends Controller
         ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
         ->groupBy('leave_types.name')
         ->get();
-        dd($allleaves);
+        // dd($allleaves);
         return view('backend.staff.teacherleaveview', compact('allleaves','sickle','casuale','totalsickLeave','totalcasualLeave'));
 
 

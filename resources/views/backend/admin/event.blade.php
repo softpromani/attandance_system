@@ -25,10 +25,15 @@
         margin:40px auto;
         }
         .event-point {
-    display: flex;
-    align-items: center; /* Align vertically */
-    justify-content: center; /* Align horizontally */
-}
+        display: flex;
+        align-items: center; /* Align vertically */
+        justify-content: center; /* Align horizontally */
+        }
+        tr.calendar-header .calendar-header-day, tr.calendar-body .calendar-day {
+       font-size: 13px;
+        }
+       
+
       </style>
   @endsection
     <div class="card card-style">
