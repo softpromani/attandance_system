@@ -35,7 +35,9 @@ class User extends Authenticatable
         'teacher_image',
         'first_name',
         'last_name',
-        'fcm_key'
+        'fcm_key',
+        'remember_token',
+        'location'
 
     ];
 

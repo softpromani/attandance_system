@@ -29,9 +29,15 @@ class AttendanceController extends Controller
                $data = $query->whereBetween('created_at', [$startDate, $endDate]);
                $data->latest()->get();
             }
-    
+            $thirtyDaysAgo = Carbon::now()->subDays(30);
             if (auth()->user()->hasRole('admin')) {
-                $userAttendance = $query->latest()->get();
+                if($startDate && $endDate){
+                    $userAttendance = $query->latest()->get();
+                }
+                else{
+                    $userAttendance = $query->where('created_at', '>=', $thirtyDaysAgo)->latest()->get();
+                }
+               
             } else {
                 $userAttendance = auth()->user()->attendances()->latest()->get();
             }

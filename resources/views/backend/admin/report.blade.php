@@ -47,9 +47,9 @@
             $(document).ready(function() {
                 var females = {!! json_encode($studentFemale) !!};
                 var males = {!! json_encode($studentMale) !!};
-                var allstudent = {!! json_encode($allstudent) !!};
-        var xValues = ["Female", "Male", "Total Student "];
-        var yValues = [females, males, allstudent];
+                // var allstudent = {!! json_encode($allstudent) !!};
+        var xValues = ["Female", "Male"];
+        var yValues = [females, males];
         var barColors = [
         "#b91d47",
         "#00aba9",

@@ -19,19 +19,22 @@ class TeacherController extends Controller
     }
     public function storeTeacherRegister(Request $request)
     {
-        $request->validate([
-            'f_name' => 'required|string|max:255',
-            'l_name' => 'required|string|max:255',
-            'father_name' => 'required|string|max:255',
-            'number' => 'required|string|regex:/^[0-9]+$/|max:12', // Assuming a maximum length of 12 digits and only numeric
-            'dob' => 'required|date|before_or_equal:today',
-            // 'anniversary_date' => 'nullable|date|before_or_equal:today',
-            // 'joining_date' => 'required|date|before_or_equal:today',
-            'file' => 'nullable|file|mimes:jpeg,png|max:2048', // Assuming a maximum file size of 2 MB
-            'password' => 'required|string|min:8', // Adjust the minimum length as needed
-            'email' => 'required|email|unique:users,email|max:255',
-        ]);
-
+       
+      
+        try {
+            $request->validate([
+                'f_name' => 'required|string|max:255',
+                'l_name' => 'required|string|max:255',
+                'father_name' => 'required|string|max:255',
+                'number' => 'required|string|regex:/^[0-9]+$/|max:12', // Assuming a maximum length of 12 digits and only numeric
+                'dob' => 'required|date|before_or_equal:today',
+                // 'anniversary_date' => 'nullable|date|before_or_equal:today',
+                // 'joining_date' => 'required|date|before_or_equal:today',
+                // 'file' => 'nullable|file|mimes:jpeg,png|max:2048', // Assuming a maximum file size of 2 MB
+                'password' => 'required|string|min:8', // Adjust the minimum length as needed
+                'email' => 'required|email|unique:users,email|max:255',
+            ]);
+            
         if($request->hasFile('file'))
         {
            $pathToStore=$request->file->store('teacher','public');
@@ -41,6 +44,7 @@ class TeacherController extends Controller
         $count=User::latest()->first()->id??0;
         $count=$count+1;
         $teacher_id= Carbon::now()->format('Ym') .'000'.$count;
+         
         $res = User::create([
         'name'=>$name,
         'email'=>$request->email,
@@ -56,6 +60,7 @@ class TeacherController extends Controller
          'teacher_image' => $pathToStore??'',
     ]);
     $res->assignRole($request->role);
+    
     if($res){
         event(new DashboardNotificationEvent($res));
         event(new Action($res)); 
@@ -64,6 +69,14 @@ class TeacherController extends Controller
         {
             return redirect()->route('staff.teacherRegisterData')->with('success','Staff Register Successfully');
         }
+        else{
+            return redirect()->back()->with('error','Something Wrong');
+        }
+            
+        } catch (\Throwable $th) {
+           return $th->getMessage();
+        }
+
 
     }
     public function teacherRegisterData()

@@ -94,4 +94,9 @@ Route::group([ 'prefix'=>'student','as'=>'student.', 'middleware' => 'auth'],fun
     Route::resource('leave-set-up',LeaveSetUpController::class);
 });
 
+    Route::get('verify-email',[AuthController::class,'verifyEmail'])->name('verifyemail');
+    Route::post('forgot-link',[AuthController::class,'forgotLink'])->name('forgotlink');
+    Route::get('forgot-password-view/{email}',[AuthController::class,'forgotView']);
+    Route::post('forgot-password',[AuthController::class,'forgotPassword'])->name('forgotpassword');
+
 

@@ -15,7 +15,6 @@
                     <i class="fa fa-check disabled invalid me-4 pe-3 font-12 color-red-dark"></i>
                     </div>
 
-
                     <div class="input-style input-style-always-active has-borders validate-field mt-4">
                         <input type="date" value="{{ isset($edit)?date('Y-m-d', strtotime($edit->valid_to)):'' }}" name="to" class="form-control" id="form7">
                         <label for="form7" class="color-blue-dark font-13">Valid To</label>

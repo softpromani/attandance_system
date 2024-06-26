@@ -26,7 +26,7 @@
                         <i class="fa fa-check disabled valid color-green-dark"></i>
                         <em>(required)</em>
                     
-                                <a href="#" class=" color-highlight font-11 ">Forgot Credentials</a>
+                                <a href="{{ route('verifyemail') }}" class=" color-primary font-11 ">Forgot Password</a>
                     </div>
                     <div class=" mb-4 ">
                         

@@ -7,8 +7,10 @@ use App\Models\LeaveType;
 use Illuminate\Support\Facades\File;
 use App\Models\TeacherLeave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class TeacherLeaveController extends Controller
 {
@@ -20,7 +22,8 @@ class TeacherLeaveController extends Controller
     public function index()
     {   $leave = LeaveType::get();
         $teacherleaves = TeacherLeave::get();
-        $currentYear = date('Y');
+        // $currentYear = date('Y');
+        $currentYear = Carbon::now()->year;
 
         $leaveSetup = LeaveSetup::all();
         $sickle = $leaveSetup->where('type','sick')->where('years',$currentYear)->first();
@@ -34,15 +37,19 @@ class TeacherLeaveController extends Controller
             $totalcasualLeave = ($casuale->paid_leave ?? 0) + ($casuale->unpaid_leave ?? 0);
         }
         // dd($totalcasualLeave , $totalsickLeave);
-        $totalleaves =  TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
+        $userId = Auth::id();
+
+        $allleaves = TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
+        ->where('teacher_leaves.user_id', $userId)
+        ->whereYear('teacher_leaves.created_at', $currentYear)
         ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
         ->groupBy('leave_types.name')
         ->get();
 
-        $allleaves = array();
-        foreach($totalleaves as $tl){
-            $allleaves[] = $tl;  
-        }
+        // $allleaves = array();
+        // foreach($totalleaves as $tl){
+        //     $allleaves[] = $tl;  
+        // }
         // dd($allleaves);
        return view('backend.staff.teacherleaves', compact('teacherleaves','leave','totalsickLeave','totalcasualLeave','allleaves'));
 
@@ -99,27 +106,32 @@ class TeacherLeaveController extends Controller
                 ->make(true);
         }
         $userId =  auth()->user()->id;
-        $currentYear = date('Y');
+        // $currentYear = date('Y');
+        $currentYear = Carbon::now()->year;
         $leaveSetup = LeaveSetup::all();
         // if(isset($leaveSetup) && $leaveSetup->type['sick']){
         $sickle = $leaveSetup->where('type','sick')->where('years',$currentYear)->first();
-        $totalsickLeave = 0;
+        $totalsickLeave = '0';
         if ($sickle) {
-            $totalsickLeave = ($sickle->paid_leave ?? 0) + ($sickle->unpaid_leave ?? 0);
+            $totalsickLeave = ($sickle->paid_leave ?? '0') + ($sickle->unpaid_leave ?? '0');
         }
         // }
         // if(isset($leaveSetup) && $leaveSetup->type == 'casual'){
         $casuale = $leaveSetup->where('type','casual')->where('years',$currentYear)->first();
-        $totalcasualLeave = 0;
+        $totalcasualLeave = '0';
         if ($casuale) {
-            $totalcasualLeave = ($casuale->paid_leave ?? 0) + ($casuale->unpaid_leave ?? 0);
+            $totalcasualLeave = ($casuale->paid_leave ?? '0') + ($casuale->unpaid_leave ?? '0');
         }
         // }
-        $allleaves =  TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
+        // dd($totalsickLeave , $totalcasualLeave);
+        $allleaves = TeacherLeave::join('leave_types', 'teacher_leaves.leave_type', '=', 'leave_types.id')
+        ->where('teacher_leaves.user_id', $userId)
+        ->where('teacher_leaves.status', '1')
+        ->whereYear('teacher_leaves.created_at', $currentYear)
         ->select('leave_types.name as leave_type', DB::raw('count(teacher_leaves.id) as leave_count'))
         ->groupBy('leave_types.name')
         ->get();
-        // dd($allleaves);
+        // dd($allleaves);/
         return view('backend.staff.teacherleaveview', compact('allleaves','sickle','casuale','totalsickLeave','totalcasualLeave'));
 
 

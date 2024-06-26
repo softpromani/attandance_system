@@ -5,7 +5,7 @@
             <div class="content">
                 <div class="row mb-0">
                     <div class="col-3">
-                        <img src="{{asset('public/storage/'.$staff->teacher_image)}}" height="80" width="80" class="rounded-xl">
+                        <img src="{{asset('storage/'.$staff->teacher_image)}}" height="80" width="80" class="rounded-xl">
                     </div>
                     <div class="col-9 ps-4">
                         <div class="d-flex">
@@ -13,7 +13,7 @@
                                 <p class="font-700 color-theme">Name</p>
                             </div>
                             <div class="ms-auto">
-                                <p>{{ $staff->name ?? '' }}</p>
+                                <p>{{ $staff->name ?? 'NULL' }}</p>
                             </div>
                         </div>
                         <div class="d-flex">
@@ -21,7 +21,7 @@
                                 <p class="font-700 color-theme">Email</p>
                             </div>
                             <div class="ms-auto">
-                                <p> {{ $staff->email ?? '' }}</p>
+                                <p> {{ $staff->email ?? 'NULL' }}</p>
                             </div>
                         </div>
                         <div class="d-flex">
@@ -29,7 +29,7 @@
                                 <p class="font-700 color-theme">Father Nmae</p>
                             </div>
                             <div class="ms-auto">
-                                <p>{{ $staff->father_name ?? '' }}</p>
+                                <p>{{ $staff->father_name ?? 'NULL' }}</p>
                             </div>
                         </div>
                     </div>
@@ -40,28 +40,28 @@
                         <h4 class="font-15">Date Of Birth</h4>
                     </div>
                     <div class="col-6">
-                        <h4 class="font-15 text-end mt-1">{{ $staff->dob ?? '' }}</h4>
+                        <h4 class="font-15 text-end mt-1">{{ $staff->dob ?? 'NULL' }}</h4>
                     </div>
                     <div class="divider divider-margins w-100 mt-2 mb-2"></div>
                     <div class="col-6">
                         <h4 class="font-15 mt-1">Anniversary Date</h4>
                     </div>
                     <div class="col-6">
-                        <h4 class="font-15 text-end mt-1">{{ $staff->anniversary_date ?? '' }}</h4>
+                        <h4 class="font-15 text-end mt-1">{{ $staff->anniversary_date ?? 'NULL' }}</h4>
                     </div>
                     <div class="divider divider-margins w-100 mt-2 mb-2"></div>
                     <div class="col-6">
                         <h4 class="font-15 mt-1">Joining Date</h4>
                     </div>
                     <div class="col-6">
-                        <h4 class="font-15 text-end mt-1">{{ $staff->joining_date ?? '' }}</h4>
+                        <h4 class="font-15 text-end mt-1">{{ $staff->joining_date ?? 'NULL' }}</h4>
                     </div>
                     <div class="divider divider-margins w-100 mt-2 mb-2"></div>
                     <div class="col-6">
-                        <h4 class="font-15 mt-1">Mobile Number ID</h4>
+                        <h4 class="font-15 mt-1">Mobile Number</h4>
                     </div>
                     <div class="col-6">
-                        <h4 class="font-15 text-end mt-1">{{ $staff->mobile_number ?? '' }}</h4>
+                        <h4 class="font-15 text-end mt-1">{{ $staff->mobile_number ?? 'NULL' }}</h4>
                     </div>
                     <div class="divider divider-margins w-100 mt-2 mb-2"></div>
                     <div class="col-6"><a href="{{ route('admin.editStaff', $staff->id) }}"

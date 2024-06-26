@@ -40,11 +40,11 @@
                 {{-- <div class="divider"></div> --}}
             </form>
 
-            <div class="divider mt-4 mb-3"></div>
-            <div class="d-flex">
+            {{-- <div class="divider mt-4 mb-3"></div> --}}
+            {{-- <div class="d-flex">
                 <div class="w-50 font-11 pb-2 color-theme opacity-60 pb-3 text-end"><a href="page-forgot-1.html"
                         class="color-theme">Forgot Credentials</a></div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
