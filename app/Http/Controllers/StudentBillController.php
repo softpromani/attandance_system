@@ -65,7 +65,7 @@ class StudentBillController extends Controller
             return DataTables::of($bills)
                 ->addIndexColumn()
                 ->addColumn('student_name',function($q){
-                    return $q->student->student_name;
+                    return $q->student->student_name??'';
                 })
                 ->addColumn('action', function ($row) {
                     $id = $row->id;

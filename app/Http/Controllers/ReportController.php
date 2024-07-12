@@ -140,24 +140,39 @@ class ReportController extends Controller
         {
             if ($request->ajax()) {
                 $fees = Fee::with(['student.className', 'student.sectionName', 'feeDetails'])
-                    ->get()
-                    ->groupBy(function ($fee) {
-                        $createdAt = Carbon::parse($fee->created_at);
-                        return $fee->student->class_id . '-' . $fee->student->section_id . '-' . $createdAt->month . '-' . $createdAt->year;
-                    });
+                ->get()
+                ->groupBy(function ($fee) {
+                    if (!$fee->student) {
+                        return 'unknown';
+                    }
+                    
+                    $createdAt = Carbon::parse($fee->created_at);
+                    $classId = $fee->student->class_id ?? '';
+                    $sectionId = $fee->student->section_id ?? '';
+                    $month = $createdAt->month ?? '';
+                    $year = $createdAt->year ?? '';
+                    
+                    return "{$classId}-{$sectionId}-{$month}-{$year}";
+                });
         
                 $data = [];
         
                 foreach ($fees as $groupKey => $groupFees) {
-                    [$classId, $sectionId, $month, $year] = explode('-', $groupKey);
+                    $parts = explode('-', $groupKey);
+
+                    $classId = $parts[0] ?? 'unknown';
+                    $sectionId = $parts[1] ?? 'unknown';
+                    $month = $parts[2] ?? '0';
+                    $year = $parts[3] ?? '0';
+                
                     $total = $groupFees->sum(function ($fee) {
                         return $fee->total_fee;
                         // feeDetails->sum('amount');
                     });
                     $formattedTotal = '₹' . number_format($total, 2);
                     $data[] = [
-                        'class' => $groupFees->first()->student->className->class ?? '',
-                        'section' => $groupFees->first()->student->sectionName->section ?? '',
+                        'class' => $groupFees->first()->student->className->class?? '',
+                        'section' => $groupFees->first()->student->sectionName->section?? '',
                         'month' => Carbon::createFromDate(null, $month)->format('F'), // Get month name
                         'year' => $year,
                         'total' => $formattedTotal,
